@@ -1,0 +1,342 @@
+"use client";
+import { useState, useMemo } from 'react';
+import dynamic from 'next/dynamic';
+import 'react-quill-new/dist/quill.snow.css';
+import { supabase } from '@/lib/supabase';
+import { useRouter } from 'next/navigation';
+import { compressImageForUpload } from '@/lib/clientImageCompressor';
+
+const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
+
+const INITIAL_TEMPLATE = `
+  <h2>Contexto Principal</h2>
+  <p>Insira o contexto detalhado aqui. Evite parágrafos muito longos.</p>
+  <h3>Análise e Impactos</h3>
+  <p>Detalhe os impactos da tecnologia, pesquisa ou fato apurado.</p>
+  <blockquote>
+    "O futuro da tecnologia e do jornalismo depende de transparência e precisão." - Especialista
+  </blockquote>
+  <h3>O que esperar a seguir</h3>
+  <ul>
+    <li>Ponto 1: Desdobramentos imediatos</li>
+    <li>Ponto 2: Próximas etapas</li>
+  </ul>
+`;
+
+const AUTHORS = [
+  "Gustavo de Castro Bernardes Rosa",
+  "RuiWenceslau de Oliveira",
+  "Beatriz Freire",
+  "Daiene Maria de Meneses",
+  "Jhonatan d' Osogiyan (ou Pai Jhonatan)",
+  "Kaelara (Agente de IA Autônomo)",
+  "Gabriela Castro Bernardes Rosa"
+];
+
+export default function PublishForm({ categories }) {
+  const [title, setTitle] = useState('');
+  const [summary, setSummary] = useState('');
+  const [categoryId, setCategoryId] = useState('');
+  const [featuredPosition, setFeaturedPosition] = useState('none');
+  const [content, setContent] = useState(INITIAL_TEMPLATE);
+  const [imageFile, setImageFile] = useState(null);
+  
+  // Campos AdSense & E-E-A-T
+  const [authorName, setAuthorName] = useState(AUTHORS[0]);
+  const [disclaimerType, setDisclaimerType] = useState('none');
+  const [sources, setSources] = useState('');
+  const [metaTitle, setMetaTitle] = useState('');
+  const [metaDescription, setMetaDescription] = useState('');
+  const [imageAlt, setImageAlt] = useState('');
+  const [imageCredits, setImageCredits] = useState('');
+  
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+  const router = useRouter();
+
+  const slugify = (text) => {
+    return text
+      .toString()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w-]+/g, '')
+      .replace(/--+/g, '-');
+  };
+
+  const generatedSlug = slugify(title);
+
+  // Contador de Palavras (com parsing de texto puro)
+  const wordCount = useMemo(() => {
+    let parsedContent = content || '';
+    if (typeof window !== 'undefined') {
+      const parser = new window.DOMParser();
+      const doc = parser.parseFromString(parsedContent, 'text/html');
+      parsedContent = doc.body.textContent || '';
+    } else {
+      parsedContent = parsedContent.replace(/<[^>]*>/g, ' ');
+    }
+    
+    const combinedText = `${title || ''} ${summary || ''} ${parsedContent} ${sources || ''}`
+      .replace(/&nbsp;/gi, ' ')
+      .replace(/\u00A0/g, ' ');
+      
+    const words = combinedText.trim().split(/[\s\n\r\t]+/).filter(w => w.length > 0);
+    return words.length;
+  }, [title, summary, content, sources]);
+
+  let wordCountColor = '#d32f2f';
+  let wordCountText = `Alerta: Texto com ${wordCount} palavras (Mínimo de 750 palavras exigido pelo AdSense)`;
+  if (wordCount >= 750 && wordCount <= 1600) {
+    wordCountColor = '#16a34a';
+    wordCountText = `Excelente densidade informativa (${wordCount} palavras - Aprovado para AdSense)`;
+  } else if (wordCount > 1600) {
+    wordCountColor = '#1a73e8';
+    wordCountText = `Matéria aprofundada e completa (${wordCount} palavras)`;
+  }
+
+  // Cor do SEO Description
+  let metaDescColor = 'var(--border)';
+  if (metaDescription.length > 0 && metaDescription.length < 120) {
+    metaDescColor = '#F4B400'; // Amarelo (Curto)
+  } else if (metaDescription.length >= 120 && metaDescription.length <= 160) {
+    metaDescColor = '#16a34a'; // Verde (Ideal)
+  } else if (metaDescription.length > 160) {
+    metaDescColor = '#EA4335'; // Vermelho (Longo)
+  }
+
+  const handlePublish = async (e, isDraft = false) => {
+    if (e && e.preventDefault) e.preventDefault();
+    if (!title || !categoryId || !summary || !content || (!imageFile && !isDraft) || !imageAlt) {
+      setMessage('Preencha os campos obrigatórios (incluindo o Texto Alternativo - Alt Text da imagem).');
+      return;
+    }
+
+    if (!isDraft && wordCount < 750) {
+      setMessage(`A matéria possui ${wordCount} palavras. É necessário atingir o mínimo de 750 palavras (contando Título, Linha Fina, Texto e Fontes) para publicação oficial com conformidade AdSense.`);
+      return;
+    }
+
+    setLoading(true);
+    let publicUrl = null;
+
+    try {
+      if (imageFile) {
+        setMessage('Otimizando imagem para alta performance...');
+        const { blob, fileName, mimeType } = await compressImageForUpload(imageFile);
+
+        setMessage('Fazendo upload da imagem otimizada...');
+        const filePath = `${fileName}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from('images')
+          .upload(filePath, blob, {
+            contentType: mimeType,
+            cacheControl: '31536000',
+            upsert: false
+          });
+
+        if (uploadError) {
+          throw new Error('Erro ao fazer upload da imagem: ' + uploadError.message);
+        }
+
+        const { data } = supabase.storage
+          .from('images')
+          .getPublicUrl(filePath);
+        publicUrl = data.publicUrl;
+      }
+
+      setMessage(isDraft ? 'Salvando rascunho...' : 'Publicando artigo...');
+
+      const slug = slugify(title);
+
+      if (featuredPosition === 'hero_main') {
+        // Desafixa qualquer manchete principal anterior para garantir apenas 1 manchete principal
+        await supabase.from('articles').update({ featured_position: 'none' }).eq('featured_position', 'hero_main');
+      }
+      
+      const { error: insertError } = await supabase.from('articles').insert([{
+        title,
+        slug,
+        summary,
+        category_id: categoryId,
+        content: content,
+        image_url: publicUrl,
+        published: !isDraft,
+        author: authorName,
+        views: 0,
+        featured_position: featuredPosition,
+        // Campos AdSense & E-E-A-T
+        author_name: authorName,
+        disclaimer_type: disclaimerType,
+        sources: sources,
+        meta_title: metaTitle || title,
+        meta_description: metaDescription || summary,
+        image_alt: imageAlt,
+        image_credits: imageCredits
+      }]);
+
+      if (insertError) {
+        throw new Error('Erro ao salvar no banco: ' + insertError.message);
+      }
+
+      setMessage(isDraft ? 'Rascunho salvo com sucesso!' : 'Notícia publicada com sucesso e enviada ao Google!');
+      
+      if (!isDraft) {
+        fetch('/api/ping-google', { method: 'POST' }).catch((e) =>
+          console.error('Erro de ping no Google:', e)
+        );
+      }
+      
+      // Reset de campos
+      setTitle('');
+      setSummary('');
+      setCategoryId('');
+      setFeaturedPosition('none');
+      setContent(INITIAL_TEMPLATE);
+      setImageFile(null);
+      setImageCredits('');
+      setImageAlt('');
+      setSources('');
+      setMetaTitle('');
+      setMetaDescription('');
+      
+      const fileInput = document.getElementById('image-upload');
+      if (fileInput) fileInput.value = '';
+
+      router.refresh();
+
+    } catch (err) {
+      setMessage(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const inputStyle = { width: '100%', padding: '12px 14px', border: '1px solid var(--border)', borderRadius: '8px', fontSize: '15px', background: 'var(--card)', color: 'var(--text)', marginBottom: '16px' };
+  const labelStyle = { fontSize: '14px', color: 'var(--text-muted)', fontWeight: '600', marginBottom: '8px', display: 'block' };
+  const sectionStyle = { padding: '24px', background: 'var(--bg)', borderRadius: '12px', marginBottom: '24px', border: '1px solid var(--border)' };
+  const reqStar = <span style={{ color: '#d32f2f' }}>*</span>;
+
+  return (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '32px' }}>
+      <div id="editor" style={{ flex: '1 1 100%', minWidth: 0, border: '1px solid var(--border)', borderRadius: '16px', padding: '32px', background: 'var(--card)', boxShadow: 'var(--shadow)' }}>
+        <h2 style={{ fontSize: '22px', color: 'var(--text)', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '8px', borderBottom: '2px solid #1a73e8', paddingBottom: '12px' }}>
+          <span className="material-icons-extended" style={{ color: '#1a73e8' }}>campaign</span>
+          Nova Notícia - Padrão AdSense (750+ Palavras)
+        </h2>
+        
+        <form style={{ display: 'flex', flexDirection: 'column' }}>
+          
+          <div style={sectionStyle}>
+            <h3 style={{ fontSize: '16px', color: 'var(--text)', marginBottom: '16px', fontWeight: '700' }}>1. Informações Principais</h3>
+            <label style={labelStyle}>Título da Matéria (H1) {reqStar}</label>
+            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} style={inputStyle} placeholder="Ex: Avanço Histórico da IA Redefine Pesquisa Médica em 2026" required />
+            
+            <label style={labelStyle}>Slug / URL Amigável (Gerado Automaticamente)</label>
+            <input type="text" value={generatedSlug} disabled style={{ ...inputStyle, background: 'var(--search-bg, #e8eaed)', color: 'var(--text-muted)' }} />
+            
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px', marginBottom: '16px' }}>
+              <div>
+                <label style={labelStyle}>Categoria Oficial {reqStar}</label>
+                <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)} style={inputStyle} required>
+                  <option value="">Selecione a Categoria</option>
+                  {categories?.map(cat => <option key={cat.id} value={cat.id}>{cat.name}</option>)}
+                </select>
+              </div>
+              <div>
+                <label style={labelStyle}>Autor Responsável (E-E-A-T) {reqStar}</label>
+                <select value={authorName} onChange={(e) => setAuthorName(e.target.value)} style={inputStyle} required>
+                  {AUTHORS.map(a => <option key={a} value={a}>{a}</option>)}
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label style={labelStyle}>🌟 Posição Editorial & Destaque na Capa</label>
+              <select value={featuredPosition} onChange={(e) => setFeaturedPosition(e.target.value)} style={{ ...inputStyle, borderColor: featuredPosition !== 'none' ? '#1a73e8' : 'var(--border)', fontWeight: featuredPosition !== 'none' ? '600' : 'normal' }}>
+                <option value="none">⚪ Padrão (Ordem cronológica automática por data)</option>
+                <option value="hero_main">🌟 Manchete Principal (Destaque Maior com foto no Topo)</option>
+                <option value="hero_side">📌 Destaque Lateral (Hero Secundário do Topo)</option>
+                <option value="formiga_main">📍 Destaque Formiga em Foco & Sociedade</option>
+              </select>
+              <span style={{ fontSize: '12px', color: 'var(--text-muted)', display: 'block', marginTop: '-10px' }}>
+                Defina onde este artigo ficará fixado. Se escolher &ldquo;Manchete Principal&rdquo;, ele permanecerá no topo do site mesmo após novas publicações.
+              </span>
+            </div>
+          </div>
+
+          <div style={sectionStyle}>
+            <h3 style={{ fontSize: '16px', color: 'var(--text)', marginBottom: '16px', fontWeight: '700' }}>2. Imagem de Destaque (SEO e Acessibilidade)</h3>
+            <label style={labelStyle}>Upload de Imagem de Capa {reqStar}</label>
+            <input id="image-upload" type="file" accept="image/*" onChange={(e) => setImageFile(e.target.files[0])} style={{ ...inputStyle, marginBottom: '4px' }} required />
+            <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '0', marginBottom: '16px' }}>Dimensões recomendadas: 1200x630px (proporção 16:9). Formatos: WebP, JPG ou PNG. Tamanho máximo: 2 MB.</p>
+            
+            <label style={labelStyle}>Texto Alternativo (Alt Text) {reqStar}</label>
+            <input type="text" placeholder="Descreva a imagem para leitores de tela e robôs do Google" value={imageAlt} onChange={(e) => setImageAlt(e.target.value)} style={inputStyle} required />
+            
+            <label style={labelStyle}>Créditos da Imagem</label>
+            <input type="text" placeholder="Ex: Foto por Unsplash / Ilustração por IA / Divulgação" value={imageCredits} onChange={(e) => setImageCredits(e.target.value)} style={inputStyle} />
+          </div>
+
+          <div style={sectionStyle}>
+            <h3 style={{ fontSize: '16px', color: 'var(--text)', marginBottom: '16px', fontWeight: '700' }}>3. Estrutura e Conteúdo Editorial</h3>
+            <label style={labelStyle}>Resumo / Linha Fina (Aparece nos cards e Google News) {reqStar}</label>
+            <textarea value={summary} onChange={(e) => setSummary(e.target.value)} placeholder="Síntese concisa da notícia..." style={{ ...inputStyle, height: '80px', resize: 'vertical' }} required />
+            
+            <label style={labelStyle}>Corpo da Matéria (Utilize H2, H3, e Citações) {reqStar}</label>
+            <div style={{ background: '#fff', color: '#000', borderRadius: '8px', overflow: 'hidden' }}>
+              <ReactQuill theme="snow" value={content} onChange={setContent} style={{ height: '400px', marginBottom: '50px' }} />
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '-32px', marginBottom: '24px', fontWeight: '600', color: wordCountColor, fontSize: '14px' }}>
+              <span className="material-icons-extended" style={{ fontSize: '20px' }}>analytics</span>
+              {wordCountText}
+            </div>
+
+            <label style={labelStyle}>Transparência Editorial (Disclaimers)</label>
+            <select value={disclaimerType} onChange={(e) => setDisclaimerType(e.target.value)} style={inputStyle}>
+              <option value="none">Nenhum (Matéria Jornalística Padrão)</option>
+              <option value="opiniao">Artigo de Opinião / Cultura (Colunista Convidado)</option>
+              <option value="tecnica">Cobertura Técnica / Educativa (Exige fontes)</option>
+            </select>
+
+            <label style={labelStyle}>Fontes e Referências (Links e Documentos Verificados)</label>
+            <textarea placeholder="Liste as URLs ou fontes de pesquisa consultadas (Uma por linha)" value={sources} onChange={(e) => setSources(e.target.value)} style={{ ...inputStyle, height: '100px', resize: 'vertical' }} />
+          </div>
+
+          <div style={sectionStyle}>
+            <h3 style={{ fontSize: '16px', color: 'var(--text)', marginBottom: '16px', fontWeight: '700' }}>4. Metadados SEO</h3>
+            <label style={labelStyle}>Meta Title (Google Search) - {metaTitle.length}/60 caracteres</label>
+            <input type="text" placeholder="Deixe em branco para usar o Título H1" value={metaTitle} onChange={(e) => setMetaTitle(e.target.value)} style={{ ...inputStyle, borderColor: metaTitle.length > 60 ? '#EA4335' : 'var(--border)', borderWidth: metaTitle.length > 60 ? '2px' : '1px' }} />
+            
+            <label style={labelStyle}>
+              Meta Description - <span style={{ color: metaDescColor }}>{metaDescription.length} caracteres (Ideal: 120-160)</span>
+            </label>
+            <textarea placeholder="Deixe em branco para usar o Resumo" value={metaDescription} onChange={(e) => setMetaDescription(e.target.value)} style={{ ...inputStyle, height: '80px', borderColor: metaDescColor, borderWidth: metaDescColor !== 'var(--border)' ? '2px' : '1px' }} />
+          </div>
+
+          {message && (
+            <div style={{ 
+              padding: '16px', borderRadius: '8px', fontSize: '15px', fontWeight: '500', marginBottom: '24px',
+              background: message.includes('sucesso') ? '#e6f4ea' : '#fce8e6',
+              color: message.includes('sucesso') ? '#137333' : '#c5221f',
+            }}>
+              {message}
+            </div>
+          )}
+
+          <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+            <button type="button" onClick={(e) => handlePublish(e, true)} disabled={loading} style={{ flex: 1, minWidth: '180px', background: 'var(--card)', color: 'var(--text-muted)', border: '1px solid var(--border)', padding: '16px', borderRadius: '8px', fontSize: '15px', fontWeight: '600', cursor: loading ? 'wait' : 'pointer', transition: 'background 0.2s' }}>
+              Salvar Rascunho
+            </button>
+            <button type="button" onClick={(e) => handlePublish(e, false)} disabled={loading} style={{ flex: 2, minWidth: '220px', background: '#1a73e8', color: '#fff', border: 'none', padding: '16px', borderRadius: '8px', fontSize: '15px', fontWeight: '700', cursor: loading ? 'wait' : 'pointer', transition: 'background 0.2s', boxShadow: '0 4px 12px rgba(26, 115, 232, 0.3)' }}>
+              {loading ? 'Processando...' : 'Publicar Matéria (AdSense Ready)'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}

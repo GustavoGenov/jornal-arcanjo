@@ -1,0 +1,115 @@
+import { supabase } from '@/lib/supabase';
+
+// Cache de borda por 5 minutos para velocidade máxima no rastreamento do Googlebot
+export const revalidate = 300;
+
+export default async function sitemap() {
+  const baseUrl = 'https://vozdaia.com';
+  
+  try {
+    const { data: articles, error: artError } = await supabase
+      .from('articles')
+      .select('id, slug, category_id, created_at, updated_at')
+      .eq('published', true)
+      .order('created_at', { ascending: false })
+      .limit(10000);
+
+    const latestArticleDate = articles && articles.length > 0
+      ? new Date(articles[0].updated_at || articles[0].created_at).toISOString()
+      : new Date().toISOString();
+
+    // Rotas estáticas principais com lastModified realístico (data de atualização de cada página)
+    const routes = [
+      {
+        url: baseUrl,
+        lastModified: latestArticleDate,
+        changeFrequency: 'always',
+        priority: 1.0,
+      },
+      {
+        url: `${baseUrl}/sobre`,
+        lastModified: '2026-09-01T12:00:00.000Z',
+        changeFrequency: 'monthly',
+        priority: 0.8,
+      },
+      {
+        url: `${baseUrl}/equipe`,
+        lastModified: '2026-09-01T12:00:00.000Z',
+        changeFrequency: 'monthly',
+        priority: 0.8,
+      },
+      {
+        url: `${baseUrl}/clima`,
+        lastModified: new Date().toISOString(),
+        changeFrequency: 'hourly',
+        priority: 0.8,
+      },
+      {
+        url: `${baseUrl}/horoscopo`,
+        lastModified: new Date().toISOString(),
+        changeFrequency: 'daily',
+        priority: 0.8,
+      },
+      {
+        url: `${baseUrl}/termos`,
+        lastModified: '2026-08-01T12:00:00.000Z',
+        changeFrequency: 'yearly',
+        priority: 0.5,
+      },
+      {
+        url: `${baseUrl}/politica-de-privacidade`,
+        lastModified: '2026-08-01T12:00:00.000Z',
+        changeFrequency: 'yearly',
+        priority: 0.5,
+      },
+    ];
+
+    if (!artError && articles) {
+      const articleRoutes = articles.map((article) => ({
+        url: `${baseUrl}/artigo/${article.slug}`,
+        lastModified: new Date(article.updated_at || article.created_at).toISOString(),
+        changeFrequency: 'daily',
+        priority: 0.9,
+      }));
+      routes.push(...articleRoutes);
+
+      // Obter categorias que contêm artigos publicados para evitar Soft 404
+      const usedCategoryIds = new Set(articles.map(a => a.category_id).filter(Boolean));
+      
+      const { data: categories } = await supabase
+        .from('categories')
+        .select('id, slug');
+
+      if (categories) {
+        const activeCategories = categories.filter(c => usedCategoryIds.has(c.id) && c.slug !== 'clima-tempo' && c.slug !== 'horoscopo-e-taro');
+        const categoryRoutes = activeCategories.map((cat) => {
+          // A data da categoria reflete a última publicação real de sua própria editoria
+          const latestCatArticle = articles.find(a => a.category_id === cat.id);
+          const catLastMod = latestCatArticle 
+            ? new Date(latestCatArticle.updated_at || latestCatArticle.created_at).toISOString() 
+            : latestArticleDate;
+
+          return {
+            url: `${baseUrl}/categoria/${cat.slug}`,
+            lastModified: catLastMod,
+            changeFrequency: 'hourly',
+            priority: 0.8,
+          };
+        });
+        routes.push(...categoryRoutes);
+      }
+    }
+
+    return routes;
+  } catch (err) {
+    console.error('Erro ao gerar rotas no sitemap:', err);
+    return [
+      {
+        url: baseUrl,
+        lastModified: new Date().toISOString(),
+        changeFrequency: 'always',
+        priority: 1.0,
+      }
+    ];
+  }
+}

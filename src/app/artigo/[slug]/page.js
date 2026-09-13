@@ -1,0 +1,313 @@
+import { supabase } from '@/lib/supabase';
+import { notFound } from 'next/navigation';
+import Link from 'next/link';
+import AdBanner from '@/components/AdBanner';
+import SocialShare from '@/components/SocialShare';
+import PageTracker from '../../components/PageTracker';
+import { getOptimizedImageUrl, getImageSrcSet } from '@/lib/imageHelper';
+
+export const revalidate = 60;
+
+const AUTHORS_META = {
+  "Gustavo de Castro Bernardes Rosa": { initials: "GC", role: "Fundador / Eng. de I.A & CTO", img: "/equipe/gustavo.jpg", bio: "Especialista em Inteligência Artificial e Redes de Computação." },
+  "RuiWenceslau de Oliveira": { initials: "RO", role: "Cofundador e Editor", img: "/equipe/rui.jpg", bio: "Especialista em criação de conteúdo para mídias sociais e jornalismo digital." },
+  "Beatriz Freire": { initials: "BF", role: "Estrategista de CS & Qualidade", img: "/equipe/beatriz.jpg", bio: "Estrategista de Customer Success & Qualidade, Comunicação Social e Marketing." },
+  "Daiene Maria de Meneses": { initials: "DM", role: "Pedagoga e Professora", img: "/equipe/daiene.jpg", bio: "Especialista em educação e desenvolvimento infantil." },
+  "Jhonatan d' Osogiyan (ou Pai Jhonatan)": { initials: "SJ", role: "Colunista de Cultura e Etnobotânica", img: "/equipe/jhonatan.jpg", bio: "Pesquisador de Tradições Populares, Psicologia e Herbalista." },
+  "Kaelara (Agente de IA Autônomo)": { initials: "KC", role: "Sistema de Análise e Monitoramento", img: "/equipe/kaelara.png", bio: "IA desenvolvida sob arquitetura LLM (Gemma/Google API)." },
+  "Gabriela Castro Bernardes Rosa": { initials: "GB", role: "Produtora de Conteúdo e Games", img: null, bio: "Produtora de conteúdo digital e games." }
+};
+
+export async function generateStaticParams() {
+  const { data: articles } = await supabase
+    .from('articles')
+    .select('slug')
+    .eq('published', true)
+    .order('created_at', { ascending: false })
+    .limit(30);
+
+  return (articles || []).map((article) => ({
+    slug: article.slug,
+  }));
+}
+
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  
+  const { data: article } = await supabase
+    .from('articles')
+    .select('title, summary, image_url, meta_title, meta_description, author_name, image_alt, created_at, updated_at')
+    .eq('slug', slug)
+    .single();
+
+  if (!article) return { title: 'Voz da I.A - Notícia não encontrada' };
+
+  const metaTitle = article.meta_title || article.title;
+  const metaDesc = article.meta_description || article.summary;
+  const articleUrl = `https://vozdaia.com/artigo/${slug}`;
+
+  let ogImageUrl = article.image_url;
+  if (ogImageUrl && ogImageUrl.startsWith('/')) {
+    ogImageUrl = `https://vozdaia.com${ogImageUrl}`;
+  }
+
+  return {
+    title: `${metaTitle} | Voz da I.A`,
+    description: metaDesc,
+    alternates: {
+      canonical: articleUrl,
+    },
+    openGraph: {
+      title: `${metaTitle} | Voz da I.A`,
+      description: metaDesc,
+      url: articleUrl,
+      siteName: 'Voz da I.A',
+      locale: 'pt_BR',
+      images: ogImageUrl ? [{ url: ogImageUrl, alt: article.image_alt || article.title, width: 1200, height: 630 }] : [{ url: 'https://vozdaia.com/simbolo.png', alt: 'Voz da I.A', width: 512, height: 512 }],
+      type: 'article',
+      publishedTime: article.created_at,
+      modifiedTime: article.updated_at || article.created_at,
+      authors: [article.author_name || 'Voz da I.A']
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${metaTitle} | Voz da I.A`,
+      description: metaDesc,
+      images: ogImageUrl ? [ogImageUrl] : ['https://vozdaia.com/simbolo.png'],
+    }
+  };
+}
+
+export default async function ArticlePage({ params }) {
+  const { slug } = await params;
+  
+  const { data: article } = await supabase
+    .from('articles')
+    .select('*, categories(name, slug, color_code)')
+    .eq('slug', slug)
+    .single();
+
+  if (!article) notFound();
+
+  const cleanContent = article.content 
+    ? article.content
+        .replace(/&nbsp;|\u00a0/g, ' ')
+        .replace(/https:\/\/nisbarqzsjqylsvnyxrm\.supabase\.co\/storage\/v1\/object\/public\/images\/[^\s"'>]+/g, (match) => `/api/img?url=${encodeURIComponent(match)}`)
+    : '';
+  const cleanTitle = article.title ? article.title.replace(/&nbsp;|\u00a0/g, ' ') : '';
+  const cleanSummary = article.summary ? article.summary.replace(/&nbsp;|\u00a0/g, ' ') : '';
+  const optimizedImageUrl = getOptimizedImageUrl(article.image_url);
+  
+  const authorData = AUTHORS_META[article.author_name] || AUTHORS_META["Gustavo de Castro Bernardes Rosa"];
+  const pubDate = new Date(article.created_at);
+  const modDate = article.updated_at ? new Date(article.updated_at) : pubDate;
+  const articleUrl = `https://vozdaia.com/artigo/${article.slug}`;
+
+  let absoluteImageUrl = article.image_url;
+  if (absoluteImageUrl && absoluteImageUrl.startsWith('/')) {
+    absoluteImageUrl = `https://vozdaia.com${absoluteImageUrl}`;
+  }
+
+  // Schema.org JSON-LD para SEO (NewsArticle em conformidade estrita com Google News)
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": articleUrl
+    },
+    "headline": (article.meta_title || cleanTitle).substring(0, 110),
+    "image": absoluteImageUrl ? [absoluteImageUrl] : ["https://vozdaia.com/simbolo.png"],
+    "datePublished": pubDate.toISOString(),
+    "dateModified": modDate.toISOString(),
+    "inLanguage": "pt-BR",
+    "author": [{
+        "@type": article.author_name?.includes("Kaelara") ? "SoftwareApplication" : "Person",
+        "name": article.author_name || 'Voz da I.A',
+        "url": "https://vozdaia.com/equipe"
+      }],
+    "publisher": {
+      "@type": "NewsMediaOrganization",
+      "name": "Voz da I.A",
+      "url": "https://vozdaia.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://vozdaia.com/logo-header.png"
+      }
+    },
+    "description": cleanSummary,
+    "articleBody": cleanContent.replace(/<[^>]*>/g, '').trim().substring(0, 2000)
+  };
+
+  return (
+    <>
+      <PageTracker articleId={article.id} categoryId={article.category_id} />
+      
+      {/* Schema.org Injection */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
+      <main className="main-content article-page-main" style={{ maxWidth: '880px', margin: '0 auto', width: '100%', overflowX: 'hidden', padding: '24px 16px' }}>
+        
+        {/* Navegação e Categoria */}
+        <div style={{ marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', color: 'var(--gn-text-secondary)' }}>
+          <Link href="/" style={{ color: 'var(--gn-blue)', display: 'flex', alignItems: 'center', gap: '4px', textDecoration: 'none' }}>
+            <span className="material-icons-extended" style={{ fontSize: '16px' }}>arrow_back</span> Início
+          </Link>
+          <span>/</span>
+          {article.categories && (
+            <Link 
+              href={`/categoria/${article.categories.slug}`}
+              style={{ 
+                fontWeight: '600', 
+                color: article.categories.slug === 'religiao' ? '#8e24aa' : (article.categories.color_code || 'var(--gn-blue)'),
+                textDecoration: 'none'
+              }}
+            >
+              {article.categories.name}
+            </Link>
+          )}
+        </div>
+
+        {/* Título e Resumo */}
+        <h1 className="google-sans article-page-title" style={{ textAlign: 'left', wordBreak: 'break-word', overflowWrap: 'anywhere', fontSize: '2.1rem', fontWeight: 800, lineHeight: '1.25', marginBottom: '16px' }}>
+          {cleanTitle}
+        </h1>
+        <p className="article-page-summary" style={{ textAlign: 'left', wordBreak: 'break-word', overflowWrap: 'anywhere', fontSize: '1.15rem', color: 'var(--text-muted)', lineHeight: '1.6', marginBottom: '24px' }}>
+          {cleanSummary}
+        </p>
+
+        {/* Metadados da Matéria (Autor, Selo de Verificação e Data) */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap', padding: '20px 0', borderTop: '1px solid var(--gn-border)', borderBottom: '1px solid var(--gn-border)', marginBottom: '32px', width: '100%' }}>
+          {authorData.img ? (
+            <img src={authorData.img} alt={article.author_name} style={{ width: '48px', height: '48px', borderRadius: '50%', objectFit: 'cover' }} />
+          ) : (
+            <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'var(--gn-search-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--gn-text-secondary)' }}>
+              {authorData.initials}
+            </div>
+          )}
+          
+          <div style={{ flex: '1 1 auto' }}>
+            <div style={{ fontSize: '17px', fontWeight: '600', color: 'var(--gn-text)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              Por {article.author_name || article.author}
+              <span title="Jornalismo Verificado" style={{ display: 'inline-flex', alignItems: 'center', gap: '2px', background: 'rgba(26, 115, 232, 0.1)', color: '#1a73e8', padding: '2px 8px', borderRadius: '12px', fontSize: '12px', fontWeight: 600 }}>
+                <span className="material-icons-extended" style={{ fontSize: '14px' }}>verified</span> Verificado
+              </span>
+            </div>
+            <div style={{ fontSize: '13px', color: 'var(--gn-text-secondary)', display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap', marginTop: '4px' }}>
+              <span>{authorData.role}</span>
+              <span>•</span>
+              <span>
+                Publicado em {pubDate.toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo', day: 'numeric', month: 'long', year: 'numeric' })}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Imagem de Capa e Créditos (Otimizado com Edge CDN Proxy, LCP Eager e Zero CLS) */}
+        {optimizedImageUrl && (
+          <>
+            <link 
+              rel="preload" 
+              as="image" 
+              href={getOptimizedImageUrl(article.image_url, 800)} 
+              imageSrcSet={getImageSrcSet(article.image_url)} 
+              imageSizes="(max-width: 600px) 100vw, 800px" 
+              fetchPriority="high" 
+            />
+            <figure style={{ margin: '0 0 40px 0' }}>
+              <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9', maxHeight: '480px', overflow: 'hidden', borderRadius: '12px', background: 'var(--gn-search-bg)' }}>
+                <img 
+                  src={getOptimizedImageUrl(article.image_url, 800)} 
+                  srcSet={getImageSrcSet(article.image_url)}
+                  sizes="(max-width: 600px) 100vw, 800px"
+                  alt={article.image_alt || cleanTitle} 
+                  width="800"
+                  height="450"
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="sync"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} 
+                />
+              </div>
+              {article.image_credits && (
+                <figcaption style={{ fontSize: '13px', color: 'var(--gn-text-secondary)', textAlign: 'right', marginTop: '8px', fontStyle: 'italic' }}>
+                  Crédito: {article.image_credits}
+                </figcaption>
+              )}
+            </figure>
+          </>
+        )}
+
+        {/* Conteúdo Rico (HTML) */}
+        <article 
+          className="article-body" 
+          style={{ lineHeight: '1.8', color: 'var(--gn-text)', wordWrap: 'break-word', overflowWrap: 'anywhere', fontSize: '1.1rem' }}
+        >
+          <style dangerouslySetInnerHTML={{__html: `
+            .article-body h2 { font-size: 24px; font-weight: 700; margin-top: 32px; margin-bottom: 16px; color: var(--gn-text); font-family: 'Plus Jakarta Sans', sans-serif; }
+            .article-body h3 { font-size: 20px; font-weight: 600; margin-top: 24px; margin-bottom: 12px; color: var(--gn-text); font-family: 'Plus Jakarta Sans', sans-serif; }
+            .article-body p { margin-bottom: 20px; }
+            .article-body strong { font-weight: 600; }
+            .article-body a { color: var(--gn-blue); text-decoration: none; }
+            .article-body a:hover { text-decoration: underline; }
+            .article-body blockquote { border-left: 4px solid var(--gn-blue); padding-left: 16px; font-style: italic; color: var(--gn-text-secondary); margin: 24px 0; background: var(--gn-surface); padding: 16px; border-radius: 0 8px 8px 0; }
+            .article-body hr { border: 0; border-top: 1px solid var(--gn-border); margin: 32px 0; }
+            .article-body ul, .article-body ol { margin-bottom: 20px; padding-left: 24px; }
+            .article-body li { margin-bottom: 8px; }
+          `}} />
+          <div dangerouslySetInnerHTML={{ __html: cleanContent }} />
+        </article>
+
+        {/* Botões de Compartilhamento Social (Zero Scripts, Máxima Performance) */}
+        <SocialShare url={articleUrl} title={cleanTitle} />
+
+        {/* Disclaimers Transparentes */}
+        {article.disclaimer_type === 'opiniao' && (
+          <div style={{ marginTop: '40px', padding: '16px', backgroundColor: 'rgba(216, 27, 96, 0.08)', borderLeft: '4px solid #d81b60', borderRadius: '4px', fontSize: '14px', color: '#d81b60' }}>
+            <strong>Nota Editorial:</strong> Este artigo reflete a visão cultural e opinativa do autor, tendo caráter exclusivamente informativo e filosófico. Não se trata de prestação de serviços comerciais.
+          </div>
+        )}
+        {article.disclaimer_type === 'tecnica' && (
+          <div style={{ marginTop: '40px', padding: '16px', backgroundColor: 'rgba(26, 115, 232, 0.08)', borderLeft: '4px solid #1a73e8', borderRadius: '4px', fontSize: '14px', color: '#174ea6' }}>
+            <strong>Cobertura Técnica:</strong> Este conteúdo foi redigido com base em fontes técnicas e educacionais verificadas.
+          </div>
+        )}
+
+        {/* Fontes e Referências */}
+        {article.sources && (
+          <div style={{ marginTop: '40px', padding: '24px', background: 'var(--gn-surface)', border: '1px solid var(--gn-border)', borderRadius: '12px' }}>
+            <h3 style={{ fontSize: '16px', color: 'var(--gn-text)', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span className="material-icons-extended" style={{ fontSize: '18px' }}>menu_book</span>
+              Fontes e Referências
+            </h3>
+            <div style={{ fontSize: '14px', color: 'var(--gn-text-secondary)', lineHeight: '1.6', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
+              {article.sources}
+            </div>
+          </div>
+        )}
+
+        {/* Mini-Bio do Autor */}
+        <div style={{ marginTop: '40px', padding: '24px', background: 'var(--gn-surface)', border: '1px solid var(--gn-border)', borderRadius: '12px', display: 'flex', gap: '16px', alignItems: 'center' }}>
+          {authorData.img ? (
+            <img src={authorData.img} alt={article.author_name} style={{ width: '64px', height: '64px', borderRadius: '50%', objectFit: 'cover' }} />
+          ) : (
+            <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'var(--gn-search-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--gn-text-secondary)', fontSize: '20px', fontWeight: '500' }}>
+              {authorData.initials}
+            </div>
+          )}
+          <div>
+            <div style={{ fontSize: '16px', fontWeight: '600', color: 'var(--gn-text)', marginBottom: '4px' }}>{article.author_name || article.author}</div>
+            <div style={{ fontSize: '14px', color: 'var(--gn-text-secondary)' }}>{authorData.bio}</div>
+          </div>
+        </div>
+
+        {/* Anúncio AdSense Fim do Artigo */}
+        <AdBanner dataAdSlot="SEU_SLOT_ARTIGO" />
+
+      </main>
+    </>
+  );
+}
