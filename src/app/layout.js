@@ -1,5 +1,5 @@
 ﻿import './globals.css';
-import { Roboto, Plus_Jakarta_Sans } from 'next/font/google';
+import { Playfair_Display, Merriweather, Plus_Jakarta_Sans } from 'next/font/google';
 import { supabase } from '@/lib/supabase';
 import { Providers } from './providers';
 import LayoutShell from './components/LayoutShell';
@@ -7,15 +7,22 @@ import DeferredScripts from './components/DeferredScripts';
 import CookieBanner from '@/components/CookieBanner';
 import Script from 'next/script';
 
-const roboto = Roboto({
-  weight: ['400', '500', '700'],
+const playfair = Playfair_Display({
+  weight: ['400', '600', '700', '800', '900'],
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-roboto',
+  variable: '--font-playfair',
+});
+
+const merriweather = Merriweather({
+  weight: ['300', '400', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-merriweather',
 });
 
 const plusJakartaSans = Plus_Jakarta_Sans({
-  weight: ['400', '500', '600', '700', '800'],
+  weight: ['400', '500', '600', '700'],
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-plus-jakarta',
@@ -28,11 +35,11 @@ export const viewport = {
 };
 
 export const metadata = {
-  metadataBase: new URL('https://jornalarcanjo.com.br'),
-  title: 'Jornal Arcanjo - Tradição, Sociedade, Cultura & Sabedoria',
-  description: 'Jornal Arcanjo: jornalismo humanizado, cultura, filosofia, espiritualidade, saúde integral, meteorologia e notícias verificadas.',
+  metadataBase: new URL('https://jornalarcanjo.vercel.app'),
+  title: 'Jornal Arcanjo - Todas as Notícias com Rigor e Independência',
+  description: 'Jornal independente de Formiga (MG) e do Brasil. Cobertura de sociedade, cultura, filosofia, espiritualidade, saúde e fatos checados no padrão The New York Times.',
   alternates: {
-    canonical: 'https://jornalarcanjo.com.br',
+    canonical: 'https://jornalarcanjo.vercel.app',
   },
   verification: {
     google: '',
@@ -65,14 +72,12 @@ export default async function RootLayout({ children }) {
   });
 
   return (
-    <html lang="pt-BR" className={`${roboto.variable} ${plusJakartaSans.variable}`}>
+    <html lang="pt-BR" className={`${playfair.variable} ${merriweather.variable} ${plusJakartaSans.variable}`}>
       <head>
-        {/* Preconnect prioritário (máx 4 para Lighthouse) */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://hiaoasipxkxsjcoshscu.supabase.co" />
         
-        {/* Material Icons carregado de forma assíncrona não-bloqueante */}
         <link 
           rel="stylesheet" 
           href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" 
@@ -80,7 +85,6 @@ export default async function RootLayout({ children }) {
           onLoad="this.media='all'" 
         />
 
-        {/* Script AdSense / Monetização */}
         <Script
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5759690232636098"
           strategy="afterInteractive"

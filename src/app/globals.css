@@ -1799,3 +1799,640 @@ img.goog-te-gadget-icon,
     padding: 0 1rem;
   }
 }
+
+/* ==========================================================================
+   THE NEW YORK TIMES (NYT) INSPIRED BROADSHEET SYSTEM FOR JORNAL ARCANJO
+   ========================================================================== */
+
+:root {
+  --nyt-serif-title: var(--font-playfair), 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --nyt-serif-body: var(--font-merriweather), 'Merriweather', Georgia, serif;
+  --nyt-sans: var(--font-plus-jakarta), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  --nyt-bg: #ffffff;
+  --nyt-surface: #ffffff;
+  --nyt-ink: #121212;
+  --nyt-ink-secondary: #333333;
+  --nyt-ink-muted: #666666;
+  --nyt-byline: #727272;
+  --nyt-border: #e2e2e2;
+  --nyt-border-dark: #121212;
+  --nyt-accent: #0f2c59;
+  --nyt-red: #b91c1c;
+  --nyt-paper-tint: #f9f9f9;
+}
+
+[data-theme='dark'] {
+  --nyt-bg: #121212;
+  --nyt-surface: #1a1a1a;
+  --nyt-ink: #f5f5f5;
+  --nyt-ink-secondary: #d4d4d4;
+  --nyt-ink-muted: #a3a3a3;
+  --nyt-byline: #888888;
+  --nyt-border: #2c2c2c;
+  --nyt-border-dark: #e5e5e5;
+  --nyt-accent: #90caf9;
+  --nyt-red: #ef4444;
+  --nyt-paper-tint: #1e1e1e;
+}
+
+/* Base Body Override for Broadsheet Feel */
+body {
+  background-color: var(--nyt-bg) !important;
+  color: var(--nyt-ink) !important;
+  font-family: var(--nyt-sans) !important;
+}
+
+/* Container Broadsheet Width */
+.nyt-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* --- THE NEW YORK TIMES MASTHEAD --- */
+.nyt-header {
+  background: var(--nyt-bg);
+  border-bottom: 3px double var(--nyt-border-dark);
+  margin-bottom: 24px;
+}
+
+.nyt-top-utility {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--nyt-ink-muted);
+  border-bottom: 1px solid var(--nyt-border);
+}
+
+.nyt-top-utility a {
+  color: var(--nyt-ink-muted);
+  text-decoration: none;
+}
+.nyt-top-utility a:hover {
+  color: var(--nyt-ink);
+  text-decoration: underline;
+}
+
+.nyt-masthead-center {
+  text-align: center;
+  padding: 22px 0 16px;
+}
+
+.nyt-masthead-logo {
+  font-family: var(--nyt-serif-title);
+  font-size: clamp(2.4rem, 6vw, 4.8rem);
+  font-weight: 900;
+  letter-spacing: -1.2px;
+  line-height: 1;
+  color: var(--nyt-ink);
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.nyt-masthead-slogan {
+  font-family: var(--nyt-serif-body);
+  font-style: italic;
+  font-size: 12.5px;
+  color: var(--nyt-ink-muted);
+  letter-spacing: 0.2px;
+  margin-top: 4px;
+}
+
+.nyt-double-rule {
+  border-top: 1px solid var(--nyt-border-dark);
+  border-bottom: 1px solid var(--nyt-border-dark);
+  height: 3px;
+  margin: 8px 0 0;
+}
+
+.nyt-nav-row {
+  border-top: 1px solid var(--nyt-border-dark);
+  border-bottom: 1px solid var(--nyt-border-dark);
+  padding: 8px 0;
+}
+
+.nyt-nav-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nyt-nav-link {
+  font-family: var(--nyt-sans);
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.9px;
+  color: var(--nyt-ink);
+  text-decoration: none;
+  padding: 3px 0;
+  position: relative;
+  transition: color 0.15s ease;
+}
+
+.nyt-nav-link:hover {
+  color: var(--nyt-accent);
+  text-decoration: none;
+}
+
+.nyt-nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--nyt-ink);
+  transition: width 0.2s ease;
+}
+
+.nyt-nav-link:hover::after {
+  width: 100%;
+}
+
+/* --- BROADSHEET LEAD GRID (3 COLUMNS) --- */
+.nyt-frontpage-grid {
+  display: grid;
+  grid-template-columns: 290px 1fr 310px;
+  gap: 24px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid var(--nyt-border);
+}
+
+.nyt-col-left {
+  border-right: 1px solid var(--nyt-border);
+  padding-right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.nyt-col-center {
+  display: flex;
+  flex-direction: column;
+}
+
+.nyt-col-right {
+  border-left: 1px solid var(--nyt-border);
+  padding-left: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Typography elements */
+.nyt-kicker {
+  font-family: var(--nyt-sans);
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--nyt-red);
+  margin-bottom: 6px;
+  display: block;
+}
+
+.nyt-headline-main {
+  font-family: var(--nyt-serif-title);
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.4px;
+  color: var(--nyt-ink);
+  margin-bottom: 12px;
+  text-decoration: none;
+}
+.nyt-headline-main:hover {
+  color: var(--nyt-ink-secondary);
+}
+
+.nyt-headline-secondary {
+  font-family: var(--nyt-serif-title);
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.2px;
+  color: var(--nyt-ink);
+  margin-bottom: 8px;
+  text-decoration: none;
+}
+.nyt-headline-secondary:hover {
+  color: var(--nyt-ink-secondary);
+}
+
+.nyt-deck {
+  font-family: var(--nyt-serif-body);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--nyt-ink-secondary);
+  margin-bottom: 14px;
+}
+
+.nyt-deck-sm {
+  font-family: var(--nyt-sans);
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--nyt-ink-secondary);
+  margin-bottom: 10px;
+}
+
+.nyt-byline {
+  font-family: var(--nyt-sans);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--nyt-byline);
+}
+
+.nyt-byline strong {
+  color: var(--nyt-ink);
+}
+
+.nyt-lead-media {
+  margin: 14px 0 16px;
+  position: relative;
+  background: var(--nyt-paper-tint);
+  border: 1px solid var(--nyt-border);
+}
+
+.nyt-lead-media img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  display: block;
+}
+
+.nyt-media-caption {
+  font-size: 11px;
+  color: var(--nyt-ink-muted);
+  padding: 6px 10px;
+  text-align: right;
+  font-style: italic;
+  border-top: 1px solid var(--nyt-border);
+}
+
+.nyt-story-brief {
+  border-bottom: 1px solid var(--nyt-border);
+  padding-bottom: 18px;
+}
+.nyt-story-brief:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* --- THE OPINION / VOICES SIDEBAR --- */
+.nyt-opinion-header {
+  border-bottom: 2px solid var(--nyt-border-dark);
+  padding-bottom: 6px;
+  margin-bottom: 16px;
+}
+.nyt-opinion-header h3 {
+  font-family: var(--nyt-sans);
+  font-size: 13px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--nyt-ink);
+  margin: 0;
+}
+
+.nyt-opinion-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--nyt-border);
+}
+.nyt-opinion-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.nyt-opinion-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid var(--nyt-border);
+}
+
+.nyt-opinion-content {
+  flex: 1;
+}
+
+.nyt-opinion-author {
+  font-family: var(--nyt-sans);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--nyt-ink);
+  margin-bottom: 2px;
+}
+
+.nyt-opinion-role {
+  font-size: 11px;
+  color: var(--nyt-ink-muted);
+  margin-bottom: 4px;
+}
+
+.nyt-opinion-title {
+  font-family: var(--nyt-serif-title);
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--nyt-ink);
+  text-decoration: none;
+}
+.nyt-opinion-title:hover {
+  text-decoration: underline;
+}
+
+/* --- SECTION BLOCKS (NYT SECTIONAL PANELS) --- */
+.nyt-section-banner {
+  border-top: 3px solid var(--nyt-border-dark);
+  padding-top: 10px;
+  margin-top: 48px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.nyt-section-title {
+  font-family: var(--nyt-serif-title);
+  font-size: 22px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--nyt-ink);
+  margin: 0;
+}
+
+.nyt-section-more {
+  font-family: var(--nyt-sans);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--nyt-ink);
+  text-decoration: none;
+}
+.nyt-section-more:hover {
+  text-decoration: underline;
+}
+
+.nyt-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  border-bottom: 1px solid var(--nyt-border);
+  padding-bottom: 32px;
+}
+
+.nyt-grid-card {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--nyt-border);
+  padding-right: 24px;
+  text-decoration: none;
+  color: inherit;
+}
+.nyt-grid-card:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.nyt-grid-card img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  margin-bottom: 12px;
+  border: 1px solid var(--nyt-border);
+}
+
+.nyt-grid-card h4 {
+  font-family: var(--nyt-serif-title);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--nyt-ink);
+  margin-bottom: 8px;
+}
+.nyt-grid-card:hover h4 {
+  color: var(--nyt-ink-secondary);
+}
+
+.nyt-grid-card p {
+  font-family: var(--nyt-sans);
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--nyt-ink-secondary);
+  margin-bottom: 12px;
+  flex: 1;
+}
+
+/* --- THE NYT GAMES / PASSATEMPOS PANEL --- */
+.nyt-games-box {
+  background: var(--nyt-paper-tint);
+  border: 1px solid var(--nyt-border);
+  padding: 32px;
+  margin: 36px 0;
+  border-radius: 4px;
+}
+
+.nyt-games-header {
+  text-align: center;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--nyt-border);
+  padding-bottom: 16px;
+}
+
+.nyt-games-header h3 {
+  font-family: var(--nyt-serif-title);
+  font-size: 26px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--nyt-ink);
+  margin-bottom: 6px;
+}
+
+.nyt-games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.nyt-game-card {
+  background: var(--nyt-bg);
+  border: 1px solid var(--nyt-border);
+  padding: 24px;
+  text-align: center;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.nyt-game-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.nyt-game-title {
+  font-family: var(--nyt-serif-title);
+  font-size: 20px;
+  font-weight: 800;
+  margin: 12px 0 6px;
+  color: var(--nyt-ink);
+}
+
+.nyt-game-desc {
+  font-size: 13px;
+  color: var(--nyt-ink-muted);
+  line-height: 1.4;
+  margin-bottom: 16px;
+  flex: 1;
+}
+
+.nyt-btn-play {
+  font-family: var(--nyt-sans);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: var(--nyt-ink);
+  color: var(--nyt-bg) !important;
+  padding: 8px 20px;
+  border-radius: 20px;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+.nyt-btn-play:hover {
+  opacity: 0.85;
+}
+
+/* --- BROADSHEET FOOTER --- */
+.nyt-footer {
+  border-top: 3px double var(--nyt-border-dark);
+  padding: 36px 0 48px;
+  margin-top: 54px;
+  background: var(--nyt-bg);
+}
+
+.nyt-footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--nyt-border);
+  margin-bottom: 24px;
+}
+
+.nyt-footer-logo {
+  font-family: var(--nyt-serif-title);
+  font-size: 28px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
+  color: var(--nyt-ink);
+  text-decoration: none;
+}
+
+.nyt-footer-cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 32px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--nyt-border);
+}
+
+.nyt-footer-col h5 {
+  font-family: var(--nyt-sans);
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--nyt-ink);
+  margin-bottom: 12px;
+}
+
+.nyt-footer-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nyt-footer-col li {
+  margin-bottom: 8px;
+}
+
+.nyt-footer-col a {
+  font-size: 12.5px;
+  color: var(--nyt-ink-secondary);
+  text-decoration: none;
+}
+.nyt-footer-col a:hover {
+  color: var(--nyt-ink);
+  text-decoration: underline;
+}
+
+.nyt-footer-bottom {
+  padding-top: 20px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--nyt-ink-muted);
+}
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+@media (max-width: 1040px) {
+  .nyt-frontpage-grid {
+    grid-template-columns: 1fr 300px;
+  }
+  .nyt-col-left {
+    display: none; /* Left brief moves below on tablets */
+  }
+}
+
+@media (max-width: 768px) {
+  .nyt-frontpage-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .nyt-col-left, .nyt-col-right {
+    border: none;
+    padding: 0;
+  }
+  .nyt-grid-3 {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .nyt-grid-card {
+    border-right: none;
+    padding-right: 0;
+    border-bottom: 1px solid var(--nyt-border);
+    padding-bottom: 20px;
+  }
+  .nyt-nav-list {
+    gap: 10px;
+  }
+  .nyt-nav-link {
+    font-size: 10.5px;
+  }
+}

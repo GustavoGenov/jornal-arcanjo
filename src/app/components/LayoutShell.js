@@ -12,146 +12,96 @@ export default function LayoutShell({ categories, children }) {
   const toggleDrawer = () => setDrawerOpen(!drawerOpen);
   const closeDrawer = () => setDrawerOpen(false);
 
-  // Se a rota for administrativa (/admin, /admin/login, /admin/editar/...), renderiza o conteúdo do painel diretamente sem duplicar o header e footer do jornal público
+  // Se a rota for administrativa, não duplica a casca pública do jornal
   const isAdminRoute = pathname?.startsWith('/admin');
 
   if (isAdminRoute) {
     return <>{children}</>;
   }
 
+  // Formatação da data por extenso no estilo The New York Times
+  const todayFormatted = new Date().toLocaleDateString('pt-BR', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  });
+
+  const formattedDateCapitalized = todayFormatted.charAt(0).toUpperCase() + todayFormatted.slice(1);
+
   return (
     <>
-      {/* HEADER PRINCIPAL REESTRUTURADO EM 2 LINHAS COM PADRÃO DOS GRANDES JORNAIS */}
-      <header className="header header-2tier">
-        
-        {/* LINHA 1: MARCA, BUSCA E AÇÕES */}
-        <div className="header-top-row">
-          <div className="header-inner header-top-inner">
-            
-            {/* Bloco 1: Identidade da Marca e Menu */}
-            <div className="header-brand-block">
+      {/* ====================================================================
+          THE NEW YORK TIMES (NYT) MASTHEAD PARA O JORNAL ARCANJO
+          ==================================================================== */}
+      <header className="nyt-header">
+        <div className="nyt-container">
+          
+          {/* 1. Barra Utilitária Superior do NYT (Data, Edição, Clima, Ações) */}
+          <div className="nyt-top-utility">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
               <button 
-                className="menu-btn header-menu-toggle" 
-                onClick={toggleDrawer} 
-                aria-label="Abrir menu de navegação"
-                title="Menu Principal"
-                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                onClick={toggleDrawer}
+                aria-label="Abrir seções"
+                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', display: 'inline-flex', alignItems: 'center', gap: '4px', font: 'inherit', fontWeight: '700' }}
               >
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="3" y1="12" x2="21" y2="12"></line>
                   <line x1="3" y1="6" x2="21" y2="6"></line>
                   <line x1="3" y1="18" x2="21" y2="18"></line>
                 </svg>
+                <span>SEÇÕES</span>
               </button>
+              <span>•</span>
+              <span>{formattedDateCapitalized}</span>
+              <span>•</span>
+              <span style={{ display: 'none', md: 'inline' }}>EDIÇÃO DO DIA</span>
+            </div>
 
-              <Link href="/" className="logo header-brand-link" onClick={closeDrawer}>
-                <img 
-                  src="/simbolo.png" 
-                  alt="Símbolo Jornal Arcanjo" 
-                  width="40"
-                  height="40"
-                  className="header-logo-symbol"
-                  decoding="async"
-                />
-                <div className="header-brand-text-wrap">
-                  <span className="header-brand-title">Jornal Arcanjo</span>
-                  <span className="header-brand-subtitle">Sociedade, Cultura & Sabedoria</span>
-                </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+              <Link href="/clima" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', textDecoration: 'none' }}>
+                <span>⛅</span>
+                <span>FORMIGA, MG 26°C</span>
+              </Link>
+              <span>•</span>
+              <ThemeToggle />
+              <span>•</span>
+              <Link href="/admin/login" style={{ fontWeight: '700' }}>
+                REDAÇÃO / ENTRAR
               </Link>
             </div>
-
-            {/* Bloco Central: Busca Inteligente */}
-            <div className="header-search-container">
-              <form action="/busca" method="GET" className="header-search-form">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#ffffff', marginRight: '8px', flexShrink: 0 }}>
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-                <input 
-                  type="text" 
-                  name="q" 
-                  placeholder="Pesquisar notícias, cultura, sociedade, saúde..." 
-                  required 
-                  className="header-search-input" 
-                />
-              </form>
-            </div>
-
-            {/* Bloco 3: Utilitários & Ações (Tradutor, Tema, Newsletter) */}
-            <div className="header-actions-block header-actions">
-              <div id="google_translate_element" className="google-translate-wrapper" title="Traduzir página"></div>
-              
-              <div className="theme-toggle-wrap">
-                <ThemeToggle />
-              </div>
-              
-              <Link href="#newsletter" className="btn btn-header-action" title="Receba notícias diárias">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '4px' }}>
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                  <polyline points="22,6 12,13 2,6"></polyline>
-                </svg>
-                <span className="btn-label">Newsletter</span>
-              </Link>
-            </div>
-
           </div>
 
-          {/* Busca Dedicada em Dispositivos Móveis */}
-          <div className="header-mobile-search-row">
-            <form action="/busca" method="GET" className="header-search-form mobile-search-form">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#ffffff', marginRight: '8px', flexShrink: 0 }}>
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-              <input 
-                type="text" 
-                name="q" 
-                placeholder="Pesquisar no Jornal Arcanjo..." 
-                required 
-                className="header-search-input" 
-              />
-            </form>
+          {/* 2. Logotipo Central Majestoso do Jornal Arcanjo (Serif Broadsheet) */}
+          <div className="nyt-masthead-center">
+            <Link href="/" className="nyt-masthead-logo" onClick={closeDrawer}>
+              Jornal Arcanjo
+            </Link>
+            <div className="nyt-masthead-slogan">
+              “Tradição, Verdade & Cultura — Todas as Notícias com Rigor Editorial e Fatos Checados”
+            </div>
           </div>
-        </div>
 
-        {/* LINHA 2: AS 7 EDITORIAS OFICIAIS EM BLOCOS ROLÁVEIS */}
-        <div className="header-bottom-row">
-          <div className="header-inner">
-            <nav className="header-categories-nav" aria-label="Editorias do jornal">
-              <Link href="/categoria/formiga-sociedade" className="nav-pill-item pill-highlight-green">
-                <span>🏛️</span> <span>Formiga em Foco & Sociedade</span>
-              </Link>
-              <Link href="/categoria/cultura-filosofia" className="nav-pill-item">
-                <span>📚</span> <span>Cultura e Filosofia</span>
-              </Link>
-              <Link href="/categoria/saude-bem-estar" className="nav-pill-item">
-                <span>🌿</span> <span>Saúde e Bem-Estar</span>
-              </Link>
-              <Link href="/categoria/religiao" className="nav-pill-item">
-                <span>🕊️</span> <span>Religião</span>
-              </Link>
-              <Link href="/clima" className="nav-pill-item">
-                <span>⛅</span> <span>Clima tempo</span>
-              </Link>
-              <Link href="/horoscopo" className="nav-pill-item">
-                <span>✨</span> <span>Horóscopo & Tarô</span>
-              </Link>
-              <Link href="/passatempos" className="nav-pill-item">
-                <span>🧩</span> <span>Passatempos</span>
-              </Link>
-              <Link href="/equipe" className="nav-pill-item">
-                <span>👥</span> <span>Nossa Equipe</span>
-              </Link>
-              <Link href="/sobre" className="nav-pill-item">
-                <span>ℹ️</span> <span>Quem Somos</span>
-              </Link>
+          {/* 3. Navegação Horizontal com Double Rules Estilo NYT */}
+          <div className="nyt-nav-row">
+            <nav className="nyt-nav-list" aria-label="Editorias principais">
+              <Link href="/" className="nyt-nav-link">Capa</Link>
+              <Link href="/categoria/formiga-sociedade" className="nyt-nav-link" style={{ color: '#0284c7' }}>Formiga em Foco & Sociedade</Link>
+              <Link href="/categoria/cultura-filosofia" className="nyt-nav-link">Cultura e Filosofia</Link>
+              <Link href="/categoria/saude-bem-estar" className="nyt-nav-link">Saúde e Bem-Estar</Link>
+              <Link href="/categoria/religiao" className="nyt-nav-link">Religião</Link>
+              <Link href="/clima" className="nyt-nav-link">Clima tempo</Link>
+              <Link href="/horoscopo" className="nyt-nav-link">Horóscopo & Tarô</Link>
+              <Link href="/passatempos" className="nyt-nav-link" style={{ color: '#ea580c' }}>Passatempos</Link>
+              <Link href="/equipe" className="nyt-nav-link">Opinião & Equipe</Link>
+              <Link href="/sobre" className="nyt-nav-link">Quem Somos</Link>
             </nav>
           </div>
-        </div>
 
+        </div>
       </header>
 
-      {/* OVERLAY E MOBILE DRAWER */}
+      {/* OVERLAY E MENU LATERAL (SEÇÕES NYT) */}
       <div 
         className={`drawer-overlay ${drawerOpen ? 'open' : ''}`} 
         onClick={closeDrawer}
@@ -161,24 +111,24 @@ export default function LayoutShell({ categories, children }) {
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'rgba(0,0,0,0.5)',
-          zIndex: 999,
+          background: 'rgba(0,0,0,0.6)',
+          zIndex: 9999,
           display: drawerOpen ? 'block' : 'none'
         }}
       ></div>
 
       <aside 
-        className={`mobile-drawer ${drawerOpen ? 'open' : ''}`}
         style={{
           position: 'fixed',
           top: 0,
           left: drawerOpen ? 0 : '-320px',
           width: '300px',
           height: '100%',
-          background: 'var(--card)',
-          zIndex: 1000,
-          transition: 'left 0.3s ease',
-          boxShadow: '2px 0 12px rgba(0,0,0,0.2)',
+          background: 'var(--nyt-surface)',
+          color: 'var(--nyt-ink)',
+          zIndex: 10000,
+          transition: 'left 0.25s ease',
+          boxShadow: '4px 0 20px rgba(0,0,0,0.25)',
           padding: '24px',
           overflowY: 'auto',
           display: 'flex',
@@ -186,156 +136,141 @@ export default function LayoutShell({ categories, children }) {
           gap: '20px'
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Link href="/" className="logo" onClick={closeDrawer} style={{ color: 'var(--text)', display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <img 
-              src="/simbolo.png" 
-              alt="Símbolo Jornal Arcanjo" 
-              width="34" 
-              height="34" 
-              loading="lazy"
-              decoding="async"
-              style={{ width: '34px', height: '34px', borderRadius: '8px', objectFit: 'cover' }} 
-            />
-            <span style={{ fontWeight: 700, fontSize: '1.2rem' }}>Jornal Arcanjo</span>
-          </Link>
-          <button onClick={closeDrawer} aria-label="Fechar menu" style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4px' }}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '2px solid var(--nyt-border-dark)', paddingBottom: '12px' }}>
+          <span style={{ fontFamily: 'var(--nyt-serif-title)', fontSize: '20px', fontWeight: '900', textTransform: 'uppercase' }}>
+            Jornal Arcanjo
+          </span>
+          <button onClick={closeDrawer} aria-label="Fechar" style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', padding: '4px' }}>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
           </button>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <span style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--text-muted)', fontWeight: 700, letterSpacing: '0.5px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <span style={{ fontSize: '11px', textTransform: 'uppercase', color: 'var(--nyt-ink-muted)', fontWeight: 800, letterSpacing: '1px' }}>
             Editorias Oficiais
           </span>
-          <Link href="/" onClick={closeDrawer} style={{ color: 'var(--text)', padding: '8px 0', fontWeight: 500 }}>
-            📰 Início / Capa
+          <Link href="/" onClick={closeDrawer} style={{ color: 'var(--nyt-ink)', padding: '6px 0', fontSize: '14px', fontWeight: 600 }}>
+            📰 Capa Principal
           </Link>
-          <Link href="/categoria/formiga-sociedade" onClick={closeDrawer} style={{ color: 'var(--text)', padding: '8px 0', fontWeight: 500 }}>
+          <Link href="/categoria/formiga-sociedade" onClick={closeDrawer} style={{ color: 'var(--nyt-ink)', padding: '6px 0', fontSize: '14px', fontWeight: 600 }}>
             🏛️ Formiga em Foco & Sociedade
           </Link>
-          <Link href="/categoria/cultura-filosofia" onClick={closeDrawer} style={{ color: 'var(--text)', padding: '8px 0', fontWeight: 500 }}>
+          <Link href="/categoria/cultura-filosofia" onClick={closeDrawer} style={{ color: 'var(--nyt-ink)', padding: '6px 0', fontSize: '14px', fontWeight: 600 }}>
             📚 Cultura e Filosofia
           </Link>
-          <Link href="/categoria/saude-bem-estar" onClick={closeDrawer} style={{ color: 'var(--text)', padding: '8px 0', fontWeight: 500 }}>
+          <Link href="/categoria/saude-bem-estar" onClick={closeDrawer} style={{ color: 'var(--nyt-ink)', padding: '6px 0', fontSize: '14px', fontWeight: 600 }}>
             🌿 Saúde e Bem-Estar
           </Link>
-          <Link href="/categoria/religiao" onClick={closeDrawer} style={{ color: 'var(--text)', padding: '8px 0', fontWeight: 500 }}>
-            🕊️ Religião
+          <Link href="/categoria/religiao" onClick={closeDrawer} style={{ color: 'var(--nyt-ink)', padding: '6px 0', fontSize: '14px', fontWeight: 600 }}>
+            🕊️ Religião & Tradições
           </Link>
-          <Link href="/clima" onClick={closeDrawer} style={{ color: 'var(--text)', padding: '8px 0', fontWeight: 500 }}>
+          <Link href="/clima" onClick={closeDrawer} style={{ color: 'var(--nyt-ink)', padding: '6px 0', fontSize: '14px', fontWeight: 600 }}>
             ⛅ Clima tempo
           </Link>
-          <Link href="/horoscopo" onClick={closeDrawer} style={{ color: 'var(--text)', padding: '8px 0', fontWeight: 500 }}>
+          <Link href="/horoscopo" onClick={closeDrawer} style={{ color: 'var(--nyt-ink)', padding: '6px 0', fontSize: '14px', fontWeight: 600 }}>
             ✨ Horóscopo & Tarô
           </Link>
-          <Link href="/passatempos" onClick={closeDrawer} style={{ color: 'var(--text)', padding: '8px 0', fontWeight: 500 }}>
-            🧩 Passatempos
+          <Link href="/passatempos" onClick={closeDrawer} style={{ color: 'var(--nyt-ink)', padding: '6px 0', fontSize: '14px', fontWeight: 600 }}>
+            🧩 Passatempos & Jogos Mentais
           </Link>
         </div>
 
-        <hr style={{ borderColor: 'var(--border)', margin: '8px 0' }} />
+        <hr style={{ borderColor: 'var(--nyt-border)', margin: '8px 0' }} />
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <span style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--text-muted)', fontWeight: 700, letterSpacing: '0.5px' }}>
+          <span style={{ fontSize: '11px', textTransform: 'uppercase', color: 'var(--nyt-ink-muted)', fontWeight: 800, letterSpacing: '1px' }}>
             Institucional
           </span>
-          <Link href="/sobre" onClick={closeDrawer} style={{ color: 'var(--text)', padding: '6px 0', fontSize: '14px' }}>
+          <Link href="/sobre" onClick={closeDrawer} style={{ color: 'var(--nyt-ink)', padding: '4px 0', fontSize: '13px' }}>
             Quem Somos
           </Link>
-          <Link href="/equipe" onClick={closeDrawer} style={{ color: 'var(--text)', padding: '6px 0', fontSize: '14px' }}>
+          <Link href="/equipe" onClick={closeDrawer} style={{ color: 'var(--nyt-ink)', padding: '4px 0', fontSize: '13px' }}>
             Nossa Equipe Editorial
           </Link>
-          <Link href="/politica-de-privacidade" onClick={closeDrawer} style={{ color: 'var(--text)', padding: '6px 0', fontSize: '14px' }}>
+          <Link href="/politica-de-privacidade" onClick={closeDrawer} style={{ color: 'var(--nyt-ink)', padding: '4px 0', fontSize: '13px' }}>
             Política de Privacidade
           </Link>
-          <Link href="/termos" onClick={closeDrawer} style={{ color: 'var(--text)', padding: '6px 0', fontSize: '14px' }}>
+          <Link href="/termos" onClick={closeDrawer} style={{ color: 'var(--nyt-ink)', padding: '4px 0', fontSize: '13px' }}>
             Termos de Uso
           </Link>
         </div>
       </aside>
 
-      {/* APP WRAPPER */}
-      <div className="app-wrapper">
-        <div className="main-area-wrapper">
-          {children}
-
-          {/* FOOTER MULTI-COLUNAS (COMPLIANCE GOOGLE ADSENSE) */}
-          <footer className="footer">
-            <div className="footer-inner">
-              {/* Coluna 1: Sobre o Jornal */}
-              <div>
-                <div className="logo" style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <img 
-                    src="/simbolo.png" 
-                    alt="Símbolo Jornal Arcanjo" 
-                    width="38" 
-                    height="38" 
-                    loading="lazy"
-                    decoding="async"
-                    style={{ width: '38px', height: '38px', borderRadius: '8px', objectFit: 'cover' }} 
-                  />
-                  <span>Jornal Arcanjo</span>
-                </div>
-                <p style={{ fontSize: '0.9rem', lineHeight: '1.6', color: '#94a3b8' }}>
-                  Jornal digital independente sediado em Formiga (MG) e com alcance nacional. 
-                  Dedicado a celebrar a cultura, a reflexão filosófica, a saúde integral, a espiritualidade, a história comunitária e os fatos comprovados.
-                </p>
-              </div>
-
-              {/* Coluna 2: Categorias */}
-              <div>
-                <h4>Editorias</h4>
-                <ul>
-                  <li><Link href="/categoria/formiga-sociedade">Formiga em Foco & Sociedade</Link></li>
-                  <li><Link href="/categoria/cultura-filosofia">Cultura e Filosofia</Link></li>
-                  <li><Link href="/categoria/saude-bem-estar">Saúde e Bem-Estar</Link></li>
-                  <li><Link href="/categoria/religiao">Religião</Link></li>
-                  <li><Link href="/clima">Clima tempo</Link></li>
-                  <li><Link href="/horoscopo">Horóscopo & Tarô</Link></li>
-                  <li><Link href="/passatempos">Passatempos</Link></li>
-                </ul>
-              </div>
-
-              {/* Coluna 3: Destaques & Serviços */}
-              <div>
-                <h4>Serviços & Lazer</h4>
-                <ul>
-                  <li><Link href="/clima">Previsão do Tempo</Link></li>
-                  <li><Link href="/horoscopo">Horóscopo & Tarô do Dia</Link></li>
-                  <li><Link href="/passatempos">Passatempos & Jogos</Link></li>
-                  <li><Link href="/categoria/formiga-sociedade">Memória Regional</Link></li>
-                </ul>
-              </div>
-
-              {/* Coluna 4: Institucional */}
-              <div>
-                <h4>Institucional</h4>
-                <ul>
-                  <li><Link href="/sobre">Quem Somos</Link></li>
-                  <li><Link href="/equipe">Nossa Equipe Editorial</Link></li>
-                  <li><Link href="/#newsletter">Assinar Newsletter</Link></li>
-                  <li><Link href="/politica-de-privacidade">Política de Privacidade</Link></li>
-                  <li><Link href="/termos">Termos de Uso</Link></li>
-                  <li style={{ marginTop: '8px', fontSize: '0.85rem', color: '#cbd5e1' }}>
-                    ✉️ <a href="mailto:gustavocastroinfo@gmail.com" style={{ color: 'var(--accent)' }}>gustavocastroinfo@gmail.com</a>
-                  </li>
-                  <li style={{ marginTop: '4px', fontSize: '0.8rem', color: '#94a3b8' }}>
-                    📍 Rua Maria Evaristo dos Santos, 330 — Formiga (MG)
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="copyright">
-              © {new Date().getFullYear()} Jornal Arcanjo — Formiga, Minas Gerais. Todos os direitos reservados.
-            </div>
-          </footer>
-        </div>
+      {/* CONTEÚDO PRINCIPAL DO BROADSHEET */}
+      <div style={{ minHeight: '80vh' }}>
+        {children}
       </div>
+
+      {/* FOOTER NO PADRÃO THE NEW YORK TIMES */}
+      <footer className="nyt-footer">
+        <div className="nyt-container">
+          
+          <div className="nyt-footer-top">
+            <Link href="/" className="nyt-footer-logo">
+              Jornal Arcanjo
+            </Link>
+            <div style={{ fontSize: '12px', color: 'var(--nyt-ink-muted)' }}>
+              Jornalismo Independente • Formiga (MG) • Brasil
+            </div>
+          </div>
+
+          <div className="nyt-footer-cols">
+            <div className="nyt-footer-col">
+              <h5>NOTÍCIAS & SOCIEDADE</h5>
+              <ul>
+                <li><Link href="/categoria/formiga-sociedade">Formiga em Foco</Link></li>
+                <li><Link href="/categoria/formiga-sociedade">Cidadania & Memória</Link></li>
+                <li><Link href="/clima">Previsão do Tempo</Link></li>
+                <li><Link href="/busca">Arquivo de Notícias</Link></li>
+              </ul>
+            </div>
+
+            <div className="nyt-footer-col">
+              <h5>CULTURA & SABERES</h5>
+              <ul>
+                <li><Link href="/categoria/cultura-filosofia">Cultura & Filosofia</Link></li>
+                <li><Link href="/categoria/cultura-filosofia">Ensaios & Literatura</Link></li>
+                <li><Link href="/categoria/religiao">Religião & Tradições</Link></li>
+                <li><Link href="/horoscopo">Horóscopo & Tarô</Link></li>
+              </ul>
+            </div>
+
+            <div className="nyt-footer-col">
+              <h5>VIDA & SAÚDE</h5>
+              <ul>
+                <li><Link href="/categoria/saude-bem-estar">Saúde & Bem-Estar</Link></li>
+                <li><Link href="/categoria/saude-bem-estar">Qualidade de Vida</Link></li>
+                <li><Link href="/passatempos">NYT Passatempos</Link></li>
+                <li><Link href="/passatempos">Sudoku & Palavras Cruzadas</Link></li>
+              </ul>
+            </div>
+
+            <div className="nyt-footer-col">
+              <h5>INSTITUCIONAL</h5>
+              <ul>
+                <li><Link href="/sobre">Quem Somos</Link></li>
+                <li><Link href="/equipe">Nossa Equipe Editorial</Link></li>
+                <li><Link href="/politica-de-privacidade">Política de Privacidade</Link></li>
+                <li><Link href="/termos">Termos de Uso</Link></li>
+                <li><a href="mailto:gustavocastroinfo@gmail.com">gustavocastroinfo@gmail.com</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="nyt-footer-bottom">
+            <p style={{ margin: '0 0 6px' }}>
+              © {new Date().getFullYear()} The Jornal Arcanjo Publishing Group. Todos os direitos reservados.
+            </p>
+            <p style={{ margin: 0, fontSize: '10.5px' }}>
+              Rua Maria Evaristo dos Santos, 330, Vila José Branco — Formiga, MG — CEP 35572-272.
+            </p>
+          </div>
+
+        </div>
+      </footer>
     </>
   );
 }

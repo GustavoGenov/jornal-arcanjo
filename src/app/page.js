@@ -10,32 +10,20 @@ import { getOptimizedImageUrl, getImageSrcSet } from '@/lib/imageHelper';
 export const revalidate = 60;
 
 export const metadata = {
-  title: 'Jornal Arcanjo - Sociedade, Cultura, Filosofia & Sabedoria',
-  description: 'Jornal independente de Formiga (MG) e do Brasil focado em jornalismo humanizado, cultura, espiritualidade, saúde, sociedade e fatos checados.',
+  title: 'Jornal Arcanjo - The New York Times do Centro-Oeste e do Brasil',
+  description: 'Jornal independente de Formiga (MG) com cobertura analítica e rigor editorial em Sociedade, Cultura, Filosofia, Saúde e Fatos Checados.',
   alternates: {
-    canonical: 'https://jornalarcanjo.com.br',
+    canonical: 'https://jornalarcanjo.vercel.app',
   },
   openGraph: {
-    title: 'Jornal Arcanjo - Sociedade, Cultura, Filosofia & Sabedoria',
-    description: 'Jornal independente focado em cultura, espiritualidade, saúde, sociedade e fatos checados.',
-    url: 'https://jornalarcanjo.com.br',
+    title: 'Jornal Arcanjo - Tradição, Sociedade, Cultura & Sabedoria',
+    description: 'Jornalismo independente, cultura, espiritualidade, saúde e fatos checados.',
+    url: 'https://jornalarcanjo.vercel.app',
     siteName: 'Jornal Arcanjo',
     locale: 'pt_BR',
     type: 'website',
   },
 };
-
-function getCategoryClass(slug) {
-  if (!slug) return 'cat-arcanjo';
-  if (slug.includes('formiga') || slug.includes('sociedade')) return 'cat-formiga';
-  if (slug.includes('cultura') || slug.includes('filosofia')) return 'cat-cultura';
-  if (slug.includes('saude') || slug.includes('bem-estar')) return 'cat-saude';
-  if (slug.includes('religiao')) return 'cat-religiao';
-  if (slug.includes('clima')) return 'cat-clima';
-  if (slug.includes('horoscopo') || slug.includes('taro')) return 'cat-horoscopo';
-  if (slug.includes('passatempo')) return 'cat-passatempos';
-  return 'cat-arcanjo';
-}
 
 function formatDate(dateStr) {
   if (!dateStr) return '';
@@ -60,23 +48,64 @@ export default async function Home() {
     .eq('published', true)
     .order('created_at', { ascending: false });
 
+  // Lista de colunistas oficiais com fotos e editorias para a coluna "Opinião & Vozes" (estilo NYT Opinion)
+  const columnistsList = [
+    {
+      name: 'Gustavo de Castro',
+      title: 'Formiga em Foco & Sociedade',
+      image: '/equipe/gustavo.jpg',
+      quote: 'A memória viva e a cidadania regional moldam a nossa identidade.',
+      href: '/categoria/formiga-sociedade'
+    },
+    {
+      name: 'Daiene Meneses',
+      title: 'Cultura e Filosofia',
+      image: '/equipe/daiene.jpg',
+      quote: 'O cultivo da sensibilidade humana e as lições dos pensadores clássicos.',
+      href: '/categoria/cultura-filosofia'
+    },
+    {
+      name: 'Beatriz Freire',
+      title: 'Saúde e Bem-Estar',
+      image: '/equipe/beatriz.jpg',
+      quote: 'Equilíbrio físico e mental como base para a longevidade consciente.',
+      href: '/categoria/saude-bem-estar'
+    },
+    {
+      name: 'RuiWenceslau',
+      title: 'Religião & Tradições',
+      image: '/equipe/rui.jpg',
+      quote: 'A busca pelo sagrado, a moralidade e os valores que resistem ao tempo.',
+      href: '/categoria/religiao'
+    },
+    {
+      name: 'Pai Jhonatan',
+      title: 'Horóscopo & Tarô',
+      image: '/equipe/jhonatan.jpg',
+      quote: 'Os arcanos, a sabedoria ancestral e os ciclos da natureza.',
+      href: '/horoscopo'
+    },
+    {
+      name: 'Kaelara',
+      title: 'Clima & Passatempos',
+      image: '/equipe/kaelara.png',
+      quote: 'A dinâmica da atmosfera e o exercício diário do raciocínio lógico.',
+      href: '/passatempos'
+    }
+  ];
+
   if (error || !articles || articles.length === 0) {
     return (
-      <main className="container">
+      <main className="nyt-container" style={{ padding: '60px 20px', textAlign: 'center' }}>
         <PageTracker />
-        <div style={{ textAlign: 'center', padding: '90px 20px', color: 'var(--text-muted)' }}>
-          <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--border)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: '16px' }} aria-hidden="true">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="16" y1="13" x2="8" y2="13"></line>
-            <line x1="16" y1="17" x2="8" y2="17"></line>
-            <polyline points="10 9 9 9 8 9"></polyline>
-          </svg>
-          <h2 style={{ fontSize: '24px', fontWeight: '700', marginBottom: '8px' }}>Bem-vindo ao Jornal Arcanjo</h2>
-          <p style={{ fontSize: '16px', maxWidth: '500px', margin: '0 auto 24px' }}>
-            O banco de dados está pronto para receber as primeiras matérias das editorias oficiais. Acesse o painel para publicar.
+        <div style={{ maxWidth: '640px', margin: '0 auto', border: '1px solid var(--nyt-border)', padding: '48px 32px', background: 'var(--nyt-surface)' }}>
+          <h1 style={{ fontFamily: 'var(--nyt-serif-title)', fontSize: '32px', fontWeight: '900', marginBottom: '12px' }}>
+            Jornal Arcanjo
+          </h1>
+          <p style={{ fontFamily: 'var(--nyt-serif-body)', fontSize: '16px', color: 'var(--nyt-ink-secondary)', marginBottom: '24px' }}>
+            O portal está conectado ao novo banco de dados. Assim que executar o script SQL no Supabase, as editorias oficiais e matérias aparecerão instantaneamente nesta edição broadsheet.
           </p>
-          <Link href="/admin" className="btn btn-primary" style={{ padding: '10px 24px', borderRadius: '8px', textDecoration: 'none' }}>
+          <Link href="/admin" className="nyt-btn-play">
             Acessar Painel de Redação
           </Link>
         </div>
@@ -84,25 +113,21 @@ export default async function Home() {
     );
   }
 
-  // 1. Hero Principal
+  // 1. Manchete Principal (Centro do NYT)
   const heroMainPinned = articles.find(a => a.featured_position === 'hero_main');
-  const featuredArticle = heroMainPinned || articles[0];
+  const leadArticle = heroMainPinned || articles[0];
 
-  // 2. Cards Secundários do Hero
-  const heroSidePinned = articles.filter(a => a.featured_position === 'hero_side' && a.id !== featuredArticle?.id);
-  const availableForHeroSide = articles.filter(a => a.id !== featuredArticle?.id && !heroSidePinned.some(p => p.id === a.id));
-  const sideArticles = [
-    ...heroSidePinned,
-    ...availableForHeroSide
-  ].slice(0, 2);
+  // 2. Coluna Esquerda: Notícias Analíticas e Breves (2 a 3 matérias)
+  const leftColumnArticles = articles
+    .filter(a => a.id !== leadArticle?.id)
+    .slice(0, 3);
 
-  const usedHeroIds = new Set([featuredArticle?.id, ...sideArticles.map(s => s.id)]);
+  const usedInFoldIds = new Set([leadArticle?.id, ...leftColumnArticles.map(a => a.id)]);
 
   // 3. Bloco: Formiga em Foco & Sociedade (Gustavo de Castro)
   const formigaArticles = articles.filter(a => 
-    !usedHeroIds.has(a.id) &&
+    !usedInFoldIds.has(a.id) &&
     (
-      a.featured_position === 'formiga_main' ||
       a.categories?.slug?.includes('formiga') ||
       a.title?.toLowerCase().includes('formiga') ||
       a.summary?.toLowerCase().includes('formiga')
@@ -111,7 +136,7 @@ export default async function Home() {
 
   // 4. Bloco: Cultura e Filosofia (Daiene Meneses)
   const culturaArticles = articles.filter(a => 
-    !usedHeroIds.has(a.id) &&
+    !usedInFoldIds.has(a.id) &&
     !formigaArticles.some(f => f.id === a.id) &&
     (
       a.categories?.slug?.includes('cultura') ||
@@ -121,7 +146,7 @@ export default async function Home() {
 
   // 5. Bloco: Saúde e Bem-Estar (Beatriz Freire)
   const saudeArticles = articles.filter(a => 
-    !usedHeroIds.has(a.id) &&
+    !usedInFoldIds.has(a.id) &&
     !formigaArticles.some(f => f.id === a.id) &&
     !culturaArticles.some(c => c.id === a.id) &&
     (
@@ -132,7 +157,7 @@ export default async function Home() {
 
   // 6. Bloco: Religião & Tradições (RuiWenceslau)
   const religiaoArticles = articles.filter(a => 
-    !usedHeroIds.has(a.id) &&
+    !usedInFoldIds.has(a.id) &&
     !formigaArticles.some(f => f.id === a.id) &&
     !culturaArticles.some(c => c.id === a.id) &&
     !saudeArticles.some(s => s.id === a.id) &&
@@ -141,8 +166,8 @@ export default async function Home() {
 
   // 7. Demais notícias (Feed geral)
   const allUsedIds = new Set([
-    featuredArticle?.id,
-    ...sideArticles.map(s => s.id),
+    leadArticle?.id,
+    ...leftColumnArticles.map(s => s.id),
     ...formigaArticles.map(a => a.id),
     ...culturaArticles.map(a => a.id),
     ...saudeArticles.map(a => a.id),
@@ -152,500 +177,361 @@ export default async function Home() {
   const latestArticles = articles.filter(a => !allUsedIds.has(a.id)).slice(0, 6);
 
   return (
-    <main className="container" style={{ paddingTop: '16px' }}>
+    <main className="nyt-container">
       <PageTracker />
 
-      {/* PLANTÃO AO VIVO / TICKER */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '12px',
-        padding: '10px 16px',
-        background: 'var(--gn-surface)',
-        border: '1px solid var(--gn-border)',
-        borderRadius: '12px',
-        marginBottom: '24px',
-        fontSize: '14px',
-        overflow: 'hidden'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 700, color: '#1e3a8a', textTransform: 'uppercase', letterSpacing: '0.5px', whiteSpace: 'nowrap' }}>
-          <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#0284c7', animation: 'pulse 1.5s infinite' }}></span>
-          Edição Jornal Arcanjo
-        </div>
-        <div style={{ width: '1px', height: '16px', background: 'var(--gn-border)' }}></div>
-        <div style={{ color: 'var(--gn-text-secondary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>
-          <Link href={`/artigo/${featuredArticle.slug}`} style={{ color: 'var(--gn-text)', fontWeight: 500 }}>
-            {featuredArticle.title}
-          </Link>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--gn-text-secondary)', fontSize: '12px', whiteSpace: 'nowrap' }}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="#059669" style={{ flexShrink: 0 }} aria-hidden="true">
-            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
-          </svg>
-          Jornalismo Verificado
-        </div>
-      </div>
-
-      {featuredArticle.image_url && (
-        <link 
-          rel="preload" 
-          as="image" 
-          href={getOptimizedImageUrl(featuredArticle.image_url, 800)} 
-          imageSrcSet={getImageSrcSet(featuredArticle.image_url)} 
-          imageSizes="(max-width: 600px) 100vw, 800px" 
-          fetchPriority="high" 
-        />
-      )}
-
-      {/* HERO SECTION PRINCIPAL */}
-      <section className="hero-grid">
-        {/* CARD PRINCIPAL (MANCHETE DESTAQUE) */}
-        <Link href={`/artigo/${featuredArticle.slug}`} className="hero-main" prefetch={true}>
-          <div className="hero-main-img-wrap">
-            {featuredArticle.image_url ? (
-              <img 
-                src={getOptimizedImageUrl(featuredArticle.image_url, 800)} 
-                srcSet={getImageSrcSet(featuredArticle.image_url)}
-                sizes="(max-width: 600px) 100vw, 800px"
-                alt={featuredArticle.title} 
-                width="800"
-                height="450"
-                className="hero-main-img" 
-                loading="eager"
-                fetchPriority="high"
-                decoding="sync"
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              />
-            ) : (
-              <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--gn-search-bg)' }}>
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--gn-text-secondary)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                  <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                  <polyline points="21 15 16 10 5 21"></polyline>
-                </svg>
-              </div>
-            )}
-            <div className="hero-img-overlay"></div>
-          </div>
-
-          <div className="hero-main-content">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '8px' }}>
-              <span className={`category ${getCategoryClass(featuredArticle.categories?.slug)}`}>
-                {featuredArticle.categories?.name || 'Manchete Principal'}
+      {/* ====================================================================
+          1. THE LEAD BROADSHEET PACKAGE (ESTRUTURA EM 3 COLUNAS DO NYT)
+          - Coluna Esquerda: Notícias Analíticas / Briefs
+          - Coluna Central: A Grande Manchete do Jornal com Foto e Lead
+          - Coluna Direita: As Colunas & Opinião (The NYT Opinion Voices)
+          ==================================================================== */}
+      <section className="nyt-frontpage-grid">
+        
+        {/* COLUNA ESQUERDA: BREVES & ANÁLISES */}
+        <div className="nyt-col-left">
+          {leftColumnArticles.map((article) => (
+            <article key={article.id} className="nyt-story-brief">
+              <span className="nyt-kicker">
+                {article.categories?.name || 'ANÁLISE'}
               </span>
-              <span style={{ fontSize: '12px', color: '#ffffff', background: 'rgba(15, 23, 42, 0.8)', padding: '3px 8px', borderRadius: '8px', display: 'inline-flex', alignItems: 'center', gap: '4px', fontWeight: 600 }}>
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }} aria-hidden="true">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <polyline points="12 6 12 12 16 14"></polyline>
-                </svg>
-                {estimateReadingTime(featuredArticle.content, featuredArticle.summary)}
-              </span>
-            </div>
-            
-            <h2>{featuredArticle.title}</h2>
-            <p>{featuredArticle.summary}</p>
-            
-            <div className="meta">
-              <span style={{ fontWeight: '600' }}>
-                Por {featuredArticle.author_name || 'Redação Jornal Arcanjo'}
-              </span>
-              <span>•</span>
-              <span>{formatDate(featuredArticle.created_at)}</span>
-            </div>
-          </div>
-        </Link>
-
-        {/* 2 CARDS SECUNDÁRIOS */}
-        <div className="hero-side">
-          {sideArticles.map((article) => (
-            <Link key={article.id} href={`/artigo/${article.slug}`} className="hero-side-card" prefetch={false}>
-              <div className="hero-side-img-wrap">
-                {article.image_url ? (
-                  <img 
-                    src={getOptimizedImageUrl(article.image_url, 400)} 
-                    alt={article.title} 
-                    width="400"
-                    height="225"
-                    loading="lazy"
-                    decoding="async"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  />
-                ) : (
-                  <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--gn-search-bg)' }}>
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--gn-text-secondary)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                      <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                      <polyline points="21 15 16 10 5 21"></polyline>
-                    </svg>
-                  </div>
-                )}
+              <Link href={`/artigo/${article.slug}`} className="nyt-headline-secondary">
+                {article.title}
+              </Link>
+              <p className="nyt-deck-sm">
+                {article.summary?.length > 120 
+                  ? article.summary.substring(0, 120) + '...' 
+                  : article.summary}
+              </p>
+              <div className="nyt-byline">
+                Por <strong>{article.author_name || 'Redação'}</strong> • {estimateReadingTime(article.content, article.summary)}
               </div>
-
-              <div className="hero-side-content">
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
-                  <span className={`category ${getCategoryClass(article.categories?.slug)}`}>
-                    {article.categories?.name || 'Destaque'}
-                  </span>
-                </div>
-                <h3>{article.title}</h3>
-                <div className="meta">
-                  <span style={{ fontWeight: '500' }}>
-                    Por {article.author_name || 'Equipe Editorial'}
-                  </span>
-                  <span>•</span>
-                  <span>{formatDate(article.created_at)}</span>
-                </div>
-              </div>
-            </Link>
+            </article>
           ))}
         </div>
+
+        {/* COLUNA CENTRAL: A GRANDE MANCHETE BROADSHEET */}
+        <div className="nyt-col-center">
+          <article>
+            <span className="nyt-kicker" style={{ color: '#0284c7' }}>
+              {leadArticle.categories?.name || 'MANCHETE DESTAQUE'}
+            </span>
+            <Link href={`/artigo/${leadArticle.slug}`} className="nyt-headline-main">
+              {leadArticle.title}
+            </Link>
+            
+            <p className="nyt-deck">
+              {leadArticle.summary}
+            </p>
+
+            <div className="nyt-byline" style={{ marginBottom: '14px' }}>
+              Por <strong>{leadArticle.author_name || 'Redação Jornal Arcanjo'}</strong> • {formatDate(leadArticle.created_at)} • {estimateReadingTime(leadArticle.content, leadArticle.summary)}
+            </div>
+
+            {leadArticle.image_url && (
+              <div className="nyt-lead-media">
+                <img 
+                  src={getOptimizedImageUrl(leadArticle.image_url, 900)}
+                  srcSet={getImageSrcSet(leadArticle.image_url)}
+                  sizes="(max-width: 768px) 100vw, 700px"
+                  alt={leadArticle.title}
+                  loading="eager"
+                  fetchPriority="high"
+                />
+                <div className="nyt-media-caption">
+                  {leadArticle.image_credits || 'Foto: Arquivo / Ilustração Jornal Arcanjo'}
+                </div>
+              </div>
+            )}
+          </article>
+        </div>
+
+        {/* COLUNA DIREITA: AS COLUNAS & OPINIÃO (ESTILO NYT OPINION) */}
+        <aside className="nyt-col-right">
+          <div className="nyt-opinion-header">
+            <h3>OPINIÃO & COLUNISTAS</h3>
+          </div>
+
+          {columnistsList.map((col, idx) => (
+            <div key={idx} className="nyt-opinion-item">
+              <img 
+                src={col.image} 
+                alt={col.name} 
+                className="nyt-opinion-avatar"
+                onError={(e) => { e.target.style.display = 'none'; }}
+              />
+              <div className="nyt-opinion-content">
+                <div className="nyt-opinion-author">{col.name}</div>
+                <div className="nyt-opinion-role">{col.title}</div>
+                <Link href={col.href} className="nyt-opinion-title">
+                  “{col.quote}”
+                </Link>
+              </div>
+            </div>
+          ))}
+        </aside>
+
       </section>
 
-      {/* ADSENSE SLOT 1 */}
-      <AdBanner dataAdSlot="SEU_SLOT_HOME_1" />
+      {/* ADSENSE / MONETIZAÇÃO SLOT 1 */}
+      <div style={{ margin: '30px 0' }}>
+        <AdBanner dataAdSlot="SEU_SLOT_HOME_1" />
+      </div>
 
-      {/* BLOCO 1: FORMIGA EM FOCO & SOCIEDADE (GUSTAVO DE CASTRO) */}
-      <div className="section-title" id="formiga-em-foco" style={{ marginTop: '4rem' }}>
-        <h2>
-          <span style={{ background: '#0284c7' }}></span> 
+      {/* ====================================================================
+          2. SEÇÃO BROADSHEET: FORMIGA EM FOCO & SOCIEDADE (GUSTAVO DE CASTRO)
+          ==================================================================== */}
+      <div className="nyt-section-banner" id="formiga-em-foco">
+        <h3 className="nyt-section-title">
           Formiga em Foco & Sociedade
-          <small style={{ fontSize: '13px', fontWeight: '500', color: 'var(--gn-text-secondary)', marginLeft: '12px' }}>
-            Coluna de Gustavo de Castro
-          </small>
-        </h2>
-        <Link href="/categoria/formiga-sociedade" className="see-all">
-          Ver todas →
+        </h3>
+        <Link href="/categoria/formiga-sociedade" className="nyt-section-more">
+          Ver todas as notícias de Formiga →
         </Link>
       </div>
 
       {formigaArticles.length > 0 ? (
-        <section className="formiga-grid">
+        <section className="nyt-grid-3">
           {formigaArticles.map((article) => (
-            <Link key={article.id} href={`/artigo/${article.slug}`} className="card" prefetch={false}>
-              <div className="card-img-wrap">
-                {article.image_url ? (
-                  <img 
-                    src={getOptimizedImageUrl(article.image_url, 400)} 
-                    alt={article.title} 
-                    width="400"
-                    height="225"
-                    loading="lazy"
-                    decoding="async"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  />
-                ) : (
-                  <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--gn-search-bg)' }}>
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--gn-text-secondary)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                      <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                      <polyline points="21 15 16 10 5 21"></polyline>
-                    </svg>
-                  </div>
-                )}
-              </div>
-
-              <div className="card-body">
-                <span className={`category ${getCategoryClass(article.categories?.slug)}`}>
-                  {article.categories?.name || 'Formiga em Foco'}
-                </span>
-                <h3>{article.title}</h3>
-                <p>
-                  {article.summary?.length > 110 
-                    ? article.summary.substring(0, 110) + '...' 
-                    : article.summary}
-                </p>
-                <div className="meta">
-                  <span style={{ fontWeight: '500' }}>{article.author_name ? `Por ${article.author_name}` : 'Gustavo de Castro'}</span>
-                  <span>•</span>
-                  <span>{formatDate(article.created_at)}</span>
-                </div>
+            <Link key={article.id} href={`/artigo/${article.slug}`} className="nyt-grid-card">
+              {article.image_url && (
+                <img 
+                  src={getOptimizedImageUrl(article.image_url, 400)} 
+                  alt={article.title} 
+                  loading="lazy"
+                />
+              )}
+              <span className="nyt-kicker">FORMIGA & REGIÃO</span>
+              <h4>{article.title}</h4>
+              <p>{article.summary?.substring(0, 110)}...</p>
+              <div className="nyt-byline">
+                Por <strong>{article.author_name || 'Gustavo de Castro'}</strong> • {formatDate(article.created_at)}
               </div>
             </Link>
           ))}
         </section>
       ) : (
-        <div style={{ padding: '24px', background: 'var(--gn-surface)', border: '1px solid var(--gn-border)', borderRadius: '12px', textAlign: 'center', color: 'var(--gn-text-secondary)' }}>
-          Matérias em preparação pela coluna de Gustavo de Castro Bernardes Rosa.
+        <div style={{ padding: '24px', border: '1px solid var(--nyt-border)', background: 'var(--nyt-paper-tint)', textAlign: 'center', fontSize: '14px', color: 'var(--nyt-ink-muted)' }}>
+          Matérias em apuração para a coluna de Gustavo de Castro Bernardes Rosa.
         </div>
       )}
 
-      {/* BLOCO 2: CULTURA E FILOSOFIA (DAIENE MENESES) */}
-      <div className="section-title" id="cultura-e-filosofia" style={{ marginTop: '4rem' }}>
-        <h2>
-          <span style={{ background: '#7c3aed' }}></span> 
+      {/* ====================================================================
+          3. SEÇÃO BROADSHEET: CULTURA E FILOSOFIA (DAIENE MENESES)
+          ==================================================================== */}
+      <div className="nyt-section-banner" id="cultura-filosofia">
+        <h3 className="nyt-section-title">
           Cultura e Filosofia
-          <small style={{ fontSize: '13px', fontWeight: '500', color: 'var(--gn-text-secondary)', marginLeft: '12px' }}>
-            Coluna de Daiene Maria de Meneses
-          </small>
-        </h2>
-        <Link href="/categoria/cultura-filosofia" className="see-all">
-          Ver todas →
+        </h3>
+        <Link href="/categoria/cultura-filosofia" className="nyt-section-more">
+          Ver ensaios & resenhas →
         </Link>
       </div>
 
       {culturaArticles.length > 0 ? (
-        <section className="formiga-grid">
+        <section className="nyt-grid-3">
           {culturaArticles.map((article) => (
-            <Link key={article.id} href={`/artigo/${article.slug}`} className="card" prefetch={false}>
-              <div className="card-img-wrap">
-                {article.image_url ? (
-                  <img 
-                    src={getOptimizedImageUrl(article.image_url, 400)} 
-                    alt={article.title} 
-                    width="400"
-                    height="225"
-                    loading="lazy"
-                    decoding="async"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  />
-                ) : (
-                  <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--gn-search-bg)' }}>
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--gn-text-secondary)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                      <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                      <polyline points="21 15 16 10 5 21"></polyline>
-                    </svg>
-                  </div>
-                )}
-              </div>
-
-              <div className="card-body">
-                <span className={`category ${getCategoryClass(article.categories?.slug)}`}>
-                  {article.categories?.name || 'Cultura & Filosofia'}
-                </span>
-                <h3>{article.title}</h3>
-                <p>
-                  {article.summary?.length > 110 
-                    ? article.summary.substring(0, 110) + '...' 
-                    : article.summary}
-                </p>
-                <div className="meta">
-                  <span style={{ fontWeight: '500' }}>{article.author_name ? `Por ${article.author_name}` : 'Daiene Meneses'}</span>
-                  <span>•</span>
-                  <span>{formatDate(article.created_at)}</span>
-                </div>
+            <Link key={article.id} href={`/artigo/${article.slug}`} className="nyt-grid-card">
+              {article.image_url && (
+                <img 
+                  src={getOptimizedImageUrl(article.image_url, 400)} 
+                  alt={article.title} 
+                  loading="lazy"
+                />
+              )}
+              <span className="nyt-kicker">ENSÁIO & PENSAMENTO</span>
+              <h4>{article.title}</h4>
+              <p>{article.summary?.substring(0, 110)}...</p>
+              <div className="nyt-byline">
+                Por <strong>{article.author_name || 'Daiene Meneses'}</strong> • {formatDate(article.created_at)}
               </div>
             </Link>
           ))}
         </section>
       ) : (
-        <div style={{ padding: '24px', background: 'var(--gn-surface)', border: '1px solid var(--gn-border)', borderRadius: '12px', textAlign: 'center', color: 'var(--gn-text-secondary)' }}>
-          Ensaios, literatura e reflexões em preparação por Daiene Maria de Meneses.
+        <div style={{ padding: '24px', border: '1px solid var(--nyt-border)', background: 'var(--nyt-paper-tint)', textAlign: 'center', fontSize: '14px', color: 'var(--nyt-ink-muted)' }}>
+          Ensaios e reflexões literárias em preparação pela coluna de Daiene Maria de Meneses.
         </div>
       )}
 
-      {/* BLOCO 3: SAÚDE E BEM-ESTAR (BEATRIZ FREIRE) */}
-      <div className="section-title" id="saude-e-bem-estar" style={{ marginTop: '4rem' }}>
-        <h2>
-          <span style={{ background: '#059669' }}></span> 
+      {/* ====================================================================
+          4. SEÇÃO: SAÚDE E BEM-ESTAR (BEATRIZ FREIRE)
+          ==================================================================== */}
+      <div className="nyt-section-banner" id="saude-bem-estar">
+        <h3 className="nyt-section-title">
           Saúde e Bem-Estar
-          <small style={{ fontSize: '13px', fontWeight: '500', color: 'var(--gn-text-secondary)', marginLeft: '12px' }}>
-            Coluna de Beatriz Freire
-          </small>
-        </h2>
-        <Link href="/categoria/saude-bem-estar" className="see-all">
-          Ver todas →
+        </h3>
+        <Link href="/categoria/saude-bem-estar" className="nyt-section-more">
+          Ver reportagens de saúde →
         </Link>
       </div>
 
       {saudeArticles.length > 0 ? (
-        <section className="formiga-grid">
+        <section className="nyt-grid-3">
           {saudeArticles.map((article) => (
-            <Link key={article.id} href={`/artigo/${article.slug}`} className="card" prefetch={false}>
-              <div className="card-img-wrap">
-                {article.image_url ? (
-                  <img 
-                    src={getOptimizedImageUrl(article.image_url, 400)} 
-                    alt={article.title} 
-                    width="400"
-                    height="225"
-                    loading="lazy"
-                    decoding="async"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  />
-                ) : (
-                  <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--gn-search-bg)' }}>
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--gn-text-secondary)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                      <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                      <polyline points="21 15 16 10 5 21"></polyline>
-                    </svg>
-                  </div>
-                )}
-              </div>
-
-              <div className="card-body">
-                <span className={`category ${getCategoryClass(article.categories?.slug)}`}>
-                  {article.categories?.name || 'Saúde & Bem-Estar'}
-                </span>
-                <h3>{article.title}</h3>
-                <p>
-                  {article.summary?.length > 110 
-                    ? article.summary.substring(0, 110) + '...' 
-                    : article.summary}
-                </p>
-                <div className="meta">
-                  <span style={{ fontWeight: '500' }}>{article.author_name ? `Por ${article.author_name}` : 'Beatriz Freire'}</span>
-                  <span>•</span>
-                  <span>{formatDate(article.created_at)}</span>
-                </div>
+            <Link key={article.id} href={`/artigo/${article.slug}`} className="nyt-grid-card">
+              {article.image_url && (
+                <img 
+                  src={getOptimizedImageUrl(article.image_url, 400)} 
+                  alt={article.title} 
+                  loading="lazy"
+                />
+              )}
+              <span className="nyt-kicker">LONGEVIDADE & EQUILÍBRIO</span>
+              <h4>{article.title}</h4>
+              <p>{article.summary?.substring(0, 110)}...</p>
+              <div className="nyt-byline">
+                Por <strong>{article.author_name || 'Beatriz Freire'}</strong> • {formatDate(article.created_at)}
               </div>
             </Link>
           ))}
         </section>
       ) : (
-        <div style={{ padding: '24px', background: 'var(--gn-surface)', border: '1px solid var(--gn-border)', borderRadius: '12px', textAlign: 'center', color: 'var(--gn-text-secondary)' }}>
-          Dicas de equilíbrio, prevenção e qualidade de vida em preparação por Beatriz Freire.
+        <div style={{ padding: '24px', border: '1px solid var(--nyt-border)', background: 'var(--nyt-paper-tint)', textAlign: 'center', fontSize: '14px', color: 'var(--nyt-ink-muted)' }}>
+          Orientações de prevenção e estilo de vida em preparação por Beatriz Freire.
         </div>
       )}
 
-      {/* BLOCO 4: RELIGIÃO & TRADIÇÕES (RUIWENCESLAU) */}
-      <div className="section-title" id="religiao" style={{ marginTop: '4rem' }}>
-        <h2>
-          <span style={{ background: '#b45309' }}></span> 
+      {/* ====================================================================
+          5. SEÇÃO: RELIGIÃO & TRADIÇÕES DE FÉ (RUIWENCESLAU)
+          ==================================================================== */}
+      <div className="nyt-section-banner" id="religiao">
+        <h3 className="nyt-section-title">
           Religião & Tradições de Fé
-          <small style={{ fontSize: '13px', fontWeight: '500', color: 'var(--gn-text-secondary)', marginLeft: '12px' }}>
-            Coluna de RuiWenceslau
-          </small>
-        </h2>
-        <Link href="/categoria/religiao" className="see-all">
-          Ver todas →
+        </h3>
+        <Link href="/categoria/religiao" className="nyt-section-more">
+          Ver reflexões espirituais →
         </Link>
       </div>
 
       {religiaoArticles.length > 0 ? (
-        <section className="formiga-grid">
+        <section className="nyt-grid-3">
           {religiaoArticles.map((article) => (
-            <Link key={article.id} href={`/artigo/${article.slug}`} className="card" prefetch={false}>
-              <div className="card-img-wrap">
-                {article.image_url ? (
-                  <img 
-                    src={getOptimizedImageUrl(article.image_url, 400)} 
-                    alt={article.title} 
-                    width="400"
-                    height="225"
-                    loading="lazy"
-                    decoding="async"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  />
-                ) : (
-                  <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--gn-search-bg)' }}>
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--gn-text-secondary)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                      <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                      <polyline points="21 15 16 10 5 21"></polyline>
-                    </svg>
-                  </div>
-                )}
-              </div>
-
-              <div className="card-body">
-                <span className={`category ${getCategoryClass(article.categories?.slug)}`}>
-                  {article.categories?.name || 'Religião'}
-                </span>
-                <h3>{article.title}</h3>
-                <p>
-                  {article.summary?.length > 110 
-                    ? article.summary.substring(0, 110) + '...' 
-                    : article.summary}
-                </p>
-                <div className="meta">
-                  <span style={{ fontWeight: '500' }}>{article.author_name ? `Por ${article.author_name}` : 'RuiWenceslau'}</span>
-                  <span>•</span>
-                  <span>{formatDate(article.created_at)}</span>
-                </div>
+            <Link key={article.id} href={`/artigo/${article.slug}`} className="nyt-grid-card">
+              {article.image_url && (
+                <img 
+                  src={getOptimizedImageUrl(article.image_url, 400)} 
+                  alt={article.title} 
+                  loading="lazy"
+                />
+              )}
+              <span className="nyt-kicker">FÉ & MORALIDADE</span>
+              <h4>{article.title}</h4>
+              <p>{article.summary?.substring(0, 110)}...</p>
+              <div className="nyt-byline">
+                Por <strong>{article.author_name || 'RuiWenceslau'}</strong> • {formatDate(article.created_at)}
               </div>
             </Link>
           ))}
         </section>
       ) : (
-        <div style={{ padding: '24px', background: 'var(--gn-surface)', border: '1px solid var(--gn-border)', borderRadius: '12px', textAlign: 'center', color: 'var(--gn-text-secondary)' }}>
-          Mensagens de fé, teologia popular e reflexões morais sob a assinatura de RuiWenceslau.
+        <div style={{ padding: '24px', border: '1px solid var(--nyt-border)', background: 'var(--nyt-paper-tint)', textAlign: 'center', fontSize: '14px', color: 'var(--nyt-ink-muted)' }}>
+          Mensagens teológicas e história das tradições sagradas sob assinatura de RuiWenceslau.
         </div>
       )}
 
-      {/* BLOCO INTERATIVO: HORÓSCOPO & TARÔ (JHONATAN D' OSOGIYAN) */}
-      <div className="section-title" id="horoscopo" style={{ marginTop: '4rem' }}>
-        <h2>
-          <span style={{ background: '#d97706' }}></span> 
-          Horóscopo & Tarô Diário
-          <small style={{ fontSize: '13px', fontWeight: '500', color: 'var(--gn-text-secondary)', marginLeft: '12px' }}>
-            Com Pai Jhonatan d' Osogiyan
-          </small>
-        </h2>
-        <Link href="/horoscopo" className="see-all">
-          Página Completa →
+      {/* ====================================================================
+          6. SEÇÃO NYT GAMES / PASSATEMPOS (CURADORIA DE KAELARA)
+          Inspirada diretamente no famoso The New York Times Games
+          ==================================================================== */}
+      <div className="nyt-section-banner" id="passatempos">
+        <h3 className="nyt-section-title">
+          NYT Games & Passatempos
+        </h3>
+        <Link href="/passatempos" className="nyt-section-more">
+          Central de Jogos →
         </Link>
       </div>
 
-      <HoroscopoWidget />
+      <div className="nyt-games-box">
+        <div className="nyt-games-header">
+          <h3>Exercícios da Mente</h3>
+          <p style={{ margin: 0, fontSize: '14px', color: 'var(--nyt-ink-muted)' }}>
+            Sudoku clássico, Termo diário e Palavras Cruzadas selecionados por Kaelara para manter sua agilidade mental afiada.
+          </p>
+        </div>
 
-      {/* BLOCO INTERATIVO: PASSATEMPOS & JOGOS DA MENTE (KAELARA) */}
-      <div className="section-title" id="passatempos" style={{ marginTop: '4rem' }}>
-        <h2>
-          <span style={{ background: '#ea580c' }}></span> 
-          Passatempos & Lazer
-          <small style={{ fontSize: '13px', fontWeight: '500', color: 'var(--gn-text-secondary)', marginLeft: '12px' }}>
-            Curadoria de Kaelara
-          </small>
-        </h2>
-        <Link href="/passatempos" className="see-all">
-          Todos os Jogos →
-        </Link>
-      </div>
-
-      <GamesBlock />
-
-      {/* SEÇÃO: MAIS NOTÍCIAS RECENTES */}
-      {latestArticles.length > 0 && (
-        <>
-          <div className="section-title" style={{ marginTop: '4rem' }}>
-            <h2><span style={{ background: '#1e3a8a' }}></span> Mais Notícias & Artigos</h2>
-            <Link href="/busca" className="see-all">
-              Ver arquivo →
+        <div className="nyt-games-grid">
+          <div className="nyt-game-card">
+            <span style={{ fontSize: '36px', marginBottom: '8px' }}>🔢</span>
+            <div className="nyt-game-title">Sudoku</div>
+            <div className="nyt-game-desc">
+              Preencha a grade com lógica pura e números de 1 a 9 sem repetição.
+            </div>
+            <Link href="/passatempos" className="nyt-btn-play">
+              Jogar Agora
             </Link>
           </div>
 
-          <section className="articles-grid">
-            {latestArticles.map((article) => (
-              <Link key={article.id} href={`/artigo/${article.slug}`} className="card" prefetch={false}>
-                <div className="card-img-wrap">
-                  {article.image_url ? (
-                    <img 
-                      src={getOptimizedImageUrl(article.image_url, 400)} 
-                      alt={article.title} 
-                      width="400"
-                      height="225"
-                      loading="lazy"
-                      decoding="async"
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    />
-                  ) : (
-                    <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--gn-search-bg)' }}>
-                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--gn-text-secondary)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                        <polyline points="21 15 16 10 5 21"></polyline>
-                      </svg>
-                    </div>
-                  )}
-                </div>
+          <div className="nyt-game-card">
+            <span style={{ fontSize: '36px', marginBottom: '8px' }}>🟩</span>
+            <div className="nyt-game-title">Termo</div>
+            <div className="nyt-game-desc">
+              Descubra a palavra secreta de 5 letras em até 6 tentativas no jogo sensação.
+            </div>
+            <Link href="/passatempos" className="nyt-btn-play">
+              Jogar Agora
+            </Link>
+          </div>
 
-                <div className="card-body">
-                  <span className={`category ${getCategoryClass(article.categories?.slug)}`}>
-                    {article.categories?.name || 'Notícias'}
-                  </span>
-                  <h3>{article.title}</h3>
-                  <p>
-                    {article.summary?.length > 110 
-                      ? article.summary.substring(0, 110) + '...' 
-                      : article.summary}
-                  </p>
-                  <div className="meta">
-                    <span style={{ fontWeight: '500' }}>{article.author_name ? `Por ${article.author_name}` : 'Equipe Editorial'}</span>
-                    <span>•</span>
-                    <span>{formatDate(article.created_at)}</span>
-                  </div>
+          <div className="nyt-game-card">
+            <span style={{ fontSize: '36px', marginBottom: '8px' }}>✏️</span>
+            <div className="nyt-game-title">Palavras Cruzadas</div>
+            <div className="nyt-game-desc">
+              O passatempo clássico dos jornais diários testando seus conhecimentos gerais.
+            </div>
+            <Link href="/passatempos" className="nyt-btn-play">
+              Jogar Agora
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* ====================================================================
+          7. SEÇÃO: HORÓSCOPO & TARÔ (JHONATAN D' OSOGIYAN)
+          ==================================================================== */}
+      <div className="nyt-section-banner" id="horoscopo">
+        <h3 className="nyt-section-title">
+          Horóscopo & Arcanos do Tarô
+        </h3>
+        <Link href="/horoscopo" className="nyt-section-more">
+          Tiragem Completa do Dia →
+        </Link>
+      </div>
+
+      <div style={{ marginBottom: '32px' }}>
+        <HoroscopoWidget />
+      </div>
+
+      {/* ====================================================================
+          8. MAIS NOTÍCIAS & ARTIGOS GERAIS
+          ==================================================================== */}
+      {latestArticles.length > 0 && (
+        <>
+          <div className="nyt-section-banner">
+            <h3 className="nyt-section-title">
+              Mais Reportagens & Arquivo Geral
+            </h3>
+            <Link href="/busca" className="nyt-section-more">
+              Pesquisar todo o arquivo →
+            </Link>
+          </div>
+
+          <section className="nyt-grid-3">
+            {latestArticles.map((article) => (
+              <Link key={article.id} href={`/artigo/${article.slug}`} className="nyt-grid-card">
+                {article.image_url && (
+                  <img 
+                    src={getOptimizedImageUrl(article.image_url, 400)} 
+                    alt={article.title} 
+                    loading="lazy"
+                  />
+                )}
+                <span className="nyt-kicker">REPORTAGEM</span>
+                <h4>{article.title}</h4>
+                <p>{article.summary?.substring(0, 110)}...</p>
+                <div className="nyt-byline">
+                  Por <strong>{article.author_name || 'Redação'}</strong> • {formatDate(article.created_at)}
                 </div>
               </Link>
             ))}
@@ -653,11 +539,18 @@ export default async function Home() {
         </>
       )}
 
-      {/* NEWSLETTER */}
-      <SubscribeForm />
+      {/* ====================================================================
+          9. NEWSLETTER BROADSHEET
+          ==================================================================== */}
+      <div style={{ margin: '48px 0' }}>
+        <SubscribeForm />
+      </div>
 
       {/* ADSENSE SLOT 2 */}
-      <AdBanner dataAdSlot="SEU_SLOT_HOME_2" />
+      <div style={{ margin: '20px 0' }}>
+        <AdBanner dataAdSlot="SEU_SLOT_HOME_2" />
+      </div>
+
     </main>
   );
 }
