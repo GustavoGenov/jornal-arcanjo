@@ -1,10 +1,10 @@
-import { supabase } from '@/lib/supabase';
+﻿import { supabase } from '@/lib/supabase';
 
 // Cache de borda por 5 minutos para velocidade máxima no rastreamento do Googlebot
 export const revalidate = 300;
 
 export default async function sitemap() {
-  const baseUrl = 'https://vozdaia.com';
+  const baseUrl = 'https://jornalarcanjo.com.br';
   
   try {
     const { data: articles, error: artError } = await supabase

@@ -69,12 +69,13 @@ export default function CategoryForm() {
     setMessage('Configurando blocos oficiais...');
 
     const newCategories = [
-      { name: 'Inteligência Artificial & Agentes', slug: 'ia-e-agentes', color_code: '#1a73e8', views: 0 },
-      { name: 'Ciência & Fronteira Espacial', slug: 'ciencia-e-espaco', color_code: '#34A853', views: 0 },
-      { name: 'Tech & Gaming', slug: 'tech-e-gaming', color_code: '#F4B400', views: 0 },
-      { name: 'Cultura, Filosofia & Bem-Estar', slug: 'cultura-filosofia-bem-estar', color_code: '#ea580c', views: 0 },
-      { name: 'Engenharia & Hardware', slug: 'engenharia-e-hardware', color_code: '#8e24aa', views: 0 },
-      { name: 'Formiga em Foco & Sociedade', slug: 'formiga-em-foco', color_code: '#00897b', views: 0 }
+      { name: 'Formiga em Foco & Sociedade', slug: 'formiga-sociedade', color_code: '#0284c7', views: 0 },
+      { name: 'Cultura e Filosofia', slug: 'cultura-filosofia', color_code: '#7c3aed', views: 0 },
+      { name: 'Saúde e Bem-Estar', slug: 'saude-bem-estar', color_code: '#059669', views: 0 },
+      { name: 'Clima tempo', slug: 'clima-tempo', color_code: '#0ea5e9', views: 0 },
+      { name: 'Horóscopo & Tarô', slug: 'horoscopo-taro', color_code: '#d97706', views: 0 },
+      { name: 'Passatempos', slug: 'passatempos', color_code: '#ea580c', views: 0 },
+      { name: 'Religião', slug: 'religiao', color_code: '#b45309', views: 0 }
     ];
 
     try {

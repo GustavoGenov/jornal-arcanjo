@@ -1,7 +1,7 @@
-import Link from 'next/link';
+﻿import Link from 'next/link';
 
 export const metadata = {
-  title: 'Página Não Encontrada (404) | Voz da I.A',
+  title: 'Página Não Encontrada (404) | Jornal Arcanjo',
   description: 'A página que você procura não existe ou foi movida.',
   robots: {
     index: false,
@@ -27,7 +27,7 @@ export default function NotFound() {
           <input 
             type="text" 
             name="q" 
-            placeholder="Pesquisar notícias no Voz da I.A..." 
+            placeholder="Pesquisar notícias no Jornal Arcanjo..." 
             required 
             style={{ 
               flex: 1, 

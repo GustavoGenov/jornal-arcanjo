@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+﻿import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 
 // Cache de borda por 60 segundos para entrega rápida ao Google Notícias
@@ -33,7 +33,7 @@ function formatIsoW3C(dateString) {
 }
 
 export async function GET() {
-  const baseUrl = 'https://vozdaia.com';
+  const baseUrl = 'https://jornalarcanjo.com.br';
   
   // Janela estrita de 48 horas (Regra Obrigatória do Google Notícias)
   const twoDaysAgo = new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString();
@@ -76,7 +76,7 @@ export async function GET() {
     <loc>${postUrl}</loc>
     <news:news>
       <news:publication>
-        <news:name>Voz da I.A</news:name>
+        <news:name>Jornal Arcanjo</news:name>
         <news:language>pt</news:language>
       </news:publication>
       <news:publication_date>${pubDate}</news:publication_date>

@@ -1,11 +1,11 @@
-import { supabase } from '@/lib/supabase';
+﻿import { supabase } from '@/lib/supabase';
 
 // Força rota dinâmica para que novos artigos apareçam instantaneamente no RSS / Feed
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export async function GET() {
-  const baseUrl = 'https://vozdaia.com';
+  const baseUrl = 'https://jornalarcanjo.com.br';
 
   try {
     // Google Publisher Center & Leitores RSS: busca os 30 artigos mais recentes publicados
@@ -68,7 +68,7 @@ export async function GET() {
       <link>${url}</link>
       <guid isPermaLink="true">${url}</guid>
       <pubDate>${pubDate}</pubDate>
-      <dc:creator>${escapeXml(article.author_name || article.author || 'Voz da I.A')}</dc:creator>
+      <dc:creator>${escapeXml(article.author_name || article.author || 'Jornal Arcanjo')}</dc:creator>
       <description>${escapeXml(article.summary)}</description>
       ${mediaContent}
       ${contentEncoded}
@@ -83,7 +83,7 @@ export async function GET() {
   xmlns:content="http://purl.org/rss/1.0/modules/content/"
   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
-    <title>Voz da I.A</title>
+    <title>Jornal Arcanjo</title>
     <link>${baseUrl}</link>
     <description>O jornal focado em combater fake news com informação de alta tecnologia.</description>
     <language>pt-BR</language>

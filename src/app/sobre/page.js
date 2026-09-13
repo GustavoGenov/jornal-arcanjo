@@ -1,10 +1,10 @@
-import PageTracker from '../components/PageTracker';
+﻿import PageTracker from '../components/PageTracker';
 
 export const metadata = {
-  title: 'Quem Somos | Voz da I.A',
-  description: 'Conheça a história e o propósito do Voz da I.A',
+  title: 'Quem Somos | Jornal Arcanjo',
+  description: 'Conheça a história, a missão editorial e os valores que guiam o Jornal Arcanjo.',
   alternates: {
-    canonical: 'https://vozdaia.com/sobre',
+    canonical: 'https://jornalarcanjo.com.br/sobre',
   },
 };
 
@@ -14,24 +14,24 @@ export default function Sobre() {
     "@type": "AboutPage",
     "mainEntity": {
       "@type": "NewsMediaOrganization",
-      "name": "Voz da I.A",
-      "url": "https://vozdaia.com",
-      "logo": "https://vozdaia.com/logo-header.png",
+      "name": "Jornal Arcanjo",
+      "url": "https://jornalarcanjo.com.br",
+      "logo": "https://jornalarcanjo.com.br/simbolo.png",
       "sameAs": [
         "https://www.linkedin.com/in/gustavo-castro-bernardes-rosa-24a827bb"
       ],
-      "description": "Portal jornalístico focado em combater fake news com informação precisa e apuração de alta tecnologia.",
-      "foundingDate": "2026-06",
+      "description": "Jornal independente dedicado a temas de sociedade, cultura, filosofia, espiritualidade, saúde, meteorologia e entretenimento com apuração rigorosa.",
+      "foundingDate": "2026-09",
       "founder": [
         {
           "@type": "Person",
           "name": "Gustavo de Castro Bernardes Rosa",
-          "jobTitle": "Fundador & CTO"
+          "jobTitle": "Fundador & Diretor Editorial"
         },
         {
           "@type": "Person",
           "name": "RuiWenceslau de Oliveira",
-          "jobTitle": "Cofundador & Editor"
+          "jobTitle": "Cofundador & Relações Institucionais"
         }
       ],
       "address": {
@@ -51,128 +51,103 @@ export default function Sobre() {
   };
 
   return (
-    <main className="main-content" style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 24px' }}>
+    <main className="main-content" style={{ maxWidth: '840px', margin: '0 auto', padding: '40px 24px' }}>
       <PageTracker />
       
-      {/* Schema.org AboutPage Injection */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       
-      <h1 className="page-title google-sans" style={{ fontSize: '36px', marginBottom: '32px', textAlign: 'center', color: 'var(--gn-text)' }}>
-        Quem Somos: A Voz da I.A
+      <h1 className="page-title google-sans" style={{ fontSize: '36px', marginBottom: '32px', textAlign: 'center', color: 'var(--gn-text)', fontWeight: '800' }}>
+        Quem Somos: Jornal Arcanjo
       </h1>
       
-      <div style={{ background: 'var(--gn-surface)', border: '1px solid var(--gn-border)', borderRadius: '12px', padding: '40px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', fontSize: '18px', lineHeight: '1.8', color: 'var(--gn-text-secondary)' }}>
+      <div style={{ background: 'var(--gn-surface)', border: '1px solid var(--gn-border)', borderRadius: '14px', padding: '40px', boxShadow: '0 4px 12px rgba(0,0,0,0.04)', fontSize: '17px', lineHeight: '1.8', color: 'var(--gn-text-secondary)' }}>
         
-        <h2 className="google-sans" style={{ fontSize: '24px', color: 'var(--gn-blue)', marginBottom: '16px', marginTop: '0' }}>
-          Da Paixão pela Tecnologia ao Nascimento de um Propósito
+        <h2 className="google-sans" style={{ fontSize: '24px', color: '#1e3a8a', marginBottom: '16px', marginTop: '0', fontWeight: '700' }}>
+          Tradição, Sabedoria e o Resgate da Informação com Propósito
         </h2>
         <p style={{ marginBottom: '24px' }}>
-          Toda grande jornada nasce de quedas, aprendizados e, acima de tudo, da vontade inabalável de fazer a diferença. Rui Wenceslau e Gustavo de Castro compartilham uma trajetória de anos dedicada à criação de conteúdo na internet: desbravaram canais no YouTube, administraram páginas e construíram projetos em diversas redes sociais. Cada desafio enfrentado serviu como laboratório para moldar a maturidade, a resiliência e a visão técnica que hoje definem o nosso trabalho.
+          O <strong>Jornal Arcanjo</strong> nasce do compromisso de devolver ao leitor uma experiência jornalística acolhedora, rica em significado e profundamente conectada com o que é essencial à vida humana: a vida em comunidade, o cultivo do pensamento crítico, o cuidado com o corpo e a mente, o respeito às tradições de fé e o fascínio pelos mistérios da existência.
         </p>
         <p style={{ marginBottom: '40px' }}>
-          Em junho de 2026, quando os caminhos de Rui e Gustavo se cruzaram, a sintonia foi imediata. Diante de dezenas de ideias e ambições compartilhadas, surgiu a decisão de construir uma iniciativa que integrasse tecnologia de ponta, verdade factual e impacto humano real. Dessa faísca nasceu o <strong>Voz da I.A</strong> — mais do que um jornal digital, um manifesto pelo jornalismo de alta precisão e pela democratização responsável da tecnologia.
+          Fundado por <strong>Gustavo de Castro Bernardes Rosa</strong> e <strong>RuiWenceslau de Oliveira</strong>, o Jornal Arcanjo surge para preencher uma lacuna urgente na internet brasileira: um espaço editorial limpo, elegante e confiável, onde os leitores encontram conteúdo formativo, reflexões culturais profundas e informações locais relevantes de Formiga (MG) e região.
         </p>
 
-        <h2 className="google-sans" style={{ fontSize: '24px', color: 'var(--gn-blue)', marginBottom: '16px' }}>
-          A Nossa Missão: Resgatar a Verdade e Valorizar o Conhecimento
+        <h2 className="google-sans" style={{ fontSize: '24px', color: '#1e3a8a', marginBottom: '16px', fontWeight: '700' }}>
+          Nossos 7 Pilares Editoriais
         </h2>
-        <p style={{ marginBottom: '16px' }}>
-          O Voz da I.A nasceu para responder a duas dores profundas da era digital:
+        <p style={{ marginBottom: '20px' }}>
+          O Jornal Arcanjo estrutura sua cobertura editorial em sete blocos permanentes, cada um conduzido por articulistas dedicados:
         </p>
-        <ul style={{ marginBottom: '40px', paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '16px', marginBottom: '40px' }}>
+          <div style={{ padding: '16px', borderRadius: '10px', background: 'var(--gn-bg)', border: '1px solid var(--gn-border)' }}>
+            <strong style={{ color: '#0284c7' }}>1. Formiga em Foco & Sociedade</strong>
+            <p style={{ margin: '6px 0 0', fontSize: '14px' }}>História regional, acontecimentos comunitários, cidadania e o cotidiano da nossa terra, sob a curadoria de Gustavo de Castro.</p>
+          </div>
+          <div style={{ padding: '16px', borderRadius: '10px', background: 'var(--gn-bg)', border: '1px solid var(--gn-border)' }}>
+            <strong style={{ color: '#7c3aed' }}>2. Cultura e Filosofia</strong>
+            <p style={{ margin: '6px 0 0', fontSize: '14px' }}>Reflexões existenciais, literatura, pedagogia e o cultivo da sensibilidade humana, conduzido por Daiene Meneses.</p>
+          </div>
+          <div style={{ padding: '16px', borderRadius: '10px', background: 'var(--gn-bg)', border: '1px solid var(--gn-border)' }}>
+            <strong style={{ color: '#059669' }}>3. Saúde e Bem-Estar</strong>
+            <p style={{ margin: '6px 0 0', fontSize: '14px' }}>Equilíbrio físico e mental, hábitos saudáveis e qualidade de vida integral com Beatriz Freire.</p>
+          </div>
+          <div style={{ padding: '16px', borderRadius: '10px', background: 'var(--gn-bg)', border: '1px solid var(--gn-border)' }}>
+            <strong style={{ color: '#b45309' }}>4. Religião & Tradições</strong>
+            <p style={{ margin: '6px 0 0', fontSize: '14px' }}>Espiritualidade, mensagens de fé, história das tradições sagradas e valores morais sob a assinatura de RuiWenceslau.</p>
+          </div>
+          <div style={{ padding: '16px', borderRadius: '10px', background: 'var(--gn-bg)', border: '1px solid var(--gn-border)' }}>
+            <strong style={{ color: '#0ea5e9' }}>5. Clima tempo</strong>
+            <p style={{ margin: '6px 0 0', fontSize: '14px' }}>Previsões meteorológicas, dinâmica das estações e alertas climáticos analisados por Kaelara.</p>
+          </div>
+          <div style={{ padding: '16px', borderRadius: '10px', background: 'var(--gn-bg)', border: '1px solid var(--gn-border)' }}>
+            <strong style={{ color: '#d97706' }}>6. Horóscopo & Tarô</strong>
+            <p style={{ margin: '6px 0 0', fontSize: '14px' }}>Leituras dos astros, simbologia dos arcanos do tarô e etnobotânica com Jhonatan d' Osogiyan.</p>
+          </div>
+          <div style={{ padding: '16px', borderRadius: '10px', background: 'var(--gn-bg)', border: '1px solid var(--gn-border)' }}>
+            <strong style={{ color: '#ea580c' }}>7. Passatempos & Lazer</strong>
+            <p style={{ margin: '6px 0 0', fontSize: '14px' }}>Enigmas, cruzadinhas e exercícios para manter a mente ativa e relaxada no dia a dia com Kaelara.</p>
+          </div>
+        </div>
+
+        <h2 className="google-sans" style={{ fontSize: '24px', color: '#1e3a8a', marginBottom: '16px', fontWeight: '700' }}>
+          Compromisso Ético e Verificação Rigorosa
+        </h2>
+        <ul style={{ marginBottom: '32px', paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
           <li>
-            <strong>O Combate Rigoroso à Desinformação:</strong> Gustavo de Castro transformou sua indignação com o mar de fake news, boatos sensacionalistas e especulações infundadas sobre Inteligência Artificial em compromisso editorial. Enquanto a IA é frequentemente mal compreendida e instrumentalizada para gerar conteúdos superficiais, nós assumimos a vanguarda técnica para explicar a ciência, a arquitetura e os impactos reais dessa revolução sem mitos.
+            <strong>Apuração Factual:</strong> Cada informação compartilhada é checada junto a fontes seguras, documentos oficiais ou literatura de referência.
           </li>
           <li>
-            <strong>A Proteção à Autoria e à Excelência:</strong> Rui Wenceslau vivenciou as consequências da apropriação indevida de produções intelectuais na internet, sem os devidos créditos e respeito aos criadores. Unindo forças, desenvolvemos uma plataforma própria, robusta e independente, focada em entregar análises profundas, checadas e com credibilidade inegociável.
+            <strong>Autoria e Transparência:</strong> Nossos artigos trazem identificação clara de seus autores, suas fontes e metodologias, respeitando a inteligência do leitor.
+          </li>
+          <li>
+            <strong>Canal Aberto para Correções:</strong> Prezamos pela honestidade intelectual absoluta. Qualquer esclarecimento ou retificação é realizado com total visibilidade ao público.
           </li>
         </ul>
 
-        <h2 className="google-sans" style={{ fontSize: '24px', color: 'var(--gn-blue)', marginBottom: '16px' }}>
-          A Força da Nossa Equipe
-        </h2>
-        <p style={{ marginBottom: '16px' }}>
-          A seriedade do projeto ecoou rapidamente. Atraídos pelo profissionalismo e pela transparência da nossa linha editorial, novos talentos integraram o ecossistema do Voz da I.A:
-        </p>
-        <p style={{ marginBottom: '40px' }}>
-          Beatriz, Daiene, Jhonatan, Gabriela e Kaelara, ao lado de novos colaboradores que somam forças continuamente, enriquecem a publicação com suas especialidades em estratégias de qualidade e comunicação, design, redação, engenharia e análise crítica. Cada integrante assina blocos editoriais dedicados, garantindo pluralidade técnica e profundidade humana em cada pauta.
-        </p>
-
-        <h2 className="google-sans" style={{ fontSize: '24px', color: 'var(--gn-blue)', marginBottom: '16px' }}>
-          Dinâmica e Engenharia Operacional
-        </h2>
-        <p style={{ marginBottom: '16px' }}>
-          Para garantir alto desempenho e excelência técnica diária, a liderança executiva do jornal opera de forma integrada:
-        </p>
-        <ul style={{ marginBottom: '40px', paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          <li>
-            <strong>Rui Wenceslau:</strong> Lidera a estratégia de divulgação global, produção de conteúdo especializado, processos de debug e melhoria contínua da experiência do usuário, além da condução de parcerias e representações externas.
-          </li>
-          <li>
-            <strong>Gustavo de Castro:</strong> Comanda a arquitetura de código e engenharia da plataforma, a integração avançada de ferramentas computacionais, a geração de pautas estruturantes e a articulação institucional.
-          </li>
-        </ul>
-
-        <h2 className="google-sans" style={{ fontSize: '24px', color: 'var(--gn-blue)', marginBottom: '16px' }}>
-          Diretrizes Editoriais, Checagem de Fatos e Compromisso com a Verdade
-        </h2>
-        <p style={{ marginBottom: '16px' }}>
-          Em estrita conformidade com os princípios do jornalismo ético e as diretrizes de combate à desinformação, o <strong>Voz da I.A</strong> adota políticas transparentes em todos os seus processos de produção:
-        </p>
-        <ul style={{ marginBottom: '32px', paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          <li>
-            <strong>Supervisão e Curadoria 100% Humana:</strong> Todas as reportagens, análises e artigos publicados no portal passam pela leitura crítica, apuração e validação de nossa equipe editorial e colunistas. Modelos computacionais e inteligência artificial atuam unicamente como ferramentas auxiliares de produtividade, organização de dados e apoio à pesquisa, nunca substituindo o discernimento e a responsabilidade de autores humanos.
-          </li>
-          <li>
-            <strong>Checagem Rigorosa de Fontes:</strong> Priorizamos documentos primários, publicações acadêmicas com revisão por pares, comunicados oficiais de órgãos governamentais e instituições de referência tecnológica. Afirmações sem comprovação factual não são veiculadas.
-          </li>
-          <li>
-            <strong>Política de Correções e Erratas:</strong> Mantemos o compromisso inegociável com a retificação imediata e transparente. Caso qualquer imprecisão factual seja identificada em nossos textos, ela é imediatamente corrigida com a devida nota explicativa transparente ao leitor.
-          </li>
-        </ul>
-
-        <h2 className="google-sans" style={{ fontSize: '24px', color: 'var(--gn-blue)', marginBottom: '16px' }}>
-          Horário de Funcionamento e Cobertura Editorial
-        </h2>
-        <div style={{ padding: '24px', background: 'var(--gn-bg)', border: '1px solid var(--gn-border)', borderRadius: '12px', marginBottom: '40px' }}>
-          <p style={{ marginBottom: '16px', fontSize: '17px', display: 'flex', alignItems: 'flex-start', gap: '10px', color: 'var(--gn-text)' }}>
-            <span className="material-icons-extended" style={{ color: 'var(--gn-blue)', marginTop: '4px' }}>schedule</span>
-            <span>
-              <strong>Expediente de Atendimento:</strong> Nosso expediente de atendimento ao público ocorre de acordo com a escala de trabalho dos editores, com atendimento preferencial nos dias de semana e suporte das 19:00 às 21:00.
-            </span>
+        <div style={{ padding: '24px', background: 'var(--gn-bg)', border: '1px solid var(--gn-border)', borderRadius: '12px', marginBottom: '32px' }}>
+          <h3 style={{ fontSize: '18px', fontWeight: '700', color: 'var(--gn-text)', marginBottom: '12px' }}>
+            Expediente e Contato
+          </h3>
+          <p style={{ margin: '0 0 8px', fontSize: '15px' }}>
+            <strong>Editor-Chefe:</strong> Gustavo de Castro Bernardes Rosa
           </p>
-          <p style={{ marginBottom: '16px', fontSize: '17px', display: 'flex', alignItems: 'flex-start', gap: '10px', color: 'var(--gn-text)' }}>
-            <span className="material-icons-extended" style={{ color: '#34A853', marginTop: '4px' }}>verified</span>
-            <span>
-              <strong>Cobertura Contínua com Rigor:</strong> Nossa equipe monitora os avanços da ciência, IA, tecnologia e os acontecimentos da comunidade regional de Formiga (MG), assegurando que cada pauta atenda aos mais altos critérios de precisão antes de ir ao ar.
-            </span>
+          <p style={{ margin: '0 0 8px', fontSize: '15px' }}>
+            <strong>Cofundador e Relações Institucionais:</strong> RuiWenceslau de Oliveira
           </p>
-          <p style={{ marginBottom: '16px', fontSize: '17px', display: 'flex', alignItems: 'flex-start', gap: '10px', color: 'var(--gn-text)' }}>
-            <span className="material-icons-extended" style={{ color: '#FBBC05', marginTop: '4px' }}>groups</span>
-            <span>
-              <strong>Corpo Editorial Independente:</strong> O jornal conta com um corpo dedicado de autores e articulistas que assinam seus artigos nominalmente, trazendo bagagem técnica, acadêmica e visão comunitária.
-            </span>
+          <p style={{ margin: '0 0 8px', fontSize: '15px' }}>
+            <strong>Redação Editorial:</strong> <a href="mailto:gustavocastroinfo@gmail.com" style={{ color: '#1e3a8a' }}>gustavocastroinfo@gmail.com</a>
           </p>
-          <p style={{ marginBottom: '16px', fontSize: '17px', display: 'flex', alignItems: 'flex-start', gap: '10px', color: 'var(--gn-text)' }}>
-            <span className="material-icons-extended" style={{ color: '#EA4335', marginTop: '4px' }}>mail</span>
-            <span>
-              <strong>Redação e Contato Editorial:</strong> Para sugestões de pauta, solicitação de correções, dúvidas ou parcerias institucionais, envie mensagem diretamente para a redação: <strong><a href="mailto:gustavocastroinfo@gmail.com" style={{ color: 'var(--gn-blue)', textDecoration: 'none' }}>gustavocastroinfo@gmail.com</a></strong>.
-            </span>
-          </p>
-          <p style={{ margin: 0, fontSize: '17px', display: 'flex', alignItems: 'flex-start', gap: '10px', color: 'var(--gn-text)' }}>
-            <span className="material-icons-extended" style={{ color: '#1a73e8', marginTop: '4px' }}>location_on</span>
-            <span>
-              <strong>Sede e Correspondência Editorial:</strong> Rua Maria Evaristo dos Santos, 330, Vila José Branco — Formiga (MG) — CEP 35572-272, Brasil.
-            </span>
+          <p style={{ margin: '0', fontSize: '15px' }}>
+            <strong>Sede:</strong> Rua Maria Evaristo dos Santos, 330, Vila José Branco — Formiga (MG) — CEP 35572-272, Brasil.
           </p>
         </div>
 
-        <div style={{ textAlign: 'center', marginTop: '48px', padding: '32px', background: 'var(--gn-search-bg)', borderRadius: '8px' }}>
-          <p style={{ fontStyle: 'italic', fontSize: '20px', color: 'var(--gn-text)', fontWeight: '500', margin: 0 }}>
-            &ldquo;Não construímos apenas páginas; desenvolvemos pontes de conhecimento entre a inteligência humana e as fronteiras da inovação tecnológica.&rdquo;
+        <div style={{ textAlign: 'center', marginTop: '36px', padding: '28px', background: 'linear-gradient(135deg, rgba(30, 58, 138, 0.05), rgba(217, 119, 6, 0.05))', borderRadius: '12px', border: '1px solid rgba(30, 58, 138, 0.1)' }}>
+          <p style={{ fontStyle: 'italic', fontSize: '19px', color: '#1e3a8a', fontWeight: '600', margin: 0 }}>
+            &ldquo;A verdade, a sabedoria e a conexão humana são as luzes que iluminam as decisões do nosso presente.&rdquo;
           </p>
         </div>
 

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { supabase } from '@/lib/supabase';
@@ -24,7 +24,7 @@ export default function SubscribeForm() {
         setStatus('error');
       }
     } else {
-      setMsg('Inscrição confirmada com sucesso! Bem-vindo(a) ao Voz da I.A.');
+      setMsg('Inscrição confirmada com sucesso! Bem-vindo(a) ao Jornal Arcanjo.');
       setStatus('success');
       setEmail('');
     }
@@ -33,7 +33,7 @@ export default function SubscribeForm() {
   return (
     <section className="newsletter-card" id="newsletter">
       <div>
-        <h3>Receba a Voz da I.A no seu e-mail</h3>
+        <h3>Receba a Jornal Arcanjo no seu e-mail</h3>
         <p>Análise técnica sem pânico, notícias de Formiga e o melhor da inteligência artificial e ciência. 100% gratuito.</p>
         {msg && (
           <div style={{ marginTop: '12px', color: status === 'error' ? '#f87171' : '#4ade80', fontWeight: '600', fontSize: '14px' }}>

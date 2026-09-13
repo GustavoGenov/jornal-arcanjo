@@ -1,4 +1,4 @@
-import './globals.css';
+﻿import './globals.css';
 import { Roboto, Plus_Jakarta_Sans } from 'next/font/google';
 import { supabase } from '@/lib/supabase';
 import { Providers } from './providers';
@@ -28,14 +28,14 @@ export const viewport = {
 };
 
 export const metadata = {
-  metadataBase: new URL('https://vozdaia.com'),
-  title: 'Voz da I.A - Combate às Fake News com Tecnologia',
-  description: 'O Voz da I.A é o primeiro jornal inteligente 100% focado em combater fake news através de alta tecnologia, checagem de fatos e notícias verificadas em tempo real.',
+  metadataBase: new URL('https://jornalarcanjo.com.br'),
+  title: 'Jornal Arcanjo - Tradição, Sociedade, Cultura & Sabedoria',
+  description: 'Jornal Arcanjo: jornalismo humanizado, cultura, filosofia, espiritualidade, saúde integral, meteorologia e notícias verificadas.',
   alternates: {
-    canonical: 'https://vozdaia.com',
+    canonical: 'https://jornalarcanjo.com.br',
   },
   verification: {
-    google: 'demFjjgkORq1aeNSlcUdOt7ZwTQxtocBJrJVej5_KVM',
+    google: '',
   },
   other: {
     'google-adsense-account': 'ca-pub-5759690232636098'
@@ -48,22 +48,18 @@ export default async function RootLayout({ children }) {
   const { data: categoriesData } = await supabase.from('categories').select('*');
   
   const sortOrder = {
-    'IA Sem Mitos': 1,
-    'Kaelara Insights': 2
+    'formiga-sociedade': 1,
+    'cultura-filosofia': 2,
+    'saude-bem-estar': 3,
+    'religiao': 4,
+    'clima-tempo': 5,
+    'horoscopo-taro': 6,
+    'passatempos': 7
   };
 
-  let processedCategories = (categoriesData || []).map(cat => {
-    if (cat.slug === 'religiao') {
-      return { ...cat, color_code: '#8e24aa' };
-    }
-    return cat;
-  });
-
-
-  
-  const categories = processedCategories.sort((a, b) => {
-    const rankA = sortOrder[a.name] || 99;
-    const rankB = sortOrder[b.name] || 99;
+  const categories = (categoriesData || []).sort((a, b) => {
+    const rankA = sortOrder[a.slug] || 99;
+    const rankB = sortOrder[b.slug] || 99;
     if (rankA !== rankB) return rankA - rankB;
     return a.name.localeCompare(b.name, 'pt-BR');
   });
@@ -74,9 +70,9 @@ export default async function RootLayout({ children }) {
         {/* Preconnect prioritário (máx 4 para Lighthouse) */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://nisbarqzsjqylsvnyxrm.supabase.co" />
+        <link rel="preconnect" href="https://hiaoasipxkxsjcoshscu.supabase.co" />
         
-        {/* Material Icons carregado de forma 100% assíncrona não-bloqueante */}
+        {/* Material Icons carregado de forma assíncrona não-bloqueante */}
         <link 
           rel="stylesheet" 
           href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" 
@@ -84,7 +80,7 @@ export default async function RootLayout({ children }) {
           onLoad="this.media='all'" 
         />
 
-        {/* Google AdSense Oficial via next/script após a renderização interativa (preserva FCP e LCP) */}
+        {/* Script AdSense / Monetização */}
         <Script
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5759690232636098"
           strategy="afterInteractive"

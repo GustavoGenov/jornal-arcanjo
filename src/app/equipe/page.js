@@ -1,132 +1,118 @@
-import PageTracker from '../components/PageTracker';
+﻿import PageTracker from '../components/PageTracker';
 
 export const metadata = {
-  title: 'Nossa Equipe | Voz da I.A',
-  description: 'Conheça a equipe por trás do Voz da I.A, trabalhando para trazer informações precisas e combater as fake news.',
+  title: 'Nossa Equipe | Jornal Arcanjo',
+  description: 'Conheça a equipe editorial, colunistas e especialistas por trás do Jornal Arcanjo.',
   alternates: {
-    canonical: 'https://vozdaia.com/equipe',
+    canonical: 'https://jornalarcanjo.com.br/equipe',
   },
 };
 
 const founders = [
   {
     name: 'Gustavo de Castro Bernardes Rosa',
-    roleTag: 'Fundador',
-    subtitle: 'Fundador, Engenharia de I.A & CTO',
+    roleTag: 'Fundador & Editor-Chefe',
+    subtitle: 'Formiga em Foco & Sociedade',
     initials: 'GC',
     image: '/equipe/gustavo.jpg',
     email: 'gustavocastroinfo@gmail.com',
     phone: null,
     linkedin: 'https://www.linkedin.com/in/gustavo-castro-bernardes-rosa-24a827bb',
     website: null,
-    areas: 'Inteligência Artificial & Agentes, Engenharia & Hardware, Web Design e CTO',
-    formation: 'Tecnólogo em Redes de Computação e Engenharia de I.A',
-    color: 'linear-gradient(135deg, #1a73e8, #8e24aa)'
+    areas: 'Formiga em Foco & Sociedade, Cidadania, Memória Regional e Direção Editorial',
+    formation: 'Tecnólogo em Redes de Computação, Engenharia de Software e Gestão de Mídia Digital',
+    color: 'linear-gradient(135deg, #1e3a8a, #0284c7)'
   },
   {
     name: 'RuiWenceslau de Oliveira',
-    roleTag: 'Cofundador',
-    subtitle: 'Cofundador, Editor & Relações Públicas',
+    roleTag: 'Cofundador & Colunista',
+    subtitle: 'Religião & Tradições de Fé',
     initials: 'RO',
     image: '/equipe/rui.jpg',
     email: 'ruiwenceslau@gmail.com',
     phone: null,
     linkedin: 'https://www.linkedin.com/in/ruiwenceslau-de-oliveira-ab08bb42a',
     website: null,
-    areas: 'Editor, Relações Públicas, Debug de UX/UI',
+    areas: 'Religião, Teologia Popular, Tradições de Fé, Relações Institucionais e Filosofia Moral',
     formation: 'Criador de conteúdo para mídias sociais e Youtuber',
-    color: 'linear-gradient(135deg, #34A853, #0F9D58)'
+    color: 'linear-gradient(135deg, #b45309, #78350f)'
   }
 ];
 
 const columnists = [
   {
-    name: 'Beatriz Freire',
-    roleTag: 'Colunista',
-    subtitle: 'Estrategista de CS & Qualidade',
-    initials: 'BF',
-    image: '/equipe/beatriz.jpg',
-    email: 'freiredemelob@gmail.com',
-    phone: null,
-    linkedin: 'https://www.linkedin.com/in/beatriz-freire-41225b3b0/',
-    website: 'https://uiclap.bio/beafreire',
-    areas: 'Estrategista de Customer Success & Qualidade | Comunicação Social | Marketing & Social Media',
-    formation: 'Comunicação Social, Marketing & Social Media e Estratégia de Customer Success & Qualidade',
-    color: 'linear-gradient(135deg, #e65100, #ff9800)'
-  },
-  {
     name: 'Daiene Maria de Meneses',
-    roleTag: 'Colunista',
-    subtitle: 'Colunista de Ciência e Educação',
+    roleTag: 'Colunista Principal',
+    subtitle: 'Cultura e Filosofia',
     initials: 'DM',
     image: '/equipe/daiene.jpg',
     email: 'daidiva15@gmail.com',
     phone: null,
     linkedin: 'https://www.linkedin.com/in/daiene-meneses-dai-13561a20a',
     website: null,
-    areas: 'Ciência & Fronteira Espacial, Revisora, Copidesque',
-    formation: 'Pedagoga e Professora de educação infantil',
-    color: 'linear-gradient(135deg, #e91e63, #c2185b)'
+    areas: 'Cultura, Filosofia, Educação, Pensamento Humanista, Literatura e Copidesque Editorial',
+    formation: 'Pedagoga e Professora de Educação Infantil',
+    color: 'linear-gradient(135deg, #7c3aed, #c026d3)'
+  },
+  {
+    name: 'Beatriz Freire',
+    roleTag: 'Colunista',
+    subtitle: 'Saúde e Bem-Estar',
+    initials: 'BF',
+    image: '/equipe/beatriz.jpg',
+    email: 'freiredemelob@gmail.com',
+    phone: null,
+    linkedin: 'https://www.linkedin.com/in/beatriz-freire-41225b3b0/',
+    website: 'https://uiclap.bio/beafreire',
+    areas: 'Saúde Preventiva, Bem-Estar Integral, Equilíbrio Emocional, Comunicação Social e Qualidade de Vida',
+    formation: 'Comunicação Social, Marketing & Social Media e Estratégia de Customer Success & Qualidade',
+    color: 'linear-gradient(135deg, #059669, #10b981)'
   },
   {
     name: 'Jhonatan d\' Osogiyan (ou Pai Jhonatan)',
     roleTag: 'Colunista',
-    subtitle: 'Colunista de Cultura, Tradições Afro-Brasileiras e Etnobotânica',
+    subtitle: 'Horóscopo & Tarô',
     initials: 'SJ',
     image: '/equipe/jhonatan.jpg',
     email: null,
     phone: '37 9968-8433',
     linkedin: null,
     website: null,
-    areas: 'Cultura, Filosofia & Bem-Estar, Horóscopo & Tarô',
+    areas: 'Astrologia Tradicional, Simbologia dos Arcanos do Tarô, Etnobotânica e Saberes Populares',
     formation: 'Psicologia, Pesquisador de Tradições Populares e Herbalista',
-    color: 'linear-gradient(135deg, #ff9800, #f57c00)'
+    color: 'linear-gradient(135deg, #d97706, #b45309)'
   },
   {
-    name: 'Kaelara (Assistente Computacional)',
-    roleTag: 'Tecnologia & Dados',
-    subtitle: 'Sistema Inteligente de Análise e Monitoramento Climático',
+    name: 'Kaelara (Assistente Editorial)',
+    roleTag: 'Dados & Análises',
+    subtitle: 'Clima tempo & Passatempos',
     initials: 'KC',
     image: '/equipe/kaelara.png',
     email: 'nicholaigenov@gmail.com',
     phone: null,
     linkedin: null,
     website: null,
-    areas: 'Clima tempo & Análise de Dados',
-    formation: 'Módulo assistente computacional desenvolvido sob arquitetura LLM para processamento técnico de dados meteorológicos. Todas as análises geradas passam por estrita revisão, checagem factual e aprovação da equipe editorial humana antes de qualquer publicação.',
-    color: 'linear-gradient(135deg, #9c27b0, #6a1b9a)'
-  },
-  {
-    name: 'Gabriela Castro Bernardes Rosa',
-    roleTag: 'Colunista',
-    subtitle: 'Colunista de Tecnologia e Games',
-    initials: 'GB',
-    image: '',
-    email: 'dfggames715@gmail.com',
-    phone: null,
-    linkedin: null,
-    website: null,
-    areas: 'Tech & Gaming',
-    formation: 'Youtuber e Gamer',
-    color: 'linear-gradient(135deg, #00bcd4, #0097a7)'
+    areas: 'Monitoramento Meteorológico, Previsão do Tempo, Curadoria de Enigmas e Jogos Mentais',
+    formation: 'Módulo de inteligência computacional para análise de modelos atmosféricos e geração de passatempos lógicos. Todas as informações publicadas passam por supervisão e validação humana da equipe editorial.',
+    color: 'linear-gradient(135deg, #0ea5e9, #6366f1)'
   }
 ];
 
 function MemberCard({ member }) {
   return (
-    <div style={{ background: 'var(--gn-surface)', border: '1px solid var(--gn-border)', borderRadius: '12px', padding: '32px', textAlign: 'center', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+    <div style={{ background: 'var(--gn-surface)', border: '1px solid var(--gn-border)', borderRadius: '14px', padding: '32px', textAlign: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.04)', display: 'flex', flexDirection: 'column', position: 'relative' }}>
       {member.roleTag && (
         <span style={{ position: 'absolute', top: '16px', right: '16px', fontSize: '12px', fontWeight: '600', padding: '4px 10px', borderRadius: '12px', background: 'var(--gn-bg, #f1f3f4)', color: 'var(--gn-text-secondary, #5f6368)', border: '1px solid var(--gn-border)' }}>
           {member.roleTag}
         </span>
       )}
-      <div style={{ width: '100px', height: '100px', borderRadius: '50%', background: member.color, color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '36px', fontWeight: 'bold', margin: '0 auto 24px', overflow: 'hidden' }}>
+      <div style={{ width: '108px', height: '108px', borderRadius: '50%', background: member.color, color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '36px', fontWeight: 'bold', margin: '0 auto 20px', overflow: 'hidden', border: '3px solid rgba(255,255,255,0.2)', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }}>
         {member.image ? (
           <img 
             src={member.image} 
             alt={member.name} 
-            width="100" 
-            height="100" 
+            width="108" 
+            height="108" 
             loading="lazy" 
             decoding="async" 
             style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
@@ -135,23 +121,23 @@ function MemberCard({ member }) {
           member.initials
         )}
       </div>
-      <h2 className="google-sans" style={{ fontSize: '22px', marginBottom: member.subtitle ? '4px' : '8px', color: 'var(--gn-text)' }}>
+      <h2 className="google-sans" style={{ fontSize: '20px', marginBottom: member.subtitle ? '4px' : '8px', color: 'var(--gn-text)', fontWeight: '700' }}>
         {member.name}
       </h2>
       {member.subtitle && (
-        <h3 style={{ fontSize: '14px', color: 'var(--gn-text-secondary)', marginBottom: '16px', fontWeight: '500' }}>
+        <h3 style={{ fontSize: '13px', color: '#1e3a8a', marginBottom: '16px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
           {member.subtitle}
         </h3>
       )}
       
-      <div style={{ color: 'var(--gn-text-secondary)', fontSize: '14px', lineHeight: '1.5', marginBottom: '24px', flexGrow: 1, textAlign: 'left' }}>
+      <div style={{ color: 'var(--gn-text-secondary)', fontSize: '13.5px', lineHeight: '1.55', marginBottom: '24px', flexGrow: 1, textAlign: 'left' }}>
         <div style={{ marginBottom: '12px' }}>
-          <strong style={{ color: 'var(--gn-text)' }}>Áreas de Atuação:</strong><br />
+          <strong style={{ color: 'var(--gn-text)' }}>Coluna / Editoria:</strong><br />
           {member.areas}
         </div>
         {member.formation && (
           <div>
-            <strong style={{ color: 'var(--gn-text)' }}>Formação:</strong><br />
+            <strong style={{ color: 'var(--gn-text)' }}>Biografia & Formação:</strong><br />
             {member.formation}
           </div>
         )}
@@ -196,55 +182,55 @@ export default function EquipePage() {
         "jobTitle": member.subtitle || member.roleTag,
         "description": member.formation || member.areas,
         "knowsAbout": member.areas,
-        "image": member.image ? `https://vozdaia.com${member.image}` : undefined,
+        "image": member.image ? `https://jornalarcanjo.com.br${member.image}` : undefined,
         "sameAs": member.linkedin ? [member.linkedin] : undefined,
         "worksFor": {
           "@type": "NewsMediaOrganization",
-          "name": "Voz da I.A",
-          "url": "https://vozdaia.com"
+          "name": "Jornal Arcanjo",
+          "url": "https://jornalarcanjo.com.br"
         }
       }
     }))
   };
 
   return (
-    <main className="main-content" style={{ maxWidth: '1000px', margin: '0 auto', padding: '40px 24px' }}>
+    <main className="main-content" style={{ maxWidth: '1040px', margin: '0 auto', padding: '40px 24px' }}>
       <PageTracker />
       
-      {/* Schema.org ProfilePage Injection */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       
-      <h1 className="page-title google-sans" style={{ fontSize: '32px', marginBottom: '16px', textAlign: 'center' }}>
-        Nossa Equipe
-      </h1>
-      
-      <div style={{ fontSize: '18px', lineHeight: '1.6', color: 'var(--gn-text-secondary)', marginBottom: '40px', textAlign: 'center' }}>
-        Conheça as pessoas dedicadas a trazer notícias confiáveis e de alta tecnologia para você.
+      <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+        <h1 className="page-title google-sans" style={{ fontSize: '32px', marginBottom: '12px', fontWeight: '800' }}>
+          Nossa Equipe Editorial
+        </h1>
+        <p style={{ fontSize: '16px', lineHeight: '1.6', color: 'var(--gn-text-secondary)', maxWidth: '650px', margin: '0 auto' }}>
+          Conheça os colunistas, articulistas e editores dedicados a trazer informação de valor, reflexões humanas, cultura e saúde no Jornal Arcanjo.
+        </p>
       </div>
 
-      {/* Seção Fundadores */}
+      {/* Seção Fundador e Cofundador */}
       <div style={{ marginBottom: '48px' }}>
-        <h2 className="google-sans" style={{ fontSize: '24px', marginBottom: '24px', color: 'var(--gn-text)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span className="material-icons-extended" style={{ color: '#1a73e8' }}>verified</span>
-          Fundador e Cofundador
+        <h2 className="google-sans" style={{ fontSize: '22px', marginBottom: '20px', color: 'var(--gn-text)', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '700' }}>
+          <span className="material-icons-extended" style={{ color: '#1e3a8a' }}>verified</span>
+          Direção Editorial & Fundadores
         </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
           {founders.map((member, index) => (
             <MemberCard key={index} member={member} />
           ))}
         </div>
       </div>
 
-      {/* Seção Colunistas */}
+      {/* Seção Colunistas Especialistas */}
       <div style={{ marginBottom: '48px' }}>
-        <h2 className="google-sans" style={{ fontSize: '24px', marginBottom: '24px', color: 'var(--gn-text)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span className="material-icons-extended" style={{ color: '#34A853' }}>edit_note</span>
-          Colunistas
+        <h2 className="google-sans" style={{ fontSize: '22px', marginBottom: '20px', color: 'var(--gn-text)', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '700' }}>
+          <span className="material-icons-extended" style={{ color: '#059669' }}>edit_note</span>
+          Colunistas & Titulares das Editorias
         </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
           {columnists.map((member, index) => (
             <MemberCard key={index} member={member} />
           ))}

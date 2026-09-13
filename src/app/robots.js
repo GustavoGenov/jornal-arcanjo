@@ -1,4 +1,4 @@
-export default function robots() {
+﻿export default function robots() {
   return {
     rules: [
       // 1. Regra Geral para todos os buscadores (Bing, Yahoo, DuckDuckGo)
@@ -40,8 +40,8 @@ export default function robots() {
     ],
     // Lista unificada dos sitemaps oficiais
     sitemap: [
-      'https://vozdaia.com/sitemap.xml',
-      'https://vozdaia.com/news-sitemap.xml',
+      'https://jornalarcanjo.com.br/sitemap.xml',
+      'https://jornalarcanjo.com.br/news-sitemap.xml',
     ],
   };
 }

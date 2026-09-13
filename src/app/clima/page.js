@@ -47,12 +47,23 @@ export default function ClimaPage() {
   useEffect(() => {
     async function fetchClimateArticles() {
       try {
-        const { data, error: artError } = await supabase
+        const { data: catData } = await supabase
+          .from('categories')
+          .select('id')
+          .eq('slug', 'clima-tempo')
+          .maybeSingle();
+
+        let query = supabase
           .from('articles')
           .select(`id, title, slug, created_at, image_url, summary, author_name, category_id, categories(name, slug, color_code)`)
           .eq('published', true)
-          .eq('category_id', '6956f55a-eeab-4151-a3cd-f4f8b7cc7a7f')
           .order('created_at', { ascending: false });
+
+        if (catData?.id) {
+          query = query.eq('category_id', catData.id);
+        }
+
+        const { data, error: artError } = await query;
 
         if (!artError && data) {
           setClimateArticles(data);

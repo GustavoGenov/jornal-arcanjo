@@ -1315,19 +1315,23 @@ img.goog-te-gadget-icon,
   margin-bottom: 0.6rem;
 }
 
-.cat-tech { color: #1d4ed8; }
-.cat-ciencia { color: #6d28d9; }
-.cat-cultura { color: #be185d; }
-.cat-formiga { color: #047857; }
-.cat-ia { color: #7e22ce; }
-.cat-hardware { color: #0369a1; }
+.cat-arcanjo { color: #1e3a8a; }
+.cat-formiga { color: #0284c7; }
+.cat-cultura { color: #7c3aed; }
+.cat-saude { color: #059669; }
+.cat-religiao { color: #b45309; }
+.cat-clima { color: #0ea5e9; }
+.cat-horoscopo { color: #d97706; }
+.cat-passatempos { color: #ea580c; }
 
-.dark .cat-tech, [data-theme='dark'] .cat-tech { color: #60a5fa; }
-.dark .cat-ciencia, [data-theme='dark'] .cat-ciencia { color: #a78bfa; }
-.dark .cat-cultura, [data-theme='dark'] .cat-cultura { color: #f472b6; }
-.dark .cat-formiga, [data-theme='dark'] .cat-formiga { color: #34d399; }
-.dark .cat-ia, [data-theme='dark'] .cat-ia { color: #c084fc; }
-.dark .cat-hardware, [data-theme='dark'] .cat-hardware { color: #38bdf8; }
+.dark .cat-arcanjo, [data-theme='dark'] .cat-arcanjo { color: #60a5fa; }
+.dark .cat-formiga, [data-theme='dark'] .cat-formiga { color: #38bdf8; }
+.dark .cat-cultura, [data-theme='dark'] .cat-cultura { color: #c084fc; }
+.dark .cat-saude, [data-theme='dark'] .cat-saude { color: #34d399; }
+.dark .cat-religiao, [data-theme='dark'] .cat-religiao { color: #fbbf24; }
+.dark .cat-clima, [data-theme='dark'] .cat-clima { color: #7dd3fc; }
+.dark .cat-horoscopo, [data-theme='dark'] .cat-horoscopo { color: #f59e0b; }
+.dark .cat-passatempos, [data-theme='dark'] .cat-passatempos { color: #fb923c; }
 
 .hero-main h1 {
   font-size: 1.65rem;

@@ -17,20 +17,20 @@ export async function generateMetadata({ params }) {
   
   if (slug === 'clima' || slug === 'clima-tempo') {
     return {
-      title: 'Clima Tempo BR | Voz da I.A',
-      description: 'Previsão do tempo em tempo real e reportagens climáticas.',
+      title: 'Clima tempo | Jornal Arcanjo',
+      description: 'Previsão do tempo atualizada e reportagens climáticas.',
       alternates: {
-        canonical: 'https://vozdaia.com/clima',
+        canonical: 'https://jornalarcanjo.com.br/clima',
       },
     };
   }
 
-  if (slug === 'horoscopo' || slug === 'horoscopo-e-taro') {
+  if (slug === 'horoscopo' || slug === 'horoscopo-taro' || slug === 'horoscopo-e-taro') {
     return {
-      title: 'Horóscopo & Tarô | Voz da I.A',
-      description: 'Horóscopo diário dos 12 signos e tiragem do Tarô de Marselha.',
+      title: 'Horóscopo & Tarô | Jornal Arcanjo',
+      description: 'Horóscopo diário dos 12 signos e tiragem do Tarô de Marselha com Pai Jhonatan.',
       alternates: {
-        canonical: 'https://vozdaia.com/horoscopo',
+        canonical: 'https://jornalarcanjo.com.br/horoscopo',
       },
     };
   }
@@ -41,14 +41,14 @@ export async function generateMetadata({ params }) {
     .select('name')
     .eq('slug', slug)
     .single();
-  if (!category) return { title: 'Categoria não encontrada | Voz da I.A' };
+  if (!category) return { title: 'Categoria não encontrada | Jornal Arcanjo' };
   categoryName = category.name;
 
-  const categoryUrl = `https://vozdaia.com/categoria/${slug}`;
+  const categoryUrl = `https://jornalarcanjo.com.br/categoria/${slug}`;
 
   return {
-    title: `${categoryName} | Voz da I.A`,
-    description: `Últimas notícias sobre ${categoryName} no portal Voz da I.A.`,
+    title: `${categoryName} | Jornal Arcanjo`,
+    description: `Últimas notícias sobre ${categoryName} no Jornal Arcanjo.`,
     alternates: {
       canonical: categoryUrl,
     },
@@ -62,12 +62,12 @@ export default async function CategoryPage({ params }) {
     redirect('/clima');
   }
 
-  if (slug === 'horoscopo' || slug === 'horoscopo-e-taro') {
+  if (slug === 'horoscopo' || slug === 'horoscopo-taro' || slug === 'horoscopo-e-taro') {
     redirect('/horoscopo');
   }
 
   if (slug === 'passatempos') {
-    redirect('/categoria/tech-e-gaming#passatempos');
+    redirect('/passatempos');
   }
 
   // Busca a categoria no banco de dados

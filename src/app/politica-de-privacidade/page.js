@@ -1,10 +1,10 @@
-import PageTracker from '../components/PageTracker';
+﻿import PageTracker from '../components/PageTracker';
 
 export const metadata = {
-  title: 'Política de Privacidade | Voz da I.A',
-  description: 'Política de Privacidade do portal Voz da I.A em conformidade com a LGPD',
+  title: 'Política de Privacidade | Jornal Arcanjo',
+  description: 'Política de Privacidade do portal Jornal Arcanjo em conformidade com a LGPD',
   alternates: {
-    canonical: 'https://vozdaia.com/politica-de-privacidade',
+    canonical: 'https://jornalarcanjo.com.br/politica-de-privacidade',
   },
 };
 
@@ -12,14 +12,14 @@ export default function PoliticaPrivacidade() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "DigitalDocument",
-    "name": "Política de Privacidade | Voz da I.A",
-    "description": "Política de Privacidade do portal Voz da I.A em conformidade com a LGPD",
-    "url": "https://vozdaia.com/politica-de-privacidade",
+    "name": "Política de Privacidade | Jornal Arcanjo",
+    "description": "Política de Privacidade do portal Jornal Arcanjo em conformidade com a LGPD",
+    "url": "https://jornalarcanjo.com.br/politica-de-privacidade",
     "dateModified": "2026-08-21T00:00:00-03:00",
     "publisher": {
       "@type": "NewsMediaOrganization",
-      "name": "Voz da I.A",
-      "url": "https://vozdaia.com"
+      "name": "Jornal Arcanjo",
+      "url": "https://jornalarcanjo.com.br"
     }
   };
 
@@ -43,7 +43,7 @@ export default function PoliticaPrivacidade() {
       <div style={{ background: 'var(--gn-surface)', border: '1px solid var(--gn-border)', borderRadius: '12px', padding: '40px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', fontSize: '16px', lineHeight: '1.8', color: 'var(--gn-text-secondary)' }}>
         
         <p style={{ marginBottom: '32px', fontSize: '18px' }}>
-          O <strong>Voz da I.A</strong> tem o compromisso de proteger a sua privacidade e garantir a total transparência sobre o tratamento dos seus dados. Esta Política de Privacidade descreve como coletamos, utilizamos, armazenamos e protegemos as informações dos usuários ao navegar pelo nosso portal, em total conformidade com a legislação vigente, em especial a Lei Geral de Proteção de Dados Pessoais (LGPD - Lei nº 13.709/2018).
+          O <strong>Jornal Arcanjo</strong> tem o compromisso de proteger a sua privacidade e garantir a total transparência sobre o tratamento dos seus dados. Esta Política de Privacidade descreve como coletamos, utilizamos, armazenamos e protegemos as informações dos usuários ao navegar pelo nosso portal, em total conformidade com a legislação vigente, em especial a Lei Geral de Proteção de Dados Pessoais (LGPD - Lei nº 13.709/2018).
         </p>
 
         <h2 className="google-sans" style={{ fontSize: '20px', color: 'var(--gn-blue)', marginBottom: '16px', marginTop: '32px' }}>
@@ -83,7 +83,7 @@ export default function PoliticaPrivacidade() {
           Nossos artigos contêm links diretos para fontes primárias, estudos acadêmicos, vídeos e documentos oficiais.
         </p>
         <ul style={{ marginBottom: '24px', paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          <li>O Voz da I.A não se responsabiliza pelas práticas de privacidade, termos de uso ou políticas de tratamento de dados praticadas por sites e plataformas externas.</li>
+          <li>O Jornal Arcanjo não se responsabiliza pelas práticas de privacidade, termos de uso ou políticas de tratamento de dados praticadas por sites e plataformas externas.</li>
           <li>Recomendamos a leitura atenta das políticas de privacidade de qualquer endereço externo que você visitar a partir dos nossos links.</li>
         </ul>
 
@@ -115,7 +115,7 @@ export default function PoliticaPrivacidade() {
           6. Alterações desta Política
         </h2>
         <p style={{ marginBottom: '24px' }}>
-          O Voz da I.A reserva-se o direito de atualizar esta Política de Privacidade periodicamente para refletir melhorias técnicas, novas ferramentas editoriais ou adequações legislativas. Recomendamos a consulta regular desta página para ciência das eventuais revisões.
+          O Jornal Arcanjo reserva-se o direito de atualizar esta Política de Privacidade periodicamente para refletir melhorias técnicas, novas ferramentas editoriais ou adequações legislativas. Recomendamos a consulta regular desta página para ciência das eventuais revisões.
         </p>
 
         <h2 className="google-sans" style={{ fontSize: '20px', color: 'var(--gn-blue)', marginBottom: '16px', marginTop: '32px' }}>
@@ -125,7 +125,7 @@ export default function PoliticaPrivacidade() {
           Para exercer seus direitos de privacidade garantidos pela LGPD, esclarecer dúvidas ou solicitar a atualização/remoção de dados, entre em contato diretamente com a administração e redação do portal:
         </p>
         <ul style={{ marginBottom: '24px', paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <li><strong>Portal:</strong> Voz da I.A (https://vozdaia.com)</li>
+          <li><strong>Portal:</strong> Jornal Arcanjo (https://jornalarcanjo.com.br)</li>
           <li><strong>Sede / Endereço de Correspondência:</strong> Rua Maria Evaristo dos Santos, 330, Vila José Branco — Formiga (MG) — CEP 35572-272, Brasil</li>
           <li><strong>E-mail de Contato & Privacidade:</strong> <a href="mailto:gustavocastroinfo@gmail.com" style={{ color: 'var(--gn-blue)', textDecoration: 'underline' }}>gustavocastroinfo@gmail.com</a></li>
           <li><strong>Responsável Administrativo:</strong> Daiene Maria de Meneses / Gustavo de Castro Bernardes Rosa</li>

@@ -1,16 +1,10 @@
-import { NextResponse } from 'next/server';
+﻿import { NextResponse } from 'next/server';
 
 export function middleware(request) {
   const url = request.nextUrl;
   const host = request.headers.get('host') || '';
 
-  // 1. Redirecionamento Canônico: Forçar domínio oficial https://vozdaia.com para evitar canibalização/duplicidade SEO
-  if (host.includes('vercel.app') || host.startsWith('www.')) {
-    const canonicalUrl = new URL(url.pathname + url.search, 'https://vozdaia.com');
-    return NextResponse.redirect(canonicalUrl, 301);
-  }
-
-  // 1.1 Redirecionamento amigável para variações de sitemaps comuns (evita 404 no Google Search Console)
+  // Redirecionamento amigável para variações de sitemaps comuns (evita 404 no Google Search Console)
   if (url.pathname === '/sitemaps.xml' || url.pathname === '/sitemap_index.xml') {
     return NextResponse.redirect(new URL('/sitemap.xml', request.url), 301);
   }
@@ -18,7 +12,13 @@ export function middleware(request) {
     return NextResponse.redirect(new URL('/news-sitemap.xml', request.url), 301);
   }
 
-  // 2. Proteção de Agentes (existente)
+  // Redirecionamento www para sem www se em domínio customizado próprio
+  if (host.startsWith('www.jornalarcanjo.com.br')) {
+    const canonicalUrl = new URL(url.pathname + url.search, 'https://jornalarcanjo.com.br');
+    return NextResponse.redirect(canonicalUrl, 301);
+  }
+
+  // Proteção de Agentes (escrita)
   const isAgent = request.headers.get('x-agent-role') === 'gemini_spark_agent';
   const method = request.method;
 
@@ -32,7 +32,6 @@ export function middleware(request) {
   return NextResponse.next();
 }
 
-// Configuração para interceptar rotas de API e escritas de agentes
 export const config = {
-  matcher: ['/api/:path*'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
 };

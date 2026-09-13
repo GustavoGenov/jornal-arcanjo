@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import Link from 'next/link';
@@ -47,15 +47,15 @@ export default function LayoutShell({ categories, children }) {
               <Link href="/" className="logo header-brand-link" onClick={closeDrawer}>
                 <img 
                   src="/simbolo.png" 
-                  alt="Símbolo Voz da I.A" 
+                  alt="Símbolo Jornal Arcanjo" 
                   width="40"
                   height="40"
                   className="header-logo-symbol"
                   decoding="async"
                 />
                 <div className="header-brand-text-wrap">
-                  <span className="header-brand-title">Voz da I.A</span>
-                  <span className="header-brand-subtitle">Combate às Fake News com Tecnologia</span>
+                  <span className="header-brand-title">Jornal Arcanjo</span>
+                  <span className="header-brand-subtitle">Sociedade, Cultura & Sabedoria</span>
                 </div>
               </Link>
             </div>
@@ -70,7 +70,7 @@ export default function LayoutShell({ categories, children }) {
                 <input 
                   type="text" 
                   name="q" 
-                  placeholder="Pesquisar notícias, IA, ciência, temas locais..." 
+                  placeholder="Pesquisar notícias, cultura, sociedade, saúde..." 
                   required 
                   className="header-search-input" 
                 />
@@ -106,7 +106,7 @@ export default function LayoutShell({ categories, children }) {
               <input 
                 type="text" 
                 name="q" 
-                placeholder="Pesquisar notícias..." 
+                placeholder="Pesquisar no Jornal Arcanjo..." 
                 required 
                 className="header-search-input" 
               />
@@ -114,39 +114,36 @@ export default function LayoutShell({ categories, children }) {
           </div>
         </div>
 
-        {/* LINHA 2: TODAS AS EDITORIAS EM BLOCOS ROLÁVEIS */}
+        {/* LINHA 2: AS 7 EDITORIAS OFICIAIS EM BLOCOS ROLÁVEIS */}
         <div className="header-bottom-row">
           <div className="header-inner">
             <nav className="header-categories-nav" aria-label="Editorias do jornal">
-              <Link href="/categoria/ia-e-agentes" className="nav-pill-item">
-                <span>🤖</span> <span>IA & Agentes</span>
+              <Link href="/categoria/formiga-sociedade" className="nav-pill-item pill-highlight-green">
+                <span>🏛️</span> <span>Formiga em Foco & Sociedade</span>
               </Link>
-              <Link href="/categoria/ciencia-e-espaco" className="nav-pill-item">
-                <span>🚀</span> <span>Ciência & Espaço</span>
+              <Link href="/categoria/cultura-filosofia" className="nav-pill-item">
+                <span>📚</span> <span>Cultura e Filosofia</span>
               </Link>
-              <Link href="/categoria/tech-e-gaming" className="nav-pill-item">
-                <span>🎮</span> <span>Tech & Games</span>
+              <Link href="/categoria/saude-bem-estar" className="nav-pill-item">
+                <span>🌿</span> <span>Saúde e Bem-Estar</span>
               </Link>
-              <Link href="/categoria/cultura-filosofia-bem-estar" className="nav-pill-item">
-                <span>🧠</span> <span>Cultura & Sociedade</span>
-              </Link>
-              <Link href="/categoria/engenharia-e-hardware" className="nav-pill-item">
-                <span>⚡</span> <span>Hardware & Tech</span>
-              </Link>
-              <Link href="/#formiga-em-foco" className="nav-pill-item pill-highlight-green">
-                <span>📍</span> <span>Formiga em Foco</span>
+              <Link href="/categoria/religiao" className="nav-pill-item">
+                <span>🕊️</span> <span>Religião</span>
               </Link>
               <Link href="/clima" className="nav-pill-item">
-                <span>⛅</span> <span>Clima Tempo BR</span>
+                <span>⛅</span> <span>Clima tempo</span>
               </Link>
               <Link href="/horoscopo" className="nav-pill-item">
-                <span>🔮</span> <span>Horóscopo & Tarô</span>
+                <span>✨</span> <span>Horóscopo & Tarô</span>
+              </Link>
+              <Link href="/passatempos" className="nav-pill-item">
+                <span>🧩</span> <span>Passatempos</span>
               </Link>
               <Link href="/equipe" className="nav-pill-item">
-                <span>👥</span> <span>Equipe Editorial</span>
+                <span>👥</span> <span>Nossa Equipe</span>
               </Link>
               <Link href="/sobre" className="nav-pill-item">
-                <span>ℹ️</span> <span>Sobre Nós</span>
+                <span>ℹ️</span> <span>Quem Somos</span>
               </Link>
             </nav>
           </div>
@@ -193,14 +190,14 @@ export default function LayoutShell({ categories, children }) {
           <Link href="/" className="logo" onClick={closeDrawer} style={{ color: 'var(--text)', display: 'flex', alignItems: 'center', gap: '10px' }}>
             <img 
               src="/simbolo.png" 
-              alt="Símbolo Voz da I.A" 
+              alt="Símbolo Jornal Arcanjo" 
               width="34" 
               height="34" 
               loading="lazy"
               decoding="async"
               style={{ width: '34px', height: '34px', borderRadius: '8px', objectFit: 'cover' }} 
             />
-            <span style={{ fontWeight: 700, fontSize: '1.2rem' }}>Voz da I.A</span>
+            <span style={{ fontWeight: 700, fontSize: '1.2rem' }}>Jornal Arcanjo</span>
           </Link>
           <button onClick={closeDrawer} aria-label="Fechar menu" style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4px' }}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -212,31 +209,31 @@ export default function LayoutShell({ categories, children }) {
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <span style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--text-muted)', fontWeight: 700, letterSpacing: '0.5px' }}>
-            Navegação
+            Editorias Oficiais
           </span>
           <Link href="/" onClick={closeDrawer} style={{ color: 'var(--text)', padding: '8px 0', fontWeight: 500 }}>
-            📰 Início / Manchetes
+            📰 Início / Capa
           </Link>
-          <Link href="/categoria/ia-e-agentes" onClick={closeDrawer} style={{ color: 'var(--text)', padding: '8px 0', fontWeight: 500 }}>
-            🤖 Inteligência Artificial & Agentes
+          <Link href="/categoria/formiga-sociedade" onClick={closeDrawer} style={{ color: 'var(--text)', padding: '8px 0', fontWeight: 500 }}>
+            🏛️ Formiga em Foco & Sociedade
           </Link>
-          <Link href="/categoria/ciencia-e-espaco" onClick={closeDrawer} style={{ color: 'var(--text)', padding: '8px 0', fontWeight: 500 }}>
-            🚀 Ciência & Fronteira Espacial
+          <Link href="/categoria/cultura-filosofia" onClick={closeDrawer} style={{ color: 'var(--text)', padding: '8px 0', fontWeight: 500 }}>
+            📚 Cultura e Filosofia
           </Link>
-          <Link href="/categoria/tech-e-gaming" onClick={closeDrawer} style={{ color: 'var(--text)', padding: '8px 0', fontWeight: 500 }}>
-            🎮 Tech & Gaming
+          <Link href="/categoria/saude-bem-estar" onClick={closeDrawer} style={{ color: 'var(--text)', padding: '8px 0', fontWeight: 500 }}>
+            🌿 Saúde e Bem-Estar
           </Link>
-          <Link href="/categoria/cultura-filosofia-bem-estar" onClick={closeDrawer} style={{ color: 'var(--text)', padding: '8px 0', fontWeight: 500 }}>
-            🧠 Cultura, Filosofia & Bem-Estar
-          </Link>
-          <Link href="/categoria/engenharia-e-hardware" onClick={closeDrawer} style={{ color: 'var(--text)', padding: '8px 0', fontWeight: 500 }}>
-            ⚡ Engenharia & Hardware
+          <Link href="/categoria/religiao" onClick={closeDrawer} style={{ color: 'var(--text)', padding: '8px 0', fontWeight: 500 }}>
+            🕊️ Religião
           </Link>
           <Link href="/clima" onClick={closeDrawer} style={{ color: 'var(--text)', padding: '8px 0', fontWeight: 500 }}>
-            ⛅ Clima Tempo BR
+            ⛅ Clima tempo
           </Link>
           <Link href="/horoscopo" onClick={closeDrawer} style={{ color: 'var(--text)', padding: '8px 0', fontWeight: 500 }}>
-            🔮 Horóscopo & Tarô
+            ✨ Horóscopo & Tarô
+          </Link>
+          <Link href="/passatempos" onClick={closeDrawer} style={{ color: 'var(--text)', padding: '8px 0', fontWeight: 500 }}>
+            🧩 Passatempos
           </Link>
         </div>
 
@@ -247,10 +244,10 @@ export default function LayoutShell({ categories, children }) {
             Institucional
           </span>
           <Link href="/sobre" onClick={closeDrawer} style={{ color: 'var(--text)', padding: '6px 0', fontSize: '14px' }}>
-            Sobre o Voz da I.A
+            Quem Somos
           </Link>
           <Link href="/equipe" onClick={closeDrawer} style={{ color: 'var(--text)', padding: '6px 0', fontSize: '14px' }}>
-            Nossa Equipe & Colunistas
+            Nossa Equipe Editorial
           </Link>
           <Link href="/politica-de-privacidade" onClick={closeDrawer} style={{ color: 'var(--text)', padding: '6px 0', fontSize: '14px' }}>
             Política de Privacidade
@@ -274,51 +271,52 @@ export default function LayoutShell({ categories, children }) {
                 <div className="logo" style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <img 
                     src="/simbolo.png" 
-                    alt="Símbolo Voz da I.A" 
+                    alt="Símbolo Jornal Arcanjo" 
                     width="38" 
                     height="38" 
                     loading="lazy"
                     decoding="async"
                     style={{ width: '38px', height: '38px', borderRadius: '8px', objectFit: 'cover' }} 
                   />
-                  <span>Voz da I.A</span>
+                  <span>Jornal Arcanjo</span>
                 </div>
                 <p style={{ fontSize: '0.9rem', lineHeight: '1.6', color: '#94a3b8' }}>
-                  Jornal digital independente de Formiga (MG) e do Brasil. 
-                  Compromisso absoluto com o combate rigoroso às fake news por meio de tecnologia, checagem científica e valorização do jornalismo autêntico.
+                  Jornal digital independente sediado em Formiga (MG) e com alcance nacional. 
+                  Dedicado a celebrar a cultura, a reflexão filosófica, a saúde integral, a espiritualidade, a história comunitária e os fatos comprovados.
                 </p>
               </div>
 
               {/* Coluna 2: Categorias */}
               <div>
-                <h4>Categorias</h4>
+                <h4>Editorias</h4>
                 <ul>
-                  <li><Link href="/categoria/ia-e-agentes">Inteligência Artificial</Link></li>
-                  <li><Link href="/categoria/ciencia-e-espaco">Ciência & Espaço</Link></li>
-                  <li><Link href="/categoria/tech-e-gaming">Tech & Gaming</Link></li>
-                  <li><Link href="/categoria/cultura-filosofia-bem-estar">Cultura & Filosofia</Link></li>
-                  <li><Link href="/categoria/engenharia-e-hardware">Engenharia & Hardware</Link></li>
-                </ul>
-              </div>
-
-              {/* Coluna 3: Formiga & Destaques */}
-              <div>
-                <h4>Formiga em Foco</h4>
-                <ul>
-                  <li><Link href="/#formiga-em-foco">Notícias Locais</Link></li>
-                  <li><Link href="/#formiga-em-foco">Cultura & Sociedade</Link></li>
-                  <li><Link href="/clima">Previsão do Tempo</Link></li>
+                  <li><Link href="/categoria/formiga-sociedade">Formiga em Foco & Sociedade</Link></li>
+                  <li><Link href="/categoria/cultura-filosofia">Cultura e Filosofia</Link></li>
+                  <li><Link href="/categoria/saude-bem-estar">Saúde e Bem-Estar</Link></li>
+                  <li><Link href="/categoria/religiao">Religião</Link></li>
+                  <li><Link href="/clima">Clima tempo</Link></li>
                   <li><Link href="/horoscopo">Horóscopo & Tarô</Link></li>
-                  <li><Link href="/#ecossistema">Projetos Parceiros</Link></li>
+                  <li><Link href="/passatempos">Passatempos</Link></li>
                 </ul>
               </div>
 
-              {/* Coluna 4: Institucional (Obrigatório AdSense) */}
+              {/* Coluna 3: Destaques & Serviços */}
+              <div>
+                <h4>Serviços & Lazer</h4>
+                <ul>
+                  <li><Link href="/clima">Previsão do Tempo</Link></li>
+                  <li><Link href="/horoscopo">Horóscopo & Tarô do Dia</Link></li>
+                  <li><Link href="/passatempos">Passatempos & Jogos</Link></li>
+                  <li><Link href="/categoria/formiga-sociedade">Memória Regional</Link></li>
+                </ul>
+              </div>
+
+              {/* Coluna 4: Institucional */}
               <div>
                 <h4>Institucional</h4>
                 <ul>
                   <li><Link href="/sobre">Quem Somos</Link></li>
-                  <li><Link href="/equipe">Nossa Equipe & Colunistas</Link></li>
+                  <li><Link href="/equipe">Nossa Equipe Editorial</Link></li>
                   <li><Link href="/#newsletter">Assinar Newsletter</Link></li>
                   <li><Link href="/politica-de-privacidade">Política de Privacidade</Link></li>
                   <li><Link href="/termos">Termos de Uso</Link></li>
@@ -333,7 +331,7 @@ export default function LayoutShell({ categories, children }) {
             </div>
 
             <div className="copyright">
-              © {new Date().getFullYear()} Voz da I.A — Formiga, Minas Gerais. Todos os direitos reservados.
+              © {new Date().getFullYear()} Jornal Arcanjo — Formiga, Minas Gerais. Todos os direitos reservados.
             </div>
           </footer>
         </div>

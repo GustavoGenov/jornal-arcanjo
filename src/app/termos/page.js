@@ -1,10 +1,10 @@
-import PageTracker from '../components/PageTracker';
+﻿import PageTracker from '../components/PageTracker';
 
 export const metadata = {
-  title: 'Termos e Condições de Uso | Voz da I.A',
-  description: 'Termos e Condições de Uso do portal Voz da I.A',
+  title: 'Termos e Condições de Uso | Jornal Arcanjo',
+  description: 'Termos e Condições de Uso do portal Jornal Arcanjo',
   alternates: {
-    canonical: 'https://vozdaia.com/termos',
+    canonical: 'https://jornalarcanjo.com.br/termos',
   },
 };
 
@@ -12,14 +12,14 @@ export default function TermosUso() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "DigitalDocument",
-    "name": "Termos e Condições de Uso | Voz da I.A",
-    "description": "Termos e Condições de Uso do portal Voz da I.A",
-    "url": "https://vozdaia.com/termos",
+    "name": "Termos e Condições de Uso | Jornal Arcanjo",
+    "description": "Termos e Condições de Uso do portal Jornal Arcanjo",
+    "url": "https://jornalarcanjo.com.br/termos",
     "dateModified": "2026-08-21T00:00:00-03:00",
     "publisher": {
       "@type": "NewsMediaOrganization",
-      "name": "Voz da I.A",
-      "url": "https://vozdaia.com"
+      "name": "Jornal Arcanjo",
+      "url": "https://jornalarcanjo.com.br"
     }
   };
 
@@ -43,14 +43,14 @@ export default function TermosUso() {
       <div style={{ background: 'var(--gn-surface)', border: '1px solid var(--gn-border)', borderRadius: '12px', padding: '40px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', fontSize: '16px', lineHeight: '1.8', color: 'var(--gn-text-secondary)' }}>
         
         <p style={{ marginBottom: '32px', fontSize: '18px' }}>
-          Seja bem-vindo ao portal <strong>Voz da I.A</strong>. Ao acessar, navegar ou interagir com os serviços e publicações disponibilizados em nossa plataforma, você declara ter lido, compreendido e concordado integralmente com os presentes Termos e Condições de Uso. Caso não concorde com qualquer disposição aqui descrita, solicitamos que não continue a navegação.
+          Seja bem-vindo ao portal <strong>Jornal Arcanjo</strong>. Ao acessar, navegar ou interagir com os serviços e publicações disponibilizados em nossa plataforma, você declara ter lido, compreendido e concordado integralmente com os presentes Termos e Condições de Uso. Caso não concorde com qualquer disposição aqui descrita, solicitamos que não continue a navegação.
         </p>
 
         <h2 className="google-sans" style={{ fontSize: '20px', color: 'var(--gn-blue)', marginBottom: '16px', marginTop: '32px' }}>
           1. Propriedade Intelectual e Direitos Autorais
         </h2>
         <p style={{ marginBottom: '16px' }}>
-          Todo o acervo publicado no Voz da I.A — incluindo reportagens, artigos de opinião, análises técnicas, textos, infográficos, imagens conceituais, códigos-fonte e logotipos — é protegido pelas leis de propriedade intelectual e direitos autorais (Lei nº 9.610/1998):
+          Todo o acervo publicado no Jornal Arcanjo — incluindo reportagens, artigos de opinião, análises técnicas, textos, infográficos, imagens conceituais, códigos-fonte e logotipos — é protegido pelas leis de propriedade intelectual e direitos autorais (Lei nº 9.610/1998):
         </p>
         <ul style={{ marginBottom: '24px', paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
           <li>
@@ -68,7 +68,7 @@ export default function TermosUso() {
           2. Interação e Ausência de Seção de Comentários
         </h2>
         <p style={{ marginBottom: '16px' }}>
-          O Voz da I.A prioriza a entrega de informações jornalísticas checadas, científicas e tecnológicas com o mais alto nível de precisão. Visando garantir a segurança jurídica da plataforma e a integridade do ambiente digital, <strong>o portal não disponibiliza espaço para comentários, fóruns públicos ou publicação de conteúdos diretamente por leitores e terceiros</strong> nas páginas das reportagens.
+          O Jornal Arcanjo prioriza a entrega de informações jornalísticas checadas, científicas e tecnológicas com o mais alto nível de precisão. Visando garantir a segurança jurídica da plataforma e a integridade do ambiente digital, <strong>o portal não disponibiliza espaço para comentários, fóruns públicos ou publicação de conteúdos diretamente por leitores e terceiros</strong> nas páginas das reportagens.
         </p>
         <ul style={{ marginBottom: '24px', paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
           <li>Qualquer canal oficial de contato com a equipe editorial deve ser utilizado exclusivamente para sugestões de pauta, correções factuais, dúvidas legítimas ou propostas de parcerias institucionais.</li>
@@ -97,7 +97,7 @@ export default function TermosUso() {
           4. Isenção de Responsabilidade Técnica
         </h2>
         <p style={{ marginBottom: '16px' }}>
-          A equipe do Voz da I.A trabalha continuamente para manter a plataforma segura, rápida e estável:
+          A equipe do Jornal Arcanjo trabalha continuamente para manter a plataforma segura, rápida e estável:
         </p>
         <ul style={{ marginBottom: '24px', paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
           <li>Não garantimos que a operação do portal será ininterrupta ou 100% livre de falhas temporárias resultantes de indisponibilidade em provedores de nuvem, ataques cibernéticos externos ou falhas de infraestrutura de rede global.</li>
@@ -108,7 +108,7 @@ export default function TermosUso() {
           5. Modificações dos Termos
         </h2>
         <p style={{ marginBottom: '24px' }}>
-          O Voz da I.A poderá, a qualquer momento e a seu exclusivo critério, revisar, alterar ou atualizar estes Termos de Uso para refletir mudanças tecnológicas, regulatórias ou na linha editorial. As alterações passam a vigorar imediatamente após a sua publicação nesta página, identificadas pela data da última atualização no topo do documento.
+          O Jornal Arcanjo poderá, a qualquer momento e a seu exclusivo critério, revisar, alterar ou atualizar estes Termos de Uso para refletir mudanças tecnológicas, regulatórias ou na linha editorial. As alterações passam a vigorar imediatamente após a sua publicação nesta página, identificadas pela data da última atualização no topo do documento.
         </p>
 
         <h2 className="google-sans" style={{ fontSize: '20px', color: 'var(--gn-blue)', marginBottom: '16px', marginTop: '32px' }}>
