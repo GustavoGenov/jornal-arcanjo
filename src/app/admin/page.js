@@ -67,7 +67,15 @@ export default async function AdminDashboard() {
     articleCount: articlesPerCategory[cat.id] || 0
   })).sort((a, b) => b.articleCount - a.articleCount || b.views - a.views);
 
-  const sortOrder = { 'IA Sem Mitos': 1, 'Kaelara Insights': 2 };
+  const sortOrder = { 
+    'Formiga em Foco & Sociedade': 1, 
+    'Cultura e Filosofia': 2,
+    'Saúde e Bem-Estar': 3,
+    'Religião': 4,
+    'Clima tempo': 5,
+    'Horóscopo & Tarô': 6,
+    'Passatempos': 7
+  };
   let processedCategories = (categoriesData || []).map(cat => {
     if (cat.slug === 'religiao') {
       return { ...cat, color_code: '#8e24aa' };

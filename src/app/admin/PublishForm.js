@@ -10,16 +10,16 @@ const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
 
 const INITIAL_TEMPLATE = `
   <h2>Contexto Principal</h2>
-  <p>Insira o contexto detalhado aqui. Evite parágrafos muito longos.</p>
-  <h3>Análise e Impactos</h3>
-  <p>Detalhe os impactos da tecnologia, pesquisa ou fato apurado.</p>
+  <p>Insira o contexto detalhado aqui. Desenvolva as informações com precisão e clareza.</p>
+  <h3>Análise e Desdobramentos</h3>
+  <p>Detalhe a análise aprofundada, declarações, fatos históricos ou impacto social e cultural.</p>
   <blockquote>
-    "O futuro da tecnologia e do jornalismo depende de transparência e precisão." - Especialista
+    "O compromisso com a verdade, com a memória e com a comunidade é o alicerce do bom jornalismo." - Redação Jornal Arcanjo
   </blockquote>
   <h3>O que esperar a seguir</h3>
   <ul>
     <li>Ponto 1: Desdobramentos imediatos</li>
-    <li>Ponto 2: Próximas etapas</li>
+    <li>Ponto 2: Próximas etapas e impactos na sociedade</li>
   </ul>
 `;
 

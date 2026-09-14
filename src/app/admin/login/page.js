@@ -54,11 +54,11 @@ export default function AdminLogin() {
         <Link href="/" style={{ textDecoration: 'none', display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: '10px', marginBottom: '20px' }}>
           <img 
             src="/simbolo.png" 
-            alt="Símbolo Voz da I.A" 
+            alt="Símbolo Jornal Arcanjo" 
             style={{ width: '56px', height: '56px', borderRadius: '12px', objectFit: 'cover', boxShadow: '0 4px 14px rgba(0,0,0,0.25)' }} 
           />
           <h1 style={{ fontSize: '24px', fontWeight: '800', color: '#0f172a', margin: 0, letterSpacing: '-0.3px' }}>
-            Voz da I.A
+            Jornal Arcanjo
           </h1>
         </Link>
 
@@ -73,7 +73,7 @@ export default function AdminLogin() {
             </label>
             <input 
               type="email" 
-              placeholder="seuemail@vozdaia.com" 
+              placeholder="seuemail@jornalarcanjo.com" 
               required 
               value={email}
               onChange={e => setEmail(e.target.value)}

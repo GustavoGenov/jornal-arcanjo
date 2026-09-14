@@ -1,8 +1,10 @@
 import ProtectedRoute from './ProtectedRoute';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
-  title: 'Painel Administrativo | Voz da I.A',
+  title: 'Painel Administrativo | Jornal Arcanjo',
   robots: {
     index: false,
     follow: false,
@@ -62,12 +64,12 @@ export default function AdminLayout({ children }) {
               <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '36px' }}>
                 <img 
                   src="/simbolo.png" 
-                  alt="Símbolo Voz da I.A" 
+                  alt="Símbolo Jornal Arcanjo" 
                   style={{ width: '42px', height: '42px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid rgba(255,255,255,0.3)', boxShadow: '0 4px 12px rgba(0,0,0,0.3)' }} 
                 />
                 <div>
                   <div style={{ fontSize: '18px', fontWeight: '800', color: '#fff', letterSpacing: '-0.3px', lineHeight: 1.2 }}>
-                    Voz da I.A
+                    Jornal Arcanjo
                   </div>
                   <div style={{ fontSize: '11px', color: '#93c5fd', textTransform: 'uppercase', fontWeight: '600', letterSpacing: '0.5px' }}>
                     Painel Editorial
