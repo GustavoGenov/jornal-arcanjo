@@ -1,4 +1,4 @@
-﻿import PageTracker from '../components/PageTracker';
+import PageTracker from '../components/PageTracker';
 
 export const metadata = {
   title: 'Quem Somos | Jornal Arcanjo',
@@ -36,10 +36,8 @@ export default function Sobre() {
       ],
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "Rua Maria Evaristo dos Santos, 330, Vila José Branco",
         "addressLocality": "Formiga",
         "addressRegion": "MG",
-        "postalCode": "35572-272",
         "addressCountry": "BR"
       },
       "contactPoint": {
@@ -141,7 +139,7 @@ export default function Sobre() {
             <strong>Redação Editorial:</strong> <a href="mailto:gustavocastroinfo@gmail.com" style={{ color: '#1e3a8a' }}>gustavocastroinfo@gmail.com</a>
           </p>
           <p style={{ margin: '0', fontSize: '15px' }}>
-            <strong>Sede:</strong> Rua Maria Evaristo dos Santos, 330, Vila José Branco — Formiga (MG) — CEP 35572-272, Brasil.
+            <strong>Sede:</strong> Redação Digital — Formiga (MG), Brasil.
           </p>
         </div>
 

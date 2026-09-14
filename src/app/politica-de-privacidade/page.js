@@ -1,4 +1,4 @@
-﻿import PageTracker from '../components/PageTracker';
+import PageTracker from '../components/PageTracker';
 
 export const metadata = {
   title: 'Política de Privacidade | Jornal Arcanjo',
@@ -126,7 +126,7 @@ export default function PoliticaPrivacidade() {
         </p>
         <ul style={{ marginBottom: '24px', paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <li><strong>Portal:</strong> Jornal Arcanjo (https://jornalarcanjo.com.br)</li>
-          <li><strong>Sede / Endereço de Correspondência:</strong> Rua Maria Evaristo dos Santos, 330, Vila José Branco — Formiga (MG) — CEP 35572-272, Brasil</li>
+          <li><strong>Sede / Atendimento Editorial:</strong> Redação Digital — Formiga (MG), Brasil</li>
           <li><strong>E-mail de Contato & Privacidade:</strong> <a href="mailto:gustavocastroinfo@gmail.com" style={{ color: 'var(--gn-blue)', textDecoration: 'underline' }}>gustavocastroinfo@gmail.com</a></li>
           <li><strong>Responsável Administrativo:</strong> Daiene Maria de Meneses / Gustavo de Castro Bernardes Rosa</li>
         </ul>

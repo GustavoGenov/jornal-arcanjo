@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState } from 'react';
 import Link from 'next/link';
@@ -265,7 +265,7 @@ export default function LayoutShell({ categories, children }) {
               © {new Date().getFullYear()} The Jornal Arcanjo Publishing Group. Todos os direitos reservados.
             </p>
             <p style={{ margin: 0, fontSize: '10.5px' }}>
-              Rua Maria Evaristo dos Santos, 330, Vila José Branco — Formiga, MG — CEP 35572-272.
+              Redação Digital • Formiga, MG — Brasil.
             </p>
           </div>
 
