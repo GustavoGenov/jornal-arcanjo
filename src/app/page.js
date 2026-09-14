@@ -1,4 +1,4 @@
-﻿import { supabase } from '@/lib/supabase';
+import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
 import AdBanner from '@/components/AdBanner';
 import PageTracker from './components/PageTracker';
@@ -258,7 +258,6 @@ export default async function Home() {
                 src={col.image} 
                 alt={col.name} 
                 className="nyt-opinion-avatar"
-                onError={(e) => { e.target.style.display = 'none'; }}
               />
               <div className="nyt-opinion-content">
                 <div className="nyt-opinion-author">{col.name}</div>
