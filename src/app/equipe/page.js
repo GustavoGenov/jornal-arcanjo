@@ -1,4 +1,52 @@
-﻿import PageTracker from '../components/PageTracker';
+import PageTracker from '../components/PageTracker';
+
+function IconVerified({ size = 22, color = '#1e3a8a' }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={color} style={{ display: 'inline-block', verticalAlign: 'middle', flexShrink: 0 }}>
+      <path d="M23 12l-2.44-2.79.34-3.69-3.61-.82-1.89-3.2L12 2.96 8.6 1.5 6.71 4.69 3.1 5.5l.34 3.7L1 12l2.44 2.79-.34 3.7 3.61.82L8.6 22.5l3.4-1.47 3.4 1.46 1.89-3.19 3.61-.82-.34-3.69L23 12zm-12.91 4.72l-3.8-3.81 1.48-1.48 2.32 2.33 5.85-5.87 1.48 1.48-7.33 7.35z"/>
+    </svg>
+  );
+}
+
+function IconEditNote({ size = 22, color = '#059669' }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={color} style={{ display: 'inline-block', verticalAlign: 'middle', flexShrink: 0 }}>
+      <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+    </svg>
+  );
+}
+
+function IconEmail({ size = 20 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+      <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+    </svg>
+  );
+}
+
+function IconPhone({ size = 20 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+      <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+    </svg>
+  );
+}
+
+function IconWebsite({ size = 20 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+      <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/>
+    </svg>
+  );
+}
+
+function IconLinkedIn({ size = 20 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+      <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+    </svg>
+  );
+}
 
 export const metadata = {
   title: 'Nossa Equipe | Jornal Arcanjo',
@@ -145,23 +193,23 @@ function MemberCard({ member }) {
 
       <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginTop: 'auto' }}>
         {member.email && (
-          <a href={"mailto:" + member.email} title="Email" style={{ color: 'var(--gn-text-secondary)', transition: 'color 0.2s' }}>
-            <span className="material-icons-extended">email</span>
+          <a href={"mailto:" + member.email} title="Email" style={{ color: 'var(--gn-text-secondary)', transition: 'color 0.2s', display: 'flex', alignItems: 'center' }}>
+            <IconEmail />
           </a>
         )}
         {member.phone && (
-          <a href={"https://wa.me/55" + member.phone.replace(/\D/g, '')} target="_blank" rel="noopener noreferrer" title="WhatsApp / Telefone" style={{ color: 'var(--gn-text-secondary)', transition: 'color 0.2s' }}>
-            <span className="material-icons-extended">phone</span>
+          <a href={"https://wa.me/55" + member.phone.replace(/\D/g, '')} target="_blank" rel="noopener noreferrer" title="WhatsApp / Telefone" style={{ color: 'var(--gn-text-secondary)', transition: 'color 0.2s', display: 'flex', alignItems: 'center' }}>
+            <IconPhone />
           </a>
         )}
         {member.website && (
-          <a href={member.website} target="_blank" rel="noopener noreferrer" title="Site / Perfil" style={{ color: 'var(--gn-text-secondary)', transition: 'color 0.2s' }}>
-            <span className="material-icons-extended">language</span>
+          <a href={member.website} target="_blank" rel="noopener noreferrer" title="Site / Perfil" style={{ color: 'var(--gn-text-secondary)', transition: 'color 0.2s', display: 'flex', alignItems: 'center' }}>
+            <IconWebsite />
           </a>
         )}
         {member.linkedin && (
-          <a href={member.linkedin} target="_blank" rel="noopener noreferrer" title="LinkedIn" style={{ color: 'var(--gn-text-secondary)', transition: 'color 0.2s' }}>
-            <span className="material-icons-extended">link</span>
+          <a href={member.linkedin} target="_blank" rel="noopener noreferrer" title="LinkedIn" style={{ color: 'var(--gn-text-secondary)', transition: 'color 0.2s', display: 'flex', alignItems: 'center' }}>
+            <IconLinkedIn />
           </a>
         )}
       </div>
@@ -214,7 +262,7 @@ export default function EquipePage() {
       {/* Seção Fundador e Cofundador */}
       <div style={{ marginBottom: '48px' }}>
         <h2 className="google-sans" style={{ fontSize: '22px', marginBottom: '20px', color: 'var(--gn-text)', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '700' }}>
-          <span className="material-icons-extended" style={{ color: '#1e3a8a' }}>verified</span>
+          <IconVerified />
           Direção Editorial & Fundadores
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
@@ -227,7 +275,7 @@ export default function EquipePage() {
       {/* Seção Colunistas Especialistas */}
       <div style={{ marginBottom: '48px' }}>
         <h2 className="google-sans" style={{ fontSize: '22px', marginBottom: '20px', color: 'var(--gn-text)', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '700' }}>
-          <span className="material-icons-extended" style={{ color: '#059669' }}>edit_note</span>
+          <IconEditNote />
           Colunistas & Titulares das Editorias
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>

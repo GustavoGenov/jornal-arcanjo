@@ -1,4 +1,4 @@
-﻿import './globals.css';
+import './globals.css';
 import { Playfair_Display, Merriweather, Plus_Jakarta_Sans } from 'next/font/google';
 import { supabase } from '@/lib/supabase';
 import { Providers } from './providers';
@@ -78,11 +78,14 @@ export default async function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://hiaoasipxkxsjcoshscu.supabase.co" />
         
+        {/* Material Icons e Symbols */}
         <link 
           rel="stylesheet" 
           href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" 
-          media="print" 
-          onLoad="this.media='all'" 
+        />
+        <link 
+          rel="stylesheet" 
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" 
         />
 
         <Script
