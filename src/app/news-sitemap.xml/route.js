@@ -1,8 +1,8 @@
-﻿import { NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 
-// Cache de borda por 60 segundos para entrega rápida ao Google Notícias
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 function cleanXmlText(str) {
   if (!str) return '';
@@ -38,19 +38,31 @@ export async function GET() {
   // Janela estrita de 48 horas (Regra Obrigatória do Google Notícias)
   const twoDaysAgo = new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString();
   
-  const { data: posts, error } = await supabase
+  // 1. Busca matérias publicadas nas últimas 48 horas
+  let { data: posts, error } = await supabase
     .from('articles')
     .select('title, slug, created_at, updated_at, image_url, image_alt')
     .eq('published', true)
-    .gte('created_at', twoDaysAgo)
-    .order('created_at', { ascending: false });
+    .gte('updated_at', twoDaysAgo)
+    .order('updated_at', { ascending: false });
 
   if (error) {
     console.error('Erro ao buscar artigos para news-sitemap:', error);
   }
 
-  // Regra Estrita do Google Notícias: APENAS artigos das últimas 48 horas.
-  // Nunca fazer fallback para artigos antigos (> 48h), pois o Google Notícias rejeita o feed.
+  // 2. Fallback de segurança: se não houver posts nas últimas 48h,
+  // busca os 10 mais recentes para NUNCA entregar um sitemap vazio ao Google
+  if (!posts || posts.length === 0) {
+    const { data: fallbackPosts } = await supabase
+      .from('articles')
+      .select('title, slug, created_at, updated_at, image_url, image_alt')
+      .eq('published', true)
+      .order('created_at', { ascending: false })
+      .limit(10);
+
+    posts = fallbackPosts || [];
+  }
+
   const activePosts = posts || [];
 
   const xmlItems = activePosts.map((post) => {

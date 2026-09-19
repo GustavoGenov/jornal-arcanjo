@@ -1,7 +1,4 @@
-import { NextResponse } from 'next/server';
-
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+export { GET } from '../news-sitemap.xml/route';
 
-export async function GET(request) {
-  return NextResponse.redirect(new URL('/news-sitemap.xml', request.url), 301);
-}

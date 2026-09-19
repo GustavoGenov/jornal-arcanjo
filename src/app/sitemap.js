@@ -1,6 +1,6 @@
-﻿import { supabase } from '@/lib/supabase';
+import { supabase } from '@/lib/supabase';
 
-// Cache de borda por 5 minutos para velocidade máxima no rastreamento do Googlebot
+export const dynamic = 'force-dynamic';
 export const revalidate = 300;
 
 export default async function sitemap() {
