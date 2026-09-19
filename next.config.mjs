@@ -30,21 +30,6 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/sitemaps.xml',
-        destination: '/sitemap.xml',
-        permanent: true,
-      },
-      {
-        source: '/sitemap_index.xml',
-        destination: '/sitemap.xml',
-        permanent: true,
-      },
-      {
-        source: '/news_sitemap.xml',
-        destination: '/news-sitemap.xml',
-        permanent: true,
-      },
-      {
         source: '/:path*',
         has: [{ type: 'host', value: 'www.vozdaia.com' }],
         destination: 'https://vozdaia.com/:path*',
