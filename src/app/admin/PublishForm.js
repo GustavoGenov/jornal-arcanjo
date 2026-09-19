@@ -150,7 +150,20 @@ export default function PublishForm({ categories }) {
 
       setMessage(isDraft ? 'Salvando rascunho...' : 'Publicando artigo...');
 
-      const slug = slugify(title);
+      const baseSlug = slugify(title);
+      let finalSlug = baseSlug;
+      let counter = 1;
+      while (true) {
+        const { data: existing } = await supabase
+          .from('articles')
+          .select('id')
+          .eq('slug', finalSlug)
+          .maybeSingle();
+
+        if (!existing) break;
+        counter++;
+        finalSlug = `${baseSlug}-${counter}`;
+      }
 
       if (featuredPosition === 'hero_main') {
         // Desafixa qualquer manchete principal anterior para garantir apenas 1 manchete principal
@@ -159,7 +172,7 @@ export default function PublishForm({ categories }) {
       
       const { error: insertError } = await supabase.from('articles').insert([{
         title,
-        slug,
+        slug: finalSlug,
         summary,
         category_id: categoryId,
         content: content,

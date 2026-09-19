@@ -90,7 +90,21 @@ export default function EditForm({ article, categories }) {
         setMessage('Imagem atualizada! Salvando artigo...');
       }
 
-      const slug = slugify(title);
+      const baseSlug = slugify(title);
+      let finalSlug = baseSlug;
+      let counter = 1;
+      while (true) {
+        const { data: existing } = await supabase
+          .from('articles')
+          .select('id')
+          .eq('slug', finalSlug)
+          .neq('id', article.id)
+          .maybeSingle();
+
+        if (!existing) break;
+        counter++;
+        finalSlug = `${baseSlug}-${counter}`;
+      }
 
       if (featuredPosition === 'hero_main' && article.featured_position !== 'hero_main') {
         // Desafixa qualquer manchete principal anterior
@@ -99,7 +113,7 @@ export default function EditForm({ article, categories }) {
       
       const { error: updateError } = await supabase.from('articles').update({
         title,
-        slug,
+        slug: finalSlug,
         summary,
         category_id: categoryId,
         author_name: authorName,
