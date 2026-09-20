@@ -1,16 +1,10 @@
-﻿import { NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
 export function middleware(request) {
   const url = request.nextUrl;
   const host = request.headers.get('host') || '';
 
-  // Redirecionamento amigável para variações de sitemaps comuns (evita 404 no Google Search Console)
-  if (url.pathname === '/sitemaps.xml' || url.pathname === '/sitemap_index.xml') {
-    return NextResponse.redirect(new URL('/sitemap.xml', request.url), 301);
-  }
-  if (url.pathname === '/news_sitemap.xml') {
-    return NextResponse.redirect(new URL('/news-sitemap.xml', request.url), 301);
-  }
+
 
   // Redirecionamento www para sem www se em domínio customizado próprio
   if (host.startsWith('www.jornalarcanjo.com.br')) {
