@@ -132,7 +132,7 @@ export default async function ArticlePage({ params }) {
       "url": "https://vozdaia.com",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://vozdaia.com/logo-header.png"
+        "url": "https://vozdaia.com/simbolo.png"
       }
     },
     "description": cleanSummary,
