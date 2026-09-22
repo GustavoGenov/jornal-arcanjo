@@ -35,11 +35,11 @@ export const viewport = {
 };
 
 export const metadata = {
-  metadataBase: new URL('https://jornalarcanjo.vercel.app'),
+  metadataBase: new URL('https://jornal-arcanjo.vercel.app'),
   title: 'Jornal Arcanjo - Todas as Notícias com Rigor e Independência',
   description: 'Jornal independente de Formiga (MG) e do Brasil. Cobertura de sociedade, cultura, filosofia, espiritualidade, saúde e fatos checados no padrão The New York Times.',
   alternates: {
-    canonical: 'https://jornalarcanjo.vercel.app',
+    canonical: 'https://jornal-arcanjo.vercel.app',
   },
   verification: {
     google: '',
