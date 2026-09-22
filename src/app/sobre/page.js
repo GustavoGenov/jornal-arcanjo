@@ -102,7 +102,7 @@ export default function Sobre() {
           </div>
           <div style={{ padding: '16px', borderRadius: '10px', background: 'var(--gn-bg)', border: '1px solid var(--gn-border)' }}>
             <strong style={{ color: '#d97706' }}>6. Horóscopo & Tarô</strong>
-            <p style={{ margin: '6px 0 0', fontSize: '14px' }}>Leituras dos astros, simbologia dos arcanos do tarô e etnobotânica com Jhonatan d' Osogiyan.</p>
+            <p style={{ margin: '6px 0 0', fontSize: '14px' }}>Leituras dos astros, simbologia dos arcanos do tarô e etnobotânica com Jhonatan d&apos; Osogiyan.</p>
           </div>
           <div style={{ padding: '16px', borderRadius: '10px', background: 'var(--gn-bg)', border: '1px solid var(--gn-border)' }}>
             <strong style={{ color: '#ea580c' }}>7. Passatempos & Lazer</strong>

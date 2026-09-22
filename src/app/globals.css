@@ -2436,3 +2436,631 @@ body {
     font-size: 10.5px;
   }
 }
+
+/* ====================================================================
+   NOVOS BLOCOS DE NOTÍCIAS (PADRÃO G1 DE ALTO ENGAJAMENTO & CTR)
+   ==================================================================== */
+
+/* 1. Barra "Em Alta" / Trending Topics Ticker */
+.g1-trending-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: var(--nyt-paper-tint);
+  border: 1px solid var(--nyt-border);
+  border-radius: 8px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.g1-trending-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--nyt-sans);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #c4170c;
+  white-space: nowrap;
+  padding-right: 12px;
+  border-right: 2px solid var(--nyt-border);
+}
+
+.g1-trending-chips {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 2px 0;
+}
+.g1-trending-chips::-webkit-scrollbar {
+  display: none;
+}
+
+.g1-chip {
+  font-family: var(--nyt-sans);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--nyt-ink-secondary);
+  background: var(--nyt-surface);
+  border: 1px solid var(--nyt-border);
+  padding: 4px 12px;
+  border-radius: 9999px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+}
+.g1-chip:hover {
+  background: #c4170c;
+  color: #ffffff !important;
+  border-color: #c4170c;
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+/* 2. Bloco "Mais Lidas" (G1 Top 5 Ranking) */
+.g1-mais-lidas-card {
+  background: var(--nyt-surface);
+  border: 1px solid var(--nyt-border);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.g1-mais-lidas-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+  border-bottom: 2px solid #c4170c;
+}
+
+.g1-mais-lidas-header h3 {
+  font-family: var(--nyt-sans);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--nyt-ink);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.g1-ranking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.g1-ranking-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  text-decoration: none;
+  padding-bottom: 14px;
+  border-bottom: 1px dashed var(--nyt-border);
+  transition: transform 0.15s ease;
+}
+.g1-ranking-item:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+.g1-ranking-item:hover {
+  text-decoration: none;
+  transform: translateX(3px);
+}
+
+.g1-ranking-num {
+  font-family: var(--nyt-serif-title);
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1;
+  color: #c4170c;
+  min-width: 32px;
+  text-align: center;
+}
+
+.g1-ranking-content {
+  flex: 1;
+}
+
+.g1-ranking-kicker {
+  font-family: var(--nyt-sans);
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #0284c7;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.g1-ranking-title {
+  font-family: var(--nyt-serif-title);
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--nyt-ink);
+  margin: 0 0 6px 0;
+  transition: color 0.15s ease;
+}
+.g1-ranking-item:hover .g1-ranking-title {
+  color: #c4170c;
+}
+
+.g1-ranking-meta {
+  font-family: var(--nyt-sans);
+  font-size: 11px;
+  color: var(--nyt-ink-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 3. Bloco "Fato ou Boato / Checamos" (G1 Fact-Checking) */
+.g1-factcheck-wrapper {
+  margin: 40px 0;
+  padding: 32px 24px;
+  background: linear-gradient(180deg, var(--nyt-paper-tint) 0%, var(--nyt-surface) 100%);
+  border: 1px solid var(--nyt-border);
+  border-top: 4px solid #059669;
+  border-radius: 8px;
+}
+
+.g1-factcheck-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.g1-factcheck-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.g1-factcheck-tag {
+  font-family: var(--nyt-sans);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #059669;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.g1-factcheck-heading {
+  font-family: var(--nyt-serif-title);
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--nyt-ink);
+  margin: 0;
+}
+
+.g1-factcheck-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.g1-factcheck-card {
+  background: var(--nyt-surface);
+  border: 1px solid var(--nyt-border);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+.g1-factcheck-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  border-color: #059669;
+  text-decoration: none;
+}
+
+.g1-factcheck-thumb {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  overflow: hidden;
+}
+.g1-factcheck-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.g1-factcheck-card:hover .g1-factcheck-thumb img {
+  transform: scale(1.05);
+}
+
+.g1-verdict-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-family: var(--nyt-sans);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+.g1-verdict-fato {
+  background: #059669;
+}
+.g1-verdict-fake {
+  background: #dc2626;
+}
+.g1-verdict-explicamos {
+  background: #2563eb;
+}
+
+.g1-factcheck-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.g1-factcheck-body h4 {
+  font-family: var(--nyt-serif-title);
+  font-size: 16.5px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--nyt-ink);
+  margin: 0 0 8px 0;
+}
+.g1-factcheck-card:hover .g1-factcheck-body h4 {
+  color: #059669;
+}
+
+.g1-factcheck-body p {
+  font-family: var(--nyt-serif-body);
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: var(--nyt-ink-secondary);
+  margin: 0 0 14px 0;
+  flex: 1;
+}
+
+.g1-factcheck-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--nyt-sans);
+  font-size: 11px;
+  font-weight: 700;
+  color: #059669;
+  border-top: 1px solid var(--nyt-border);
+  padding-top: 10px;
+}
+
+/* 4. Bloco "Grande Reportagem / Especial Arcanjo" (Widescreen Hero) */
+.g1-special-report {
+  margin: 40px 0;
+  background: linear-gradient(135deg, #090e1a 0%, #172033 100%);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+  color: #ffffff;
+}
+
+.g1-special-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  align-items: stretch;
+}
+
+.g1-special-media {
+  position: relative;
+  min-height: 380px;
+  overflow: hidden;
+}
+.g1-special-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.g1-special-report:hover .g1-special-media img {
+  transform: scale(1.03);
+}
+
+.g1-special-content {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.g1-special-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(234, 179, 8, 0.15);
+  border: 1px solid rgba(234, 179, 8, 0.4);
+  color: #fbbf24;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  font-family: var(--nyt-sans);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  width: fit-content;
+}
+
+.g1-special-title {
+  font-family: var(--nyt-serif-title);
+  font-size: clamp(1.8rem, 2.5vw, 2.3rem);
+  font-weight: 800;
+  line-height: 1.18;
+  color: #ffffff;
+  margin: 0 0 16px 0;
+  text-decoration: none;
+}
+.g1-special-title:hover {
+  color: #93c5fd;
+  text-decoration: none;
+}
+
+.g1-special-desc {
+  font-family: var(--nyt-serif-body);
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: #cbd5e1;
+  margin: 0 0 24px 0;
+}
+
+.g1-special-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #2563eb;
+  color: #ffffff !important;
+  font-family: var(--nyt-sans);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 12px 24px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  width: fit-content;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+.g1-special-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+  text-decoration: none;
+}
+
+/* 5. Bloco "Em Vídeo / Destaques Multimídia" */
+.g1-video-section {
+  margin: 40px 0;
+}
+
+.g1-video-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.g1-video-card {
+  background: var(--nyt-surface);
+  border: 1px solid var(--nyt-border);
+  border-radius: 8px;
+  overflow: hidden;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s ease;
+}
+.g1-video-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  text-decoration: none;
+}
+
+.g1-video-thumb {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #0f172a;
+  overflow: hidden;
+}
+.g1-video-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.g1-video-card:hover .g1-video-thumb img {
+  transform: scale(1.04);
+}
+
+.g1-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  height: 48px;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 18px;
+  transition: all 0.2s ease;
+}
+.g1-video-card:hover .g1-play-btn {
+  background: #c4170c;
+  border-color: #c4170c;
+  transform: translate(-50%, -50%) scale(1.12);
+}
+
+.g1-video-duration {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.75);
+  color: #ffffff;
+  font-family: var(--nyt-sans);
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 3px 7px;
+  border-radius: 4px;
+}
+
+.g1-video-body {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.g1-video-kicker {
+  font-family: var(--nyt-sans);
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #c4170c;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.g1-video-title {
+  font-family: var(--nyt-serif-title);
+  font-size: 15.5px;
+  font-weight: 700;
+  line-height: 1.32;
+  color: var(--nyt-ink);
+  margin: 0;
+  transition: color 0.15s ease;
+}
+.g1-video-card:hover .g1-video-title {
+  color: #c4170c;
+}
+
+/* 6. Bloco "Guia Rápido & Serviços do Dia" */
+.g1-services-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin: 32px 0;
+}
+
+.g1-service-card {
+  background: var(--nyt-surface);
+  border: 1px solid var(--nyt-border);
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.g1-service-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--nyt-ink);
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.g1-service-icon {
+  font-size: 28px;
+  min-width: 36px;
+  text-align: center;
+}
+
+.g1-service-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.g1-service-label {
+  font-family: var(--nyt-sans);
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--nyt-ink-muted);
+  letter-spacing: 0.6px;
+}
+
+.g1-service-value {
+  font-family: var(--nyt-sans);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--nyt-ink);
+}
+
+.g1-service-action {
+  font-family: var(--nyt-sans);
+  font-size: 11px;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+/* Responsividade dos novos blocos G1 */
+@media (max-width: 1024px) {
+  .g1-special-grid {
+    grid-template-columns: 1fr;
+  }
+  .g1-special-media {
+    min-height: 260px;
+  }
+  .g1-special-content {
+    padding: 24px;
+  }
+  .g1-factcheck-grid, .g1-video-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .g1-services-bar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .g1-factcheck-grid, .g1-video-grid {
+    grid-template-columns: 1fr;
+  }
+  .g1-services-bar {
+    grid-template-columns: 1fr;
+  }
+}
+

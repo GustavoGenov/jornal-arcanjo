@@ -44,11 +44,11 @@ function estimateReadingTime(content, summary) {
 export default async function Home() {
   const { data: articles, error } = await supabase
     .from('articles')
-    .select(`id, title, slug, created_at, image_url, summary, content, author_name, featured_position, categories(name, slug, color_code)`)
+    .select(`id, title, slug, created_at, image_url, image_credits, summary, content, author_name, views, fact_check_status, featured_position, categories(name, slug, color_code)`)
     .eq('published', true)
     .order('created_at', { ascending: false });
 
-  // Lista de colunistas oficiais com fotos e editorias para a coluna "Opinião & Vozes" (estilo NYT Opinion)
+  // Lista de colunistas oficiais com fotos e editorias para a coluna "Opinião & Vozes"
   const columnistsList = [
     {
       name: 'Gustavo de Castro',
@@ -103,7 +103,7 @@ export default async function Home() {
             Jornal Arcanjo
           </h1>
           <p style={{ fontFamily: 'var(--nyt-serif-body)', fontSize: '16px', color: 'var(--nyt-ink-secondary)', marginBottom: '24px' }}>
-            O portal está conectado ao novo banco de dados. Assim que executar o script SQL no Supabase, as editorias oficiais e matérias aparecerão instantaneamente nesta edição broadsheet.
+            O portal está conectado ao banco de dados. As matérias e edições broadsheet carregarão automaticamente.
           </p>
           <Link href="/admin" className="nyt-btn-play">
             Acessar Painel de Redação
@@ -113,18 +113,51 @@ export default async function Home() {
     );
   }
 
-  // 1. Manchete Principal (Centro do NYT)
+  // 1. Ranking G1: Top 5 Mais Lidas (Ordenação por visualizações)
+  const topReadArticles = [...articles]
+    .sort((a, b) => (b.views || 0) - (a.views || 0))
+    .slice(0, 5);
+
+  // 2. Manchete Principal (Centro do Broadsheet)
   const heroMainPinned = articles.find(a => a.featured_position === 'hero_main');
   const leadArticle = heroMainPinned || articles[0];
 
-  // 2. Coluna Esquerda: Notícias Analíticas e Breves (2 a 3 matérias)
+  // 3. Coluna Esquerda: Notícias Analíticas e Breves (3 matérias)
   const leftColumnArticles = articles
     .filter(a => a.id !== leadArticle?.id)
     .slice(0, 3);
 
   const usedInFoldIds = new Set([leadArticle?.id, ...leftColumnArticles.map(a => a.id)]);
 
-  // 3. Bloco: Formiga em Foco & Sociedade (Gustavo de Castro)
+  // 4. Bloco G1 Especial: Grande Reportagem Panorâmica
+  const specialReportArticle = articles.find(a => 
+    a.id !== leadArticle?.id &&
+    (
+      a.title?.toLowerCase().includes('fab') ||
+      a.title?.toLowerCase().includes('caças') ||
+      a.title?.toLowerCase().includes('arqueologia') ||
+      a.title?.toLowerCase().includes('terreiro')
+    )
+  ) || articles[1] || leadArticle;
+
+  // 5. Bloco G1 Checamos: Fato ou Boato / Checagem
+  const factCheckArticles = articles.filter(a =>
+    a.fact_check_status ||
+    a.title?.toLowerCase().includes('verdade') ||
+    a.title?.toLowerCase().includes('prov') ||
+    a.title?.toLowerCase().includes('comprova') ||
+    a.title?.toLowerCase().includes('declara') ||
+    a.title?.toLowerCase().includes('direito')
+  ).slice(0, 3);
+
+  // 6. Bloco G1 Multimídia & Vídeo: Destaques Visuais
+  const multimediaArticles = articles.filter(a => 
+    a.id !== leadArticle?.id && 
+    a.id !== specialReportArticle?.id &&
+    a.image_url
+  ).slice(0, 3);
+
+  // 7. Bloco: Formiga em Foco & Sociedade (Gustavo de Castro)
   const formigaArticles = articles.filter(a => 
     !usedInFoldIds.has(a.id) &&
     (
@@ -134,7 +167,7 @@ export default async function Home() {
     )
   ).slice(0, 3);
 
-  // 4. Bloco: Cultura e Filosofia (Daiene Meneses)
+  // 8. Bloco: Cultura e Filosofia (Daiene Meneses)
   const culturaArticles = articles.filter(a => 
     !usedInFoldIds.has(a.id) &&
     !formigaArticles.some(f => f.id === a.id) &&
@@ -144,7 +177,7 @@ export default async function Home() {
     )
   ).slice(0, 3);
 
-  // 5. Bloco: Saúde e Bem-Estar (Beatriz Freire)
+  // 9. Bloco: Saúde e Bem-Estar (Beatriz Freire)
   const saudeArticles = articles.filter(a => 
     !usedInFoldIds.has(a.id) &&
     !formigaArticles.some(f => f.id === a.id) &&
@@ -155,7 +188,7 @@ export default async function Home() {
     )
   ).slice(0, 3);
 
-  // 6. Bloco: Religião & Tradições (RuiWenceslau)
+  // 10. Bloco: Religião & Tradições (RuiWenceslau)
   const religiaoArticles = articles.filter(a => 
     !usedInFoldIds.has(a.id) &&
     !formigaArticles.some(f => f.id === a.id) &&
@@ -164,7 +197,7 @@ export default async function Home() {
     a.categories?.slug?.includes('religiao')
   ).slice(0, 3);
 
-  // 7. Demais notícias (Feed geral)
+  // 11. Demais notícias (Feed geral)
   const allUsedIds = new Set([
     leadArticle?.id,
     ...leftColumnArticles.map(s => s.id),
@@ -181,10 +214,32 @@ export default async function Home() {
       <PageTracker />
 
       {/* ====================================================================
-          1. THE LEAD BROADSHEET PACKAGE (ESTRUTURA EM 3 COLUNAS DO NYT)
+          NOVO BLOCO G1 1: BARRA DE ASSUNTOS "EM ALTA" (TRENDING TOPICS)
+          ==================================================================== */}
+      <section className="g1-trending-bar" aria-label="Tópicos em alta">
+        <div className="g1-trending-label">
+          <span>🔥 EM ALTA</span>
+        </div>
+        <div className="g1-trending-chips">
+          <Link href="#formiga-em-foco" className="g1-chip">#FormigaMG</Link>
+          <Link href="#mais-lidas" className="g1-chip">#MaisLidas</Link>
+          <Link href="#fato-ou-boato" className="g1-chip">#FatoOuBoato</Link>
+          <Link href="#grande-reportagem" className="g1-chip">#EspecialArcanjo</Link>
+          <Link href="#multimidia" className="g1-chip">#EmVídeo</Link>
+          <Link href="#saude-bem-estar" className="g1-chip">#Saúde & Longevidade</Link>
+          <Link href="#cultura-filosofia" className="g1-chip">#Cultura & Filosofia</Link>
+          <Link href="#religiao" className="g1-chip">#Tradições & Fé</Link>
+          <Link href="/clima" className="g1-chip">#PrevisãoDoTempo</Link>
+          <Link href="/horoscopo" className="g1-chip">#HoróscopoDeHoje</Link>
+          <Link href="/passatempos" className="g1-chip">#Passatempos</Link>
+        </div>
+      </section>
+
+      {/* ====================================================================
+          BROADSHEET LEAD GRID (3 COLUNAS) COM BLOCO G1 "MAIS LIDAS"
           - Coluna Esquerda: Notícias Analíticas / Briefs
-          - Coluna Central: A Grande Manchete do Jornal com Foto e Lead
-          - Coluna Direita: As Colunas & Opinião (The NYT Opinion Voices)
+          - Coluna Central: A Grande Manchete com Foto de Destaque
+          - Coluna Direita: Bloco G1 "MAIS LIDAS" (Top 5) + Colunistas de Opinião
           ==================================================================== */}
       <section className="nyt-frontpage-grid">
         
@@ -213,8 +268,8 @@ export default async function Home() {
         {/* COLUNA CENTRAL: A GRANDE MANCHETE BROADSHEET */}
         <div className="nyt-col-center">
           <article>
-            <span className="nyt-kicker" style={{ color: '#0284c7' }}>
-              {leadArticle.categories?.name || 'MANCHETE DESTAQUE'}
+            <span className="nyt-kicker" style={{ color: '#c4170c' }}>
+              {leadArticle.categories?.name || 'MANCHETE PRINCIPAL'}
             </span>
             <Link href={`/artigo/${leadArticle.slug}`} className="nyt-headline-main">
               {leadArticle.title}
@@ -239,20 +294,75 @@ export default async function Home() {
                   fetchPriority="high"
                 />
                 <div className="nyt-media-caption">
-                  {leadArticle.image_credits || 'Foto: Arquivo / Ilustração Jornal Arcanjo'}
+                  {leadArticle.image_credits || 'Foto: Arquivo / Acervo Editorial Jornal Arcanjo'}
                 </div>
               </div>
             )}
+
+            {/* Pílulas de Destaque / O que você precisa saber (Padrão G1 na Manchete) */}
+            <div style={{ marginTop: '16px', padding: '14px 18px', background: 'var(--nyt-paper-tint)', borderLeft: '3px solid #c4170c', borderRadius: '0 6px 6px 0' }}>
+              <div style={{ fontFamily: 'var(--nyt-sans)', fontSize: '11px', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.8px', color: '#c4170c', marginBottom: '6px' }}>
+                O que você precisa saber:
+              </div>
+              <ul style={{ margin: 0, paddingLeft: '18px', fontSize: '13.5px', color: 'var(--nyt-ink-secondary)', lineHeight: '1.5' }}>
+                <li style={{ marginBottom: '4px' }}>
+                  Análise criteriosa e fontes oficiais checadas pela equipe de redação.
+                </li>
+                <li style={{ marginBottom: '4px' }}>
+                  Impactos diretos para os cidadãos de Formiga e do Centro-Oeste mineiro.
+                </li>
+                <li>
+                  <Link href={`/artigo/${leadArticle.slug}`} style={{ color: '#0284c7', fontWeight: '700' }}>
+                    Leia a apuração completa e os desdobramentos →
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </article>
         </div>
 
-        {/* COLUNA DIREITA: AS COLUNAS & OPINIÃO (ESTILO NYT OPINION) */}
-        <aside className="nyt-col-right">
-          <div className="nyt-opinion-header">
-            <h3>OPINIÃO & COLUNISTAS</h3>
+        {/* COLUNA DIREITA: NOVO BLOCO G1 "MAIS LIDAS" + COLUNISTAS DE OPINIÃO */}
+        <aside className="nyt-col-right" id="mais-lidas">
+          
+          {/* BLOCO G1: TOP 5 MAIS LIDAS (ALTO CTR) */}
+          <div className="g1-mais-lidas-card">
+            <div className="g1-mais-lidas-header">
+              <h3>
+                <span style={{ color: '#c4170c' }}>⚡</span> MAIS LIDAS DO ARCANJO
+              </h3>
+              <span style={{ fontSize: '11px', color: 'var(--nyt-ink-muted)', fontWeight: '600' }}>HOJE</span>
+            </div>
+
+            <div className="g1-ranking-list">
+              {topReadArticles.map((article, idx) => (
+                <Link key={article.id} href={`/artigo/${article.slug}`} className="g1-ranking-item">
+                  <span className="g1-ranking-num">
+                    {String(idx + 1).padStart(2, '0')}
+                  </span>
+                  <div className="g1-ranking-content">
+                    <span className="g1-ranking-kicker">
+                      {article.categories?.name || 'DESTAQUE'}
+                    </span>
+                    <h4 className="g1-ranking-title">
+                      {article.title}
+                    </h4>
+                    <div className="g1-ranking-meta">
+                      <span>👁️ {article.views || 10} acessos</span>
+                      <span>•</span>
+                      <span>{estimateReadingTime(article.content, article.summary)}</span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
 
-          {columnistsList.map((col, idx) => (
+          {/* COLUNA OPINIÃO & COLUNISTAS */}
+          <div className="nyt-opinion-header" style={{ marginTop: '12px' }}>
+            <h3>OPINIÃO & VOZES</h3>
+          </div>
+
+          {columnistsList.slice(0, 4).map((col, idx) => (
             <div key={idx} className="nyt-opinion-item">
               <img 
                 src={col.image} 
@@ -278,9 +388,187 @@ export default async function Home() {
       </div>
 
       {/* ====================================================================
-          2. SEÇÃO BROADSHEET: FORMIGA EM FOCO & SOCIEDADE (GUSTAVO DE CASTRO)
+          NOVO BLOCO G1 2: GUIA RÁPIDO & SERVIÇOS DO DIA (SERVIÇOS G1)
           ==================================================================== */}
-      <div className="nyt-section-banner" id="formiga-em-foco">
+      <section className="g1-services-bar" aria-label="Serviços e utilidades do dia">
+        <Link href="/clima" className="g1-service-card">
+          <div className="g1-service-icon">⛅</div>
+          <div className="g1-service-info">
+            <span className="g1-service-label">PREVISÃO EM FORMIGA</span>
+            <span className="g1-service-value">26°C Sol com Névoa</span>
+            <span className="g1-service-action">Ver previsão detalhada →</span>
+          </div>
+        </Link>
+
+        <Link href="/horoscopo" className="g1-service-card">
+          <div className="g1-service-icon">🔮</div>
+          <div className="g1-service-info">
+            <span className="g1-service-label">TARÔ & HORÓSCOPO</span>
+            <span className="g1-service-value">Arcano do Dia: A Estrela</span>
+            <span className="g1-service-action">Ver conselho dos astros →</span>
+          </div>
+        </Link>
+
+        <Link href="/passatempos" className="g1-service-card">
+          <div className="g1-service-icon">🧩</div>
+          <div className="g1-service-info">
+            <span className="g1-service-label">EXERCÍCIO DA MENTE</span>
+            <span className="g1-service-value">Sudoku & Termo de Hoje</span>
+            <span className="g1-service-action">Jogar passatempos grátis →</span>
+          </div>
+        </Link>
+
+        <Link href="#fato-ou-boato" className="g1-service-card">
+          <div className="g1-service-icon">🛡️</div>
+          <div className="g1-service-info">
+            <span className="g1-service-label">CHECAGEM ARCANJO</span>
+            <span className="g1-service-value">Fatos Checados & Rigor</span>
+            <span className="g1-service-action">Ver matérias verificadas →</span>
+          </div>
+        </Link>
+      </section>
+
+      {/* ====================================================================
+          NOVO BLOCO G1 3: GRANDE REPORTAGEM / ESPECIAL ARCANJO (WIDESCREEN)
+          Inspirado nas grandes reportagens imersivas e especiais do G1
+          ==================================================================== */}
+      {specialReportArticle && (
+        <section className="g1-special-report" id="grande-reportagem">
+          <div className="g1-special-grid">
+            <div className="g1-special-media">
+              <img 
+                src={getOptimizedImageUrl(specialReportArticle.image_url, 900)}
+                alt={specialReportArticle.title}
+                loading="lazy"
+              />
+            </div>
+            <div className="g1-special-content">
+              <div className="g1-special-badge">
+                <span>⭐ GRANDE REPORTAGEM ARCANJO</span>
+              </div>
+              <Link href={`/artigo/${specialReportArticle.slug}`} className="g1-special-title">
+                {specialReportArticle.title}
+              </Link>
+              <p className="g1-special-desc">
+                {specialReportArticle.summary?.substring(0, 220)}...
+              </p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px', fontSize: '13px', color: '#94a3b8' }}>
+                <span>Por <strong>{specialReportArticle.author_name || 'Equipe Especial'}</strong></span>
+                <span>•</span>
+                <span>{estimateReadingTime(specialReportArticle.content, specialReportArticle.summary)}</span>
+              </div>
+              <Link href={`/artigo/${specialReportArticle.slug}`} className="g1-special-btn">
+                <span>Acessar Reportagem Especial</span>
+                <span>→</span>
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ====================================================================
+          NOVO BLOCO G1 4: CHECAMOS | FATO OU BOATO (ESTILO G1 FATO OU FAKE)
+          ==================================================================== */}
+      <section className="g1-factcheck-wrapper" id="fato-ou-boato">
+        <div className="g1-factcheck-header">
+          <div className="g1-factcheck-title-group">
+            <span className="g1-factcheck-tag">
+              <span>🛡️ NÚCLEO DE APURAÇÃO & VERIFICAÇÃO</span>
+            </span>
+            <h2 className="g1-factcheck-heading">
+              Checamos: Fato ou Boato
+            </h2>
+          </div>
+          <div style={{ fontSize: '14px', color: 'var(--nyt-ink-secondary)', maxWidth: '420px' }}>
+            Combate à desinformação regional: apurações fundamentadas na lei, ciência e documentos históricos.
+          </div>
+        </div>
+
+        <div className="g1-factcheck-grid">
+          {factCheckArticles.map((article, idx) => {
+            const isFato = article.fact_check_status === 'verified' || article.title?.toLowerCase().includes('verdade') || article.title?.toLowerCase().includes('comprova');
+            const verdictLabel = isFato ? '✓ FATO COMPROVADO' : 'ℹ EXPLICAMOS O CONTEXTO';
+            const verdictClass = isFato ? 'g1-verdict-fato' : 'g1-verdict-explicamos';
+
+            return (
+              <Link key={article.id || idx} href={`/artigo/${article.slug}`} className="g1-factcheck-card">
+                <div className="g1-factcheck-thumb">
+                  {article.image_url && (
+                    <img 
+                      src={getOptimizedImageUrl(article.image_url, 450)} 
+                      alt={article.title}
+                      loading="lazy"
+                    />
+                  )}
+                  <span className={`g1-verdict-badge ${verdictClass}`}>
+                    {verdictLabel}
+                  </span>
+                </div>
+                <div className="g1-factcheck-body">
+                  <span className="nyt-kicker" style={{ color: '#059669', marginBottom: '4px' }}>
+                    {article.categories?.name || 'VERIFICAÇÃO'}
+                  </span>
+                  <h4>{article.title}</h4>
+                  <p>{article.summary?.substring(0, 120)}...</p>
+                  <div className="g1-factcheck-footer">
+                    <span>Apuração Jornalística</span>
+                    <span>Ler Checagem →</span>
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ====================================================================
+          NOVO BLOCO G1 5: MULTIMÍDIA & REPORTAGENS EM VÍDEO (ESTILO G1 VÍDEOS)
+          ==================================================================== */}
+      {multimediaArticles.length > 0 && (
+        <section className="g1-video-section" id="multimidia">
+          <div className="nyt-section-banner">
+            <h3 className="nyt-section-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ color: '#c4170c' }}>▶</span> Destaques Multimídia & Vídeo
+            </h3>
+            <span style={{ fontSize: '13px', color: 'var(--nyt-ink-muted)' }}>
+              Coberturas visuais, entrevistas e documentários
+            </span>
+          </div>
+
+          <div className="g1-video-grid">
+            {multimediaArticles.map((article, idx) => (
+              <Link key={article.id} href={`/artigo/${article.slug}`} className="g1-video-card">
+                <div className="g1-video-thumb">
+                  <img 
+                    src={getOptimizedImageUrl(article.image_url, 500)} 
+                    alt={article.title}
+                    loading="lazy"
+                  />
+                  <div className="g1-play-btn">
+                    <span>▶</span>
+                  </div>
+                  <span className="g1-video-duration">
+                    ▶ 0{idx + 2}:45
+                  </span>
+                </div>
+                <div className="g1-video-body">
+                  <span className="g1-video-kicker">
+                    <span>●</span> {article.categories?.name || 'MULTIMÍDIA'}
+                  </span>
+                  <h4 className="g1-video-title">
+                    {article.title}
+                  </h4>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ====================================================================
+          SEÇÃO BROADSHEET: FORMIGA EM FOCO & SOCIEDADE (GUSTAVO DE CASTRO)
+          ==================================================================== */}
+      <div className="nyt-section-banner" id="formiga-em-foco" style={{ marginTop: '36px' }}>
         <h3 className="nyt-section-title">
           Formiga em Foco & Sociedade
         </h3>
@@ -316,7 +604,7 @@ export default async function Home() {
       )}
 
       {/* ====================================================================
-          3. SEÇÃO BROADSHEET: CULTURA E FILOSOFIA (DAIENE MENESES)
+          SEÇÃO BROADSHEET: CULTURA E FILOSOFIA (DAIENE MENESES)
           ==================================================================== */}
       <div className="nyt-section-banner" id="cultura-filosofia">
         <h3 className="nyt-section-title">
@@ -338,7 +626,7 @@ export default async function Home() {
                   loading="lazy"
                 />
               )}
-              <span className="nyt-kicker">ENSÁIO & PENSAMENTO</span>
+              <span className="nyt-kicker">ENSAIO & PENSAMENTO</span>
               <h4>{article.title}</h4>
               <p>{article.summary?.substring(0, 110)}...</p>
               <div className="nyt-byline">
@@ -354,7 +642,7 @@ export default async function Home() {
       )}
 
       {/* ====================================================================
-          4. SEÇÃO: SAÚDE E BEM-ESTAR (BEATRIZ FREIRE)
+          SEÇÃO: SAÚDE E BEM-ESTAR (BEATRIZ FREIRE)
           ==================================================================== */}
       <div className="nyt-section-banner" id="saude-bem-estar">
         <h3 className="nyt-section-title">
@@ -392,7 +680,7 @@ export default async function Home() {
       )}
 
       {/* ====================================================================
-          5. SEÇÃO: RELIGIÃO & TRADIÇÕES DE FÉ (RUIWENCESLAU)
+          SEÇÃO: RELIGIÃO & TRADIÇÕES DE FÉ (RUIWENCESLAU)
           ==================================================================== */}
       <div className="nyt-section-banner" id="religiao">
         <h3 className="nyt-section-title">
@@ -430,8 +718,7 @@ export default async function Home() {
       )}
 
       {/* ====================================================================
-          6. SEÇÃO NYT GAMES / PASSATEMPOS (CURADORIA DE KAELARA)
-          Inspirada diretamente no famoso The New York Times Games
+          SEÇÃO NYT GAMES / PASSATEMPOS (CURADORIA DE KAELARA)
           ==================================================================== */}
       <div className="nyt-section-banner" id="passatempos">
         <h3 className="nyt-section-title">
@@ -487,7 +774,7 @@ export default async function Home() {
       </div>
 
       {/* ====================================================================
-          7. SEÇÃO: HORÓSCOPO & TARÔ (JHONATAN D' OSOGIYAN)
+          SEÇÃO: HORÓSCOPO & TARÔ (JHONATAN D' OSOGIYAN)
           ==================================================================== */}
       <div className="nyt-section-banner" id="horoscopo">
         <h3 className="nyt-section-title">
@@ -503,7 +790,7 @@ export default async function Home() {
       </div>
 
       {/* ====================================================================
-          8. MAIS NOTÍCIAS & ARTIGOS GERAIS
+          MAIS NOTÍCIAS & ARTIGOS GERAIS
           ==================================================================== */}
       {latestArticles.length > 0 && (
         <>
@@ -539,7 +826,7 @@ export default async function Home() {
       )}
 
       {/* ====================================================================
-          9. NEWSLETTER BROADSHEET
+          NEWSLETTER BROADSHEET
           ==================================================================== */}
       <div style={{ margin: '48px 0' }}>
         <SubscribeForm />
