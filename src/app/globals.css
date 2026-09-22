@@ -1503,15 +1503,21 @@ img.goog-te-gadget-icon,
 
 .card-img-wrap {
   width: 100%;
-  height: 190px;
+  height: 160px;
   overflow: hidden;
-  background: var(--gn-surface);
+  background: #090d16;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
 .card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
   transition: transform 0.3s ease;
 }
 
@@ -2065,16 +2071,26 @@ body {
 .nyt-lead-media {
   margin: 14px 0 16px;
   position: relative;
-  background: var(--nyt-paper-tint);
+  background: #090d16;
   border: 1px solid var(--nyt-border);
+  border-radius: 8px;
+  overflow: hidden;
+  height: 270px;
+  max-height: 270px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .nyt-lead-media img {
-  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
   height: auto;
-  aspect-ratio: 16/9;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
+  position: relative;
+  z-index: 1;
 }
 
 .nyt-media-caption {
@@ -2221,10 +2237,13 @@ body {
 
 .nyt-grid-card img {
   width: 100%;
-  aspect-ratio: 16/9;
-  object-fit: cover;
+  height: 150px;
+  object-fit: contain;
+  background: #090d16;
+  border-radius: 6px;
   margin-bottom: 12px;
   border: 1px solid var(--nyt-border);
+  display: block;
 }
 
 .nyt-grid-card h4 {
@@ -2679,18 +2698,23 @@ body {
 .g1-factcheck-thumb {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
-  background: #000;
+  height: 150px;
+  background: #090e1a;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .g1-factcheck-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
   transition: transform 0.3s ease;
 }
 .g1-factcheck-card:hover .g1-factcheck-thumb img {
-  transform: scale(1.05);
+  transform: scale(1.04);
 }
 
 .g1-verdict-badge {
@@ -2779,15 +2803,24 @@ body {
 
 .g1-special-media {
   position: relative;
-  min-height: 380px;
+  height: 260px;
+  min-height: 240px;
   overflow: hidden;
+  background: #090e1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .g1-special-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
   display: block;
-  transition: transform 0.4s ease;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s ease;
 }
 .g1-special-report:hover .g1-special-media img {
   transform: scale(1.03);
@@ -2893,14 +2926,19 @@ body {
 .g1-video-thumb {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  height: 140px;
   background: #0f172a;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .g1-video-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
   transition: transform 0.3s ease;
 }
 .g1-video-card:hover .g1-video-thumb img {

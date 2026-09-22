@@ -285,6 +285,22 @@ export default async function Home() {
 
             {leadArticle.image_url && (
               <div className="nyt-lead-media">
+                <div 
+                  className="img-ambient-backdrop" 
+                  style={{ 
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundImage: `url(${getOptimizedImageUrl(leadArticle.image_url, 400)})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    filter: 'blur(20px) brightness(0.35)',
+                    transform: 'scale(1.15)',
+                    opacity: 0.6
+                  }} 
+                />
                 <img 
                   src={getOptimizedImageUrl(leadArticle.image_url, 900)}
                   srcSet={getImageSrcSet(leadArticle.image_url)}
@@ -436,6 +452,22 @@ export default async function Home() {
         <section className="g1-special-report" id="grande-reportagem">
           <div className="g1-special-grid">
             <div className="g1-special-media">
+              <div 
+                className="img-ambient-backdrop" 
+                style={{ 
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  backgroundImage: `url(${getOptimizedImageUrl(specialReportArticle.image_url, 400)})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  filter: 'blur(20px) brightness(0.35)',
+                  transform: 'scale(1.15)',
+                  opacity: 0.6
+                }} 
+              />
               <img 
                 src={getOptimizedImageUrl(specialReportArticle.image_url, 900)}
                 alt={specialReportArticle.title}

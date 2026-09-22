@@ -217,8 +217,36 @@ export default async function ArticlePage({ params }) {
               imageSizes="(max-width: 600px) 100vw, 800px" 
               fetchPriority="high" 
             />
-            <figure style={{ margin: '0 0 40px 0' }}>
-              <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9', maxHeight: '480px', overflow: 'hidden', borderRadius: '12px', background: 'var(--gn-search-bg)' }}>
+            <figure style={{ margin: '0 0 32px 0' }}>
+              <div style={{ 
+                position: 'relative', 
+                width: '100%', 
+                maxHeight: '340px', 
+                height: '320px', 
+                overflow: 'hidden', 
+                borderRadius: '12px', 
+                background: '#090e1a',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                border: '1px solid var(--gn-border)'
+              }}>
+                <div 
+                  className="img-ambient-backdrop" 
+                  style={{ 
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundImage: `url(${getOptimizedImageUrl(article.image_url, 400)})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    filter: 'blur(20px) brightness(0.35)',
+                    transform: 'scale(1.15)',
+                    opacity: 0.6
+                  }} 
+                />
                 <img 
                   src={getOptimizedImageUrl(article.image_url, 800)} 
                   srcSet={getImageSrcSet(article.image_url)}
@@ -229,7 +257,17 @@ export default async function ArticlePage({ params }) {
                   loading="eager"
                   fetchPriority="high"
                   decoding="sync"
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} 
+                  style={{ 
+                    maxWidth: '100%', 
+                    maxHeight: '100%', 
+                    width: 'auto', 
+                    height: 'auto', 
+                    objectFit: 'contain', 
+                    display: 'block',
+                    position: 'relative',
+                    zIndex: 1,
+                    borderRadius: '4px'
+                  }} 
                 />
               </div>
               {article.image_credits && (
@@ -257,6 +295,7 @@ export default async function ArticlePage({ params }) {
             .article-body hr { border: 0; border-top: 1px solid var(--gn-border); margin: 32px 0; }
             .article-body ul, .article-body ol { margin-bottom: 20px; padding-left: 24px; }
             .article-body li { margin-bottom: 8px; }
+            .article-body img { max-width: 100%; max-height: 380px; height: auto; object-fit: contain; margin: 20px auto; display: block; border-radius: 8px; background: #090e1a; }
           `}} />
           <div dangerouslySetInnerHTML={{ __html: cleanContent }} />
         </article>
