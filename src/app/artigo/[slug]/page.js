@@ -217,56 +217,54 @@ export default async function ArticlePage({ params }) {
               imageSizes="(max-width: 600px) 100vw, 800px" 
               fetchPriority="high" 
             />
-            <figure style={{ margin: '0 0 32px 0' }}>
+            <figure style={{ margin: '0 0 40px 0' }}>
               <div style={{ 
                 position: 'relative', 
                 width: '100%', 
-                maxHeight: '340px', 
-                height: '320px', 
+                minHeight: '280px',
+                maxHeight: '540px', 
                 overflow: 'hidden', 
-                borderRadius: '12px', 
-                background: '#090e1a',
+                borderRadius: '16px', 
+                background: 'radial-gradient(circle at center, #1e293b 0%, #090d16 100%)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                boxShadow: '0 8px 30px rgba(0, 0, 0, 0.25)',
                 border: '1px solid var(--gn-border)'
               }}>
                 <div 
                   className="img-ambient-backdrop" 
                   style={{ 
                     position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    backgroundImage: `url(${getOptimizedImageUrl(article.image_url, 400)})`,
+                    inset: '-20px',
+                    backgroundImage: `url(${getOptimizedImageUrl(article.image_url, 800)})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
-                    filter: 'blur(20px) brightness(0.35)',
-                    transform: 'scale(1.15)',
-                    opacity: 0.6
+                    filter: 'blur(24px) brightness(0.48)',
+                    transform: 'scale(1.2)',
+                    opacity: 0.65,
+                    zIndex: 0,
+                    pointerEvents: 'none'
                   }} 
                 />
                 <img 
                   src={getOptimizedImageUrl(article.image_url, 800)} 
                   srcSet={getImageSrcSet(article.image_url)}
-                  sizes="(max-width: 600px) 100vw, 800px"
+                  sizes="(max-width: 880px) 100vw, 880px"
                   alt={article.image_alt || cleanTitle} 
-                  width="800"
-                  height="450"
                   loading="eager"
                   fetchPriority="high"
-                  decoding="sync"
+                  decoding="async"
                   style={{ 
+                    position: 'relative',
+                    zIndex: 1,
                     maxWidth: '100%', 
-                    maxHeight: '100%', 
+                    maxHeight: '540px', 
                     width: 'auto', 
                     height: 'auto', 
                     objectFit: 'contain', 
                     display: 'block',
-                    position: 'relative',
-                    zIndex: 1,
-                    borderRadius: '4px'
+                    margin: '0 auto'
                   }} 
                 />
               </div>

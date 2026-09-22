@@ -284,35 +284,25 @@ export default async function Home() {
             </div>
 
             {leadArticle.image_url && (
-              <div className="nyt-lead-media">
-                <div 
-                  className="img-ambient-backdrop" 
-                  style={{ 
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    backgroundImage: `url(${getOptimizedImageUrl(leadArticle.image_url, 400)})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    filter: 'blur(20px) brightness(0.35)',
-                    transform: 'scale(1.15)',
-                    opacity: 0.6
-                  }} 
-                />
-                <img 
-                  src={getOptimizedImageUrl(leadArticle.image_url, 900)}
-                  srcSet={getImageSrcSet(leadArticle.image_url)}
-                  sizes="(max-width: 768px) 100vw, 700px"
-                  alt={leadArticle.title}
-                  loading="eager"
-                  fetchPriority="high"
-                />
-                <div className="nyt-media-caption">
-                  {leadArticle.image_credits || 'Foto: Arquivo / Acervo Editorial Jornal Arcanjo'}
+              <figure style={{ margin: '14px 0 16px' }}>
+                <div className="nyt-lead-media">
+                  <div 
+                    className="img-ambient-backdrop" 
+                    style={{ backgroundImage: `url(${getOptimizedImageUrl(leadArticle.image_url, 400)})` }} 
+                  />
+                  <img 
+                    src={getOptimizedImageUrl(leadArticle.image_url, 900)}
+                    srcSet={getImageSrcSet(leadArticle.image_url)}
+                    sizes="(max-width: 768px) 100vw, 700px"
+                    alt={leadArticle.title}
+                    loading="eager"
+                    fetchPriority="high"
+                  />
                 </div>
-              </div>
+                <figcaption className="nyt-media-caption">
+                  {leadArticle.image_credits || 'Foto: Arquivo / Acervo Editorial Jornal Arcanjo'}
+                </figcaption>
+              </figure>
             )}
 
             {/* Pílulas de Destaque / O que você precisa saber (Padrão G1 na Manchete) */}
@@ -454,19 +444,7 @@ export default async function Home() {
             <div className="g1-special-media">
               <div 
                 className="img-ambient-backdrop" 
-                style={{ 
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  backgroundImage: `url(${getOptimizedImageUrl(specialReportArticle.image_url, 400)})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  filter: 'blur(20px) brightness(0.35)',
-                  transform: 'scale(1.15)',
-                  opacity: 0.6
-                }} 
+                style={{ backgroundImage: `url(${getOptimizedImageUrl(specialReportArticle.image_url, 400)})` }} 
               />
               <img 
                 src={getOptimizedImageUrl(specialReportArticle.image_url, 900)}
@@ -526,11 +504,17 @@ export default async function Home() {
               <Link key={article.id || idx} href={`/artigo/${article.slug}`} className="g1-factcheck-card">
                 <div className="g1-factcheck-thumb">
                   {article.image_url && (
-                    <img 
-                      src={getOptimizedImageUrl(article.image_url, 450)} 
-                      alt={article.title}
-                      loading="lazy"
-                    />
+                    <>
+                      <div 
+                        className="img-ambient-backdrop" 
+                        style={{ backgroundImage: `url(${getOptimizedImageUrl(article.image_url, 300)})` }} 
+                      />
+                      <img 
+                        src={getOptimizedImageUrl(article.image_url, 450)} 
+                        alt={article.title}
+                        loading="lazy"
+                      />
+                    </>
                   )}
                   <span className={`g1-verdict-badge ${verdictClass}`}>
                     {verdictLabel}
@@ -571,6 +555,12 @@ export default async function Home() {
             {multimediaArticles.map((article, idx) => (
               <Link key={article.id} href={`/artigo/${article.slug}`} className="g1-video-card">
                 <div className="g1-video-thumb">
+                  {article.image_url && (
+                    <div 
+                      className="img-ambient-backdrop" 
+                      style={{ backgroundImage: `url(${getOptimizedImageUrl(article.image_url, 300)})` }} 
+                    />
+                  )}
                   <img 
                     src={getOptimizedImageUrl(article.image_url, 500)} 
                     alt={article.title}
@@ -614,11 +604,17 @@ export default async function Home() {
           {formigaArticles.map((article) => (
             <Link key={article.id} href={`/artigo/${article.slug}`} className="nyt-grid-card">
               {article.image_url && (
-                <img 
-                  src={getOptimizedImageUrl(article.image_url, 400)} 
-                  alt={article.title} 
-                  loading="lazy"
-                />
+                <div className="nyt-grid-img-wrap">
+                  <div 
+                    className="img-ambient-backdrop" 
+                    style={{ backgroundImage: `url(${getOptimizedImageUrl(article.image_url, 300)})` }} 
+                  />
+                  <img 
+                    src={getOptimizedImageUrl(article.image_url, 400)} 
+                    alt={article.title} 
+                    loading="lazy"
+                  />
+                </div>
               )}
               <span className="nyt-kicker">FORMIGA & REGIÃO</span>
               <h4>{article.title}</h4>
@@ -652,11 +648,17 @@ export default async function Home() {
           {culturaArticles.map((article) => (
             <Link key={article.id} href={`/artigo/${article.slug}`} className="nyt-grid-card">
               {article.image_url && (
-                <img 
-                  src={getOptimizedImageUrl(article.image_url, 400)} 
-                  alt={article.title} 
-                  loading="lazy"
-                />
+                <div className="nyt-grid-img-wrap">
+                  <div 
+                    className="img-ambient-backdrop" 
+                    style={{ backgroundImage: `url(${getOptimizedImageUrl(article.image_url, 300)})` }} 
+                  />
+                  <img 
+                    src={getOptimizedImageUrl(article.image_url, 400)} 
+                    alt={article.title} 
+                    loading="lazy"
+                  />
+                </div>
               )}
               <span className="nyt-kicker">ENSAIO & PENSAMENTO</span>
               <h4>{article.title}</h4>
@@ -690,11 +692,17 @@ export default async function Home() {
           {saudeArticles.map((article) => (
             <Link key={article.id} href={`/artigo/${article.slug}`} className="nyt-grid-card">
               {article.image_url && (
-                <img 
-                  src={getOptimizedImageUrl(article.image_url, 400)} 
-                  alt={article.title} 
-                  loading="lazy"
-                />
+                <div className="nyt-grid-img-wrap">
+                  <div 
+                    className="img-ambient-backdrop" 
+                    style={{ backgroundImage: `url(${getOptimizedImageUrl(article.image_url, 300)})` }} 
+                  />
+                  <img 
+                    src={getOptimizedImageUrl(article.image_url, 400)} 
+                    alt={article.title} 
+                    loading="lazy"
+                  />
+                </div>
               )}
               <span className="nyt-kicker">LONGEVIDADE & EQUILÍBRIO</span>
               <h4>{article.title}</h4>
@@ -728,11 +736,17 @@ export default async function Home() {
           {religiaoArticles.map((article) => (
             <Link key={article.id} href={`/artigo/${article.slug}`} className="nyt-grid-card">
               {article.image_url && (
-                <img 
-                  src={getOptimizedImageUrl(article.image_url, 400)} 
-                  alt={article.title} 
-                  loading="lazy"
-                />
+                <div className="nyt-grid-img-wrap">
+                  <div 
+                    className="img-ambient-backdrop" 
+                    style={{ backgroundImage: `url(${getOptimizedImageUrl(article.image_url, 300)})` }} 
+                  />
+                  <img 
+                    src={getOptimizedImageUrl(article.image_url, 400)} 
+                    alt={article.title} 
+                    loading="lazy"
+                  />
+                </div>
               )}
               <span className="nyt-kicker">FÉ & MORALIDADE</span>
               <h4>{article.title}</h4>

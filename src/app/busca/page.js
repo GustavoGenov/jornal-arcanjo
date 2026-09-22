@@ -75,14 +75,20 @@ export default async function BuscaPage({ searchParams }) {
             <Link key={article.id} href={`/artigo/${article.slug}`} className="card">
               <div className="card-img-wrap">
                 {getOptimizedImageUrl(article.image_url) ? (
-                  <img 
-                    src={getOptimizedImageUrl(article.image_url, 400)} 
-                    alt={article.title} 
-                    width="400"
-                    height="225"
-                    loading="lazy"
-                    decoding="async"
-                  />
+                  <>
+                    <div 
+                      className="img-ambient-backdrop" 
+                      style={{ backgroundImage: `url(${getOptimizedImageUrl(article.image_url, 400)})` }} 
+                    />
+                    <img 
+                      src={getOptimizedImageUrl(article.image_url, 400)} 
+                      alt={article.title} 
+                      width="400"
+                      height="225"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </>
                 ) : (
                   <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--border)' }}>
                     <span className="material-icons-extended" style={{ fontSize: '32px', color: 'var(--text-muted)' }}>image</span>

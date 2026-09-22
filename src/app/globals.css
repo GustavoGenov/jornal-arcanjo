@@ -1333,6 +1333,20 @@ img.goog-te-gadget-icon,
 .dark .cat-horoscopo, [data-theme='dark'] .cat-horoscopo { color: #f59e0b; }
 .dark .cat-passatempos, [data-theme='dark'] .cat-passatempos { color: #fb923c; }
 
+/* Ambient Backdrop para Imagens Proporcionais (Zero Cortes - Padrão Voz da I.A) */
+.img-ambient-backdrop {
+  position: absolute;
+  inset: -20px;
+  background-size: cover;
+  background-position: center;
+  filter: blur(24px) brightness(0.48);
+  transform: scale(1.2);
+  opacity: 0.65;
+  z-index: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
 .hero-main h1 {
   font-size: 1.65rem;
   line-height: 1.3;
@@ -1503,9 +1517,9 @@ img.goog-te-gadget-icon,
 
 .card-img-wrap {
   width: 100%;
-  height: 160px;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
-  background: #090d16;
+  background: radial-gradient(circle at center, #1e293b 0%, #090d16 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1513,16 +1527,18 @@ img.goog-te-gadget-icon,
 }
 
 .card img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  transition: transform 0.3s ease;
+  width: 100%;
+  height: 100%;
+  object-fit: contain !important;
+  object-position: center !important;
+  position: relative;
+  z-index: 1;
+  display: block;
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card:hover img {
-  transform: scale(1.03);
+  transform: scale(1.04);
 }
 
 .card-body {
@@ -1781,7 +1797,8 @@ img.goog-te-gadget-icon,
     padding: 1rem 1.2rem;
   }
   .card-img-wrap {
-    height: 190px;
+    height: auto;
+    aspect-ratio: 16 / 9;
   }
   .card-body {
     padding: 1rem 1.2rem;
@@ -2069,37 +2086,40 @@ body {
 }
 
 .nyt-lead-media {
-  margin: 14px 0 16px;
+  width: 100%;
+  aspect-ratio: 16 / 9;
   position: relative;
-  background: #090d16;
+  background: radial-gradient(circle at center, #1e293b 0%, #090d16 100%);
   border: 1px solid var(--nyt-border);
   border-radius: 8px;
   overflow: hidden;
-  height: 270px;
-  max-height: 270px;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 }
 
 .nyt-lead-media img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: contain !important;
+  object-position: center !important;
   display: block;
   position: relative;
   z-index: 1;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nyt-col-center:hover .nyt-lead-media img {
+  transform: scale(1.035);
 }
 
 .nyt-media-caption {
-  font-size: 11px;
+  font-size: 11.5px;
   color: var(--nyt-ink-muted);
-  padding: 6px 10px;
+  padding: 6px 4px 0;
   text-align: right;
   font-style: italic;
-  border-top: 1px solid var(--nyt-border);
 }
 
 .nyt-story-brief {
@@ -2235,15 +2255,33 @@ body {
   padding-right: 0;
 }
 
-.nyt-grid-card img {
+.nyt-grid-img-wrap {
   width: 100%;
-  height: 150px;
-  object-fit: contain;
-  background: #090d16;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: radial-gradient(circle at center, #1e293b 0%, #090d16 100%);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 6px;
   margin-bottom: 12px;
   border: 1px solid var(--nyt-border);
+}
+
+.nyt-grid-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain !important;
+  object-position: center !important;
+  position: relative;
+  z-index: 1;
   display: block;
+  transition: transform 0.4s ease;
+}
+
+.nyt-grid-card:hover .nyt-grid-img-wrap img {
+  transform: scale(1.04);
 }
 
 .nyt-grid-card h4 {
@@ -2698,20 +2736,22 @@ body {
 .g1-factcheck-thumb {
   position: relative;
   width: 100%;
-  height: 150px;
-  background: #090e1a;
+  aspect-ratio: 16 / 9;
+  background: radial-gradient(circle at center, #1e293b 0%, #090d16 100%);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .g1-factcheck-thumb img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  transition: transform 0.3s ease;
+  width: 100%;
+  height: 100%;
+  object-fit: contain !important;
+  object-position: center !important;
+  display: block;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.4s ease;
 }
 .g1-factcheck-card:hover .g1-factcheck-thumb img {
   transform: scale(1.04);
@@ -2803,27 +2843,27 @@ body {
 
 .g1-special-media {
   position: relative;
-  height: 260px;
+  width: 100%;
+  aspect-ratio: 16 / 10;
   min-height: 240px;
   overflow: hidden;
-  background: #090e1a;
+  background: radial-gradient(circle at center, #1e293b 0%, #090d16 100%);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .g1-special-media img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: contain !important;
+  object-position: center !important;
   display: block;
   position: relative;
   z-index: 1;
-  transition: transform 0.3s ease;
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .g1-special-report:hover .g1-special-media img {
-  transform: scale(1.03);
+  transform: scale(1.035);
 }
 
 .g1-special-content {
@@ -2926,20 +2966,22 @@ body {
 .g1-video-thumb {
   position: relative;
   width: 100%;
-  height: 140px;
-  background: #0f172a;
+  aspect-ratio: 16 / 9;
+  background: radial-gradient(circle at center, #1e293b 0%, #090d16 100%);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .g1-video-thumb img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  transition: transform 0.3s ease;
+  width: 100%;
+  height: 100%;
+  object-fit: contain !important;
+  object-position: center !important;
+  display: block;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.4s ease;
 }
 .g1-video-card:hover .g1-video-thumb img {
   transform: scale(1.04);
