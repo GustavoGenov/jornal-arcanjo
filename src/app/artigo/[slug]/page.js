@@ -1,5 +1,5 @@
 import { supabase } from '@/lib/supabase';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import AdBanner from '@/components/AdBanner';
 import SocialShare from '@/components/SocialShare';
@@ -9,13 +9,125 @@ import { getOptimizedImageUrl, getImageSrcSet } from '@/lib/imageHelper';
 export const revalidate = 60;
 
 const AUTHORS_META = {
-  "Gustavo de Castro Bernardes Rosa": { initials: "GC", role: "Fundador / Eng. de I.A & CTO", img: "/equipe/gustavo.jpg", bio: "Especialista em Inteligência Artificial e Redes de Computação." },
-  "RuiWenceslau de Oliveira": { initials: "RO", role: "Cofundador e Editor", img: "/equipe/rui.jpg", bio: "Especialista em criação de conteúdo para mídias sociais e jornalismo digital." },
-  "Beatriz Freire": { initials: "BF", role: "Estrategista de CS & Qualidade", img: "/equipe/beatriz.jpg", bio: "Estrategista de Customer Success & Qualidade, Comunicação Social e Marketing." },
-  "Daiene Maria de Meneses": { initials: "DM", role: "Pedagoga e Professora", img: "/equipe/daiene.jpg", bio: "Especialista em educação e desenvolvimento infantil." },
-  "Jhonatan d' Osogiyan (ou Pai Jhonatan)": { initials: "SJ", role: "Colunista de Cultura e Etnobotânica", img: "/equipe/jhonatan.jpg", bio: "Pesquisador de Tradições Populares, Psicologia e Herbalista." },
-  "Kaelara (Agente de IA Autônomo)": { initials: "KC", role: "Sistema de Análise e Monitoramento", img: "/equipe/kaelara.png", bio: "IA desenvolvida sob arquitetura LLM (Gemma/Google API)." },
-  "Gabriela Castro Bernardes Rosa": { initials: "GB", role: "Produtora de Conteúdo e Games", img: null, bio: "Produtora de conteúdo digital e games." }
+  "Gustavo de Castro Bernardes Rosa": {
+    initials: "GC",
+    role: "Fundador, Engenheiro de IA & CTO",
+    img: "/equipe/gustavo.jpg",
+    bio: "Fundador e CTO. Tecnólogo em Redes de Computadores e Arquiteto de Soluções de IA focado em modelos locais, RAG e infraestrutura computacional.",
+    slug: "gustavo-castro",
+    linkedin: "https://www.linkedin.com/in/gustavo-castro-bernardes-rosa-24a827bb"
+  },
+  "Gustavo de Castro": {
+    initials: "GC",
+    role: "Fundador, Engenheiro de IA & CTO",
+    img: "/equipe/gustavo.jpg",
+    bio: "Fundador e CTO. Tecnólogo em Redes de Computadores e Arquiteto de Soluções de IA focado em modelos locais, RAG e infraestrutura computacional.",
+    slug: "gustavo-castro",
+    linkedin: "https://www.linkedin.com/in/gustavo-castro-bernardes-rosa-24a827bb"
+  },
+  "RuiWenceslau de Oliveira": {
+    initials: "RO",
+    role: "Cofundador, Editor-Chefe & Relações Públicas",
+    img: "/equipe/rui.jpg",
+    bio: "Cofundador e Editor. Comunicador social e produtor de conteúdo focado em diálogo institucional, pautas comunitárias e experiência do usuário (UX).",
+    slug: "rui-wenceslau",
+    linkedin: "https://www.linkedin.com/in/ruiwenceslau-de-oliveira-ab08bb42a"
+  },
+  "Rui Wenceslau": {
+    initials: "RO",
+    role: "Cofundador, Editor-Chefe & Relações Públicas",
+    img: "/equipe/rui.jpg",
+    bio: "Cofundador e Editor. Comunicador social e produtor de conteúdo focado em diálogo institucional, pautas comunitárias e experiência do usuário (UX).",
+    slug: "rui-wenceslau",
+    linkedin: "https://www.linkedin.com/in/ruiwenceslau-de-oliveira-ab08bb42a"
+  },
+  "Beatriz Freire": {
+    initials: "BF",
+    role: "Estrategista de Customer Success (CS) & Qualidade Editorial",
+    img: "/equipe/beatriz.jpg",
+    bio: "Estrategista de CS e Qualidade Editorial. Especialista em Comunicação Social e engajamento comunitário.",
+    slug: "beatriz-freire",
+    linkedin: "https://www.linkedin.com/in/beatriz-freire-41225b3b0/"
+  },
+  "Daiene Maria de Meneses": {
+    initials: "DM",
+    role: "Colunista de Ciência, Sociedade e Educação",
+    img: "/equipe/daiene.jpg",
+    bio: "Colunista de Ciência, Sociedade e Educação. Pedagoga, revisora e pesquisadora de iniciativas educacionais e históricas.",
+    slug: "daiene-meneses",
+    linkedin: "https://www.linkedin.com/in/daiene-meneses-dai-13561a20a"
+  },
+  "Daiene Meneses": {
+    initials: "DM",
+    role: "Colunista de Ciência, Sociedade e Educação",
+    img: "/equipe/daiene.jpg",
+    bio: "Colunista de Ciência, Sociedade e Educação. Pedagoga, revisora e pesquisadora de iniciativas educacionais e históricas.",
+    slug: "daiene-meneses",
+    linkedin: "https://www.linkedin.com/in/daiene-meneses-dai-13561a20a"
+  },
+  "Jhonatan d' Osogiyan (Pai Jhonatan)": {
+    initials: "SJ",
+    role: "Colunista de Cultura, Tradições Afro-Brasileiras e Etnobotânica",
+    img: "/equipe/jhonatan.jpg",
+    bio: "Colunista de Cultura e Tradições Populares. Psicólogo, herbalista e pesquisador de etnobotânica e patrimônio imaterial.",
+    slug: "jhonatan-osogiyan"
+  },
+  "Jhonatan d' Osogiyan (ou Pai Jhonatan)": {
+    initials: "SJ",
+    role: "Colunista de Cultura, Tradições Afro-Brasileiras e Etnobotânica",
+    img: "/equipe/jhonatan.jpg",
+    bio: "Colunista de Cultura e Tradições Populares. Psicólogo, herbalista e pesquisador de etnobotânica e patrimônio imaterial.",
+    slug: "jhonatan-osogiyan"
+  },
+  "Jhonatan d' Osogiyan": {
+    initials: "SJ",
+    role: "Colunista de Cultura, Tradições Afro-Brasileiras e Etnobotânica",
+    img: "/equipe/jhonatan.jpg",
+    bio: "Colunista de Cultura e Tradições Populares. Psicólogo, herbalista e pesquisador de etnobotânica e patrimônio imaterial.",
+    slug: "jhonatan-osogiyan"
+  },
+  "Pai Jhonatan": {
+    initials: "SJ",
+    role: "Colunista de Cultura, Tradições Afro-Brasileiras e Etnobotânica",
+    img: "/equipe/jhonatan.jpg",
+    bio: "Colunista de Cultura e Tradições Populares. Psicólogo, herbalista e pesquisador de etnobotânica e patrimônio imaterial.",
+    slug: "jhonatan-osogiyan"
+  },
+  "Kaelara (Kae)": {
+    initials: "KC",
+    role: "Agente Computacional & Núcleo de Análise Preditiva e Dados",
+    img: "/equipe/kaelara.png",
+    bio: "Agente computacional autônoma, desenvolvida com base em arquiteturas abertas e RAG multidomínio. Conteúdo revisado e homologado pela redação humana.",
+    slug: "kaelara"
+  },
+  "Kaelara (Agente de IA Autônomo)": {
+    initials: "KC",
+    role: "Agente Computacional & Núcleo de Análise Preditiva e Dados",
+    img: "/equipe/kaelara.png",
+    bio: "Agente computacional autônoma, desenvolvida com base em arquiteturas abertas e RAG multidomínio. Conteúdo revisado e homologado pela redação humana.",
+    slug: "kaelara"
+  },
+  "Kaelara": {
+    initials: "KC",
+    role: "Agente Computacional & Núcleo de Análise Preditiva e Dados",
+    img: "/equipe/kaelara.png",
+    bio: "Agente computacional autônoma, desenvolvida com base em arquiteturas abertas e RAG multidomínio. Conteúdo revisado e homologado pela redação humana.",
+    slug: "kaelara"
+  },
+  "Gabriela Castro Bernardes Rosa": {
+    initials: "GB",
+    role: "Inspiração Editorial & Colunista Mirim de Tech & Gaming",
+    img: null,
+    bio: "Coluna Tech & Gaming Infantojuvenil. Explorando o universo dos games, criatividade e narrativas digitais com o olhar das novas gerações.",
+    slug: "gabriela-castro"
+  },
+  "Gabriela Castro": {
+    initials: "GB",
+    role: "Inspiração Editorial & Colunista Mirim de Tech & Gaming",
+    img: null,
+    bio: "Coluna Tech & Gaming Infantojuvenil. Explorando o universo dos games, criatividade e narrativas digitais com o olhar das novas gerações.",
+    slug: "gabriela-castro"
+  }
 };
 
 export async function generateStaticParams() {
@@ -36,44 +148,45 @@ export async function generateMetadata({ params }) {
   
   const { data: article } = await supabase
     .from('articles')
-    .select('title, summary, image_url, meta_title, meta_description, author_name, image_alt, created_at, updated_at')
+    .select('title, summary, image_url, meta_title, meta_description, author_name, image_alt, created_at, updated_at, categories(name)')
     .eq('slug', slug)
     .single();
 
-  if (!article) return { title: 'Voz da I.A - Notícia não encontrada' };
+  if (!article) return { title: 'Jornal Arcanjo - Notícia não encontrada' };
 
-  const metaTitle = article.meta_title || article.title;
-  const metaDesc = article.meta_description || article.summary;
-  const articleUrl = `https://vozdaia.com/artigo/${slug}`;
+  const rawTitle = (article.meta_title || article.title || '').replace(/&nbsp;|\u00a0/g, ' ').trim();
+  const metaDesc = (article.meta_description || article.summary || '').replace(/&nbsp;|\u00a0/g, ' ').trim();
+  const articleUrl = `https://jornalarcanjo.com.br/artigo/${slug}`;
 
   let ogImageUrl = article.image_url;
   if (ogImageUrl && ogImageUrl.startsWith('/')) {
-    ogImageUrl = `https://vozdaia.com${ogImageUrl}`;
+    ogImageUrl = `https://jornalarcanjo.com.br${ogImageUrl}`;
   }
 
   return {
-    title: `${metaTitle} | Voz da I.A`,
+    title: `${rawTitle} | Jornal Arcanjo`,
     description: metaDesc,
     alternates: {
       canonical: articleUrl,
     },
     openGraph: {
-      title: `${metaTitle} | Voz da I.A`,
+      title: `${rawTitle} | Jornal Arcanjo`,
       description: metaDesc,
       url: articleUrl,
-      siteName: 'Voz da I.A',
+      siteName: 'Jornal Arcanjo',
       locale: 'pt_BR',
-      images: ogImageUrl ? [{ url: ogImageUrl, alt: article.image_alt || article.title, width: 1200, height: 630 }] : [{ url: 'https://vozdaia.com/simbolo.png', alt: 'Voz da I.A', width: 512, height: 512 }],
+      images: ogImageUrl ? [{ url: ogImageUrl, alt: article.image_alt || rawTitle, width: 1200, height: 630 }] : [{ url: 'https://jornalarcanjo.com.br/simbolo.png', alt: 'Jornal Arcanjo', width: 512, height: 512 }],
       type: 'article',
       publishedTime: article.created_at,
       modifiedTime: article.updated_at || article.created_at,
-      authors: [article.author_name || 'Voz da I.A']
+      section: article.categories?.name || 'Notícias',
+      authors: [article.author_name || 'Jornal Arcanjo']
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${metaTitle} | Voz da I.A`,
+      title: `${rawTitle} | Jornal Arcanjo`,
       description: metaDesc,
-      images: ogImageUrl ? [ogImageUrl] : ['https://vozdaia.com/simbolo.png'],
+      images: ogImageUrl ? [ogImageUrl] : ['https://jornalarcanjo.com.br/simbolo.png'],
     }
   };
 }
@@ -87,7 +200,9 @@ export default async function ArticlePage({ params }) {
     .eq('slug', slug)
     .single();
 
-  if (!article) notFound();
+  if (!article) {
+    redirect('/');
+  }
 
   const cleanContent = article.content 
     ? article.content
@@ -101,42 +216,61 @@ export default async function ArticlePage({ params }) {
   const authorData = AUTHORS_META[article.author_name] || AUTHORS_META["Gustavo de Castro Bernardes Rosa"];
   const pubDate = new Date(article.created_at);
   const modDate = article.updated_at ? new Date(article.updated_at) : pubDate;
-  const articleUrl = `https://vozdaia.com/artigo/${article.slug}`;
+  const articleUrl = `https://jornalarcanjo.com.br/artigo/${article.slug}`;
 
   let absoluteImageUrl = article.image_url;
   if (absoluteImageUrl && absoluteImageUrl.startsWith('/')) {
-    absoluteImageUrl = `https://vozdaia.com${absoluteImageUrl}`;
+    absoluteImageUrl = `https://jornalarcanjo.com.br${absoluteImageUrl}`;
   }
 
-  // Schema.org JSON-LD para SEO (NewsArticle em conformidade estrita com Google News)
+  // Schema.org JSON-LD para SEO (NewsArticle em conformidade com Google News)
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "NewsArticle",
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": articleUrl
-    },
-    "headline": (article.meta_title || cleanTitle).substring(0, 110),
-    "image": absoluteImageUrl ? [absoluteImageUrl] : ["https://vozdaia.com/simbolo.png"],
-    "datePublished": pubDate.toISOString(),
-    "dateModified": modDate.toISOString(),
-    "inLanguage": "pt-BR",
-    "author": [{
-        "@type": article.author_name?.includes("Kaelara") ? "SoftwareApplication" : "Person",
-        "name": article.author_name || 'Voz da I.A',
-        "url": "https://vozdaia.com/equipe"
-      }],
-    "publisher": {
-      "@type": "NewsMediaOrganization",
-      "name": "Voz da I.A",
-      "url": "https://vozdaia.com",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://vozdaia.com/simbolo.png"
+    "@graph": [
+      {
+        "@type": "NewsArticle",
+        "@id": `${articleUrl}#article`,
+        "isPartOf": {
+          "@type": "WebPage",
+          "@id": articleUrl
+        },
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": articleUrl
+        },
+        "headline": (article.meta_title || cleanTitle).substring(0, 110),
+        "description": cleanSummary,
+        "image": absoluteImageUrl ? [absoluteImageUrl] : ["https://jornalarcanjo.com.br/simbolo.png"],
+        "datePublished": pubDate.toISOString(),
+        "dateModified": modDate.toISOString(),
+        "inLanguage": "pt-BR",
+        "isAccessibleForFree": true,
+        "articleSection": article.categories?.name || "Notícias",
+        "wordCount": cleanContent.replace(/<[^>]*>/g, '').trim().split(/\s+/).filter(Boolean).length,
+        "author": [
+          {
+            "@type": "Person",
+            "name": article.author_name || 'Jornal Arcanjo',
+            "jobTitle": authorData?.role || "Jornalista e Articulista",
+            "url": `https://jornalarcanjo.com.br/equipe#${authorData?.slug || 'gustavo-castro'}`,
+            ...(authorData?.linkedin ? { "sameAs": [authorData.linkedin] } : {})
+          }
+        ],
+        "publisher": {
+          "@type": "NewsMediaOrganization",
+          "@id": "https://jornalarcanjo.com.br/#organization",
+          "name": "Jornal Arcanjo",
+          "url": "https://jornalarcanjo.com.br",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://jornalarcanjo.com.br/simbolo.png",
+            "width": 512,
+            "height": 512
+          }
+        },
+        "articleBody": cleanContent.replace(/<[^>]*>/g, '').trim().substring(0, 2000)
       }
-    },
-    "description": cleanSummary,
-    "articleBody": cleanContent.replace(/<[^>]*>/g, '').trim().substring(0, 2000)
+    ]
   };
 
   return (
@@ -161,9 +295,12 @@ export default async function ArticlePage({ params }) {
             <Link 
               href={`/categoria/${article.categories.slug}`}
               style={{ 
-                fontWeight: '600', 
-                color: article.categories.slug === 'religiao' ? '#8e24aa' : (article.categories.color_code || 'var(--gn-blue)'),
-                textDecoration: 'none'
+                color: article.categories.color_code || 'var(--gn-blue)', 
+                fontWeight: '600',
+                textDecoration: 'none',
+                textTransform: 'uppercase',
+                fontSize: '12px',
+                letterSpacing: '0.5px'
               }}
             >
               {article.categories.name}
@@ -171,32 +308,34 @@ export default async function ArticlePage({ params }) {
           )}
         </div>
 
-        {/* Título e Resumo */}
-        <h1 className="google-sans article-page-title" style={{ textAlign: 'left', wordBreak: 'break-word', overflowWrap: 'anywhere', fontSize: '2.1rem', fontWeight: 800, lineHeight: '1.25', marginBottom: '16px' }}>
+        {/* Título Principal (H1 Único) */}
+        <h1 className="article-title" style={{ fontSize: 'clamp(28px, 4vw, 42px)', fontWeight: '800', lineHeight: '1.25', color: 'var(--gn-text)', marginBottom: '16px', letterSpacing: '-0.5px' }}>
           {cleanTitle}
         </h1>
-        <p className="article-page-summary" style={{ textAlign: 'left', wordBreak: 'break-word', overflowWrap: 'anywhere', fontSize: '1.15rem', color: 'var(--text-muted)', lineHeight: '1.6', marginBottom: '24px' }}>
-          {cleanSummary}
-        </p>
 
-        {/* Metadados da Matéria (Autor, Selo de Verificação e Data) */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap', padding: '20px 0', borderTop: '1px solid var(--gn-border)', borderBottom: '1px solid var(--gn-border)', marginBottom: '32px', width: '100%' }}>
+        {/* Resumo / Subtítulo */}
+        {cleanSummary && (
+          <p className="article-summary" style={{ fontSize: '18px', lineHeight: '1.6', color: 'var(--gn-text-secondary)', marginBottom: '24px' }}>
+            {cleanSummary}
+          </p>
+        )}
+
+        {/* Metadados: Autor e Data */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', paddingBottom: '24px', marginBottom: '24px', borderBottom: '1px solid var(--gn-border)' }}>
           {authorData.img ? (
-            <img src={authorData.img} alt={article.author_name} style={{ width: '48px', height: '48px', borderRadius: '50%', objectFit: 'cover' }} />
+            <img src={authorData.img} alt={article.author_name} style={{ width: '44px', height: '44px', borderRadius: '50%', objectFit: 'cover' }} />
           ) : (
-            <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'var(--gn-search-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--gn-text-secondary)' }}>
+            <div style={{ width: '44px', height: '44px', borderRadius: '50%', background: 'var(--gn-search-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--gn-text-secondary)', fontSize: '16px', fontWeight: '500' }}>
               {authorData.initials}
             </div>
           )}
-          
-          <div style={{ flex: '1 1 auto' }}>
-            <div style={{ fontSize: '17px', fontWeight: '600', color: 'var(--gn-text)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              Por {article.author_name || article.author}
-              <span title="Jornalismo Verificado" style={{ display: 'inline-flex', alignItems: 'center', gap: '2px', background: 'rgba(26, 115, 232, 0.1)', color: '#1a73e8', padding: '2px 8px', borderRadius: '12px', fontSize: '12px', fontWeight: 600 }}>
-                <span className="material-icons-extended" style={{ fontSize: '14px' }}>verified</span> Verificado
-              </span>
+          <div>
+            <div style={{ fontSize: '15px', fontWeight: '600', color: 'var(--gn-text)' }}>
+              <Link href={`/equipe#${authorData?.slug || 'gustavo-castro'}`} style={{ color: 'inherit', textDecoration: 'none' }} title={`Conheça a trajetória de ${article.author_name || article.author}`}>
+                {article.author_name || article.author}
+              </Link>
             </div>
-            <div style={{ fontSize: '13px', color: 'var(--gn-text-secondary)', display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap', marginTop: '4px' }}>
+            <div style={{ fontSize: '13px', color: 'var(--gn-text-secondary)', display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
               <span>{authorData.role}</span>
               <span>•</span>
               <span>
@@ -304,7 +443,7 @@ export default async function ArticlePage({ params }) {
         {/* Disclaimers Transparentes */}
         {article.disclaimer_type === 'opiniao' && (
           <div style={{ marginTop: '40px', padding: '16px', backgroundColor: 'rgba(216, 27, 96, 0.08)', borderLeft: '4px solid #d81b60', borderRadius: '4px', fontSize: '14px', color: '#d81b60' }}>
-            <strong>Nota Editorial:</strong> Este artigo reflete a visão cultural e opinativa do autor, tendo caráter exclusivamente informativo e filosófico. Não se trata de prestação de serviços comerciais.
+            <strong>Nota Editorial:</strong> Este artigo reflete a visão cultural e opinativa do autor, tendo caráter exclusivamente informativo e reflexivo. Não se trata de prestação de serviços comerciais.
           </div>
         )}
         {article.disclaimer_type === 'tecnica' && (
@@ -335,9 +474,18 @@ export default async function ArticlePage({ params }) {
               {authorData.initials}
             </div>
           )}
-          <div>
-            <div style={{ fontSize: '16px', fontWeight: '600', color: 'var(--gn-text)', marginBottom: '4px' }}>{article.author_name || article.author}</div>
-            <div style={{ fontSize: '14px', color: 'var(--gn-text-secondary)' }}>{authorData.bio}</div>
+          <div style={{ flex: '1 1 auto' }}>
+            <div style={{ fontSize: '16px', fontWeight: '600', color: 'var(--gn-text)', marginBottom: '4px' }}>
+              <Link href={`/equipe#${authorData?.slug || 'gustavo-castro'}`} style={{ color: 'inherit', textDecoration: 'none' }} title={`Conheça a trajetória de ${article.author_name || article.author}`}>
+                {article.author_name || article.author} &rarr;
+              </Link>
+            </div>
+            <div style={{ fontSize: '14px', color: 'var(--gn-text-secondary)', lineHeight: '1.5' }}>{authorData.bio}</div>
+            <div style={{ marginTop: '8px' }}>
+              <Link href={`/equipe#${authorData?.slug || 'gustavo-castro'}`} style={{ fontSize: '13px', color: 'var(--gn-blue)', textDecoration: 'none', fontWeight: 600 }}>
+                Ver biografia completa e credenciais &rarr;
+              </Link>
+            </div>
           </div>
         </div>
 

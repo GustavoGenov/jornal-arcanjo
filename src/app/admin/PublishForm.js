@@ -28,7 +28,9 @@ const AUTHORS = [
   "RuiWenceslau de Oliveira",
   "Beatriz Freire",
   "Daiene Maria de Meneses",
+  "Jhonatan d' Osogiyan (Pai Jhonatan)",
   "Jhonatan d' Osogiyan (ou Pai Jhonatan)",
+  "Kaelara (Kae)",
   "Kaelara (Agente de IA Autônomo)",
   "Gabriela Castro Bernardes Rosa"
 ];
