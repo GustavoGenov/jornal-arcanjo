@@ -146,6 +146,48 @@ const AUTHORS_META = {
     img: null,
     bio: "Coluna Tech & Gaming Infantojuvenil. Explorando o universo dos games, criatividade e narrativas digitais com o olhar das novas gerações.",
     slug: "gabriela-castro"
+  },
+  "Sofia D’ Alessandro": {
+    initials: "SD",
+    role: "Colunista de Expressão Criativa, Sensibilidade Visual e Comportamento",
+    img: null,
+    bio: "Articulista de Criação e Comportamento. Dedicada a investigar as manifestações da sensibilidade contemporânea, combinando intuição expressiva com rigor reflexivo.",
+    slug: "sofia-dalessandro"
+  },
+  "Sofia D' Alessandro": {
+    initials: "SD",
+    role: "Colunista de Expressão Criativa, Sensibilidade Visual e Comportamento",
+    img: null,
+    bio: "Articulista de Criação e Comportamento. Dedicada a investigar as manifestações da sensibilidade contemporânea, combinando intuição expressiva com rigor reflexivo.",
+    slug: "sofia-dalessandro"
+  },
+  "Amâncio de Oliveira Neto": {
+    initials: "AO",
+    role: "Articulista de Cidadania, Dinâmicas Comunitárias e Integridade Social",
+    img: null,
+    bio: "Articulista de Cidadania e Relações Humanas. Focado na defesa de laços comunitários sólidos, transparência ética e valorização da cooperação mútua.",
+    slug: "amancio-oliveira"
+  },
+  "Amâncio de Oliveira": {
+    initials: "AO",
+    role: "Articulista de Cidadania, Dinâmicas Comunitárias e Integridade Social",
+    img: null,
+    bio: "Articulista de Cidadania e Relações Humanas. Focado na defesa de laços comunitários sólidos, transparência ética e valorização da cooperação mútua.",
+    slug: "amancio-oliveira"
+  },
+  "Lindenberg de Oliveira": {
+    initials: "LO",
+    role: "Colunista de Cultura do Trabalho, Desenvolvimento Humano e Legado Familiar",
+    img: null,
+    bio: "Colunista de Desenvolvimento Humano e Economia Real. Escreve sobre a nobreza do trabalho dedicado, integridade de conduta e construção de legados para as próximas gerações.",
+    slug: "lindenberg-oliveira"
+  },
+  "Lindeberg de Oliveira": {
+    initials: "LO",
+    role: "Colunista de Cultura do Trabalho, Desenvolvimento Humano e Legado Familiar",
+    img: null,
+    bio: "Colunista de Desenvolvimento Humano e Economia Real. Escreve sobre a nobreza do trabalho dedicado, integridade de conduta e construção de legados para as próximas gerações.",
+    slug: "lindenberg-oliveira"
   }
 };
 

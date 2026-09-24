@@ -32,7 +32,10 @@ const AUTHORS = [
   "Jhonatan d' Osogiyan (ou Pai Jhonatan)",
   "Kaelara (Kae)",
   "Kaelara (Agente de IA Autônomo)",
-  "Gabriela Castro Bernardes Rosa"
+  "Gabriela Castro Bernardes Rosa",
+  "Sofia D’ Alessandro",
+  "Amâncio de Oliveira Neto",
+  "Lindenberg de Oliveira"
 ];
 
 export default function PublishForm({ categories }) {
