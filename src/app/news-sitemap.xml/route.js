@@ -33,7 +33,7 @@ function formatIsoW3C(dateString) {
 }
 
 export async function GET() {
-  const baseUrl = 'https://jornalarcanjo.com.br';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://jornal-arcanjo.vercel.app';
   
   // Janela estrita de 48 horas (Regra Obrigatória do Google Notícias)
   const twoDaysAgo = new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString();

@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export async function GET() {
-  const baseUrl = 'https://jornalarcanjo.com.br';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://jornal-arcanjo.vercel.app';
   
   const { data: latest } = await supabase
     .from('articles')

@@ -18,35 +18,41 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default function robots() {
+  const primaryDomain = process.env.NEXT_PUBLIC_SITE_URL || 'https://jornal-arcanjo.vercel.app';
+  
   return {
     rules: [
-      // 1. Regra Geral para todos os buscadores (Bing, Yahoo, DuckDuckGo)
+      // 1. Regra Geral para todos os buscadores (Google, Bing, Yahoo, DuckDuckGo)
       {
         userAgent: '*',
         allow: ['/', '/artigo/', '/categoria/', '/articles/', '/api/img', '/api/horoscopo'],
-        disallow: ['/admin/', '/api/'],
+        disallow: ['/admin/', '/admin25/', '/admin25', '/api/'],
       },
-      // 2. Googlebot (Rastreador web geral do Google)
+      // 2. Googlebot (Rastreador web geral do Google Search Console)
       {
         userAgent: 'Googlebot',
         allow: ['/', '/artigo/', '/categoria/', '/articles/', '/api/img'],
-        disallow: ['/admin/', '/api/'],
+        disallow: ['/admin/', '/admin25/', '/admin25', '/api/'],
       },
       // 3. Googlebot-News (Rastreador em tempo real do Google Notícias)
       {
         userAgent: 'Googlebot-News',
         allow: ['/', '/artigo/', '/categoria/', '/articles/', '/api/img'],
-        disallow: ['/admin/', '/api/'],
+        disallow: ['/admin/', '/admin25/', '/admin25', '/api/'],
       },
       // 4. Googlebot-Image (Rastreador de imagens do Google)
       {
         userAgent: 'Googlebot-Image',
         allow: ['/', '/articles/', '/api/img'],
-        disallow: ['/admin/', '/api/'],
+        disallow: ['/admin/', '/admin25/', '/admin25', '/api/'],
       },
     ],
-    // Lista unificada dos sitemaps oficiais
+    // Lista unificada dos sitemaps oficiais para o Google Search Console e Google News
     sitemap: [
+      `${primaryDomain}/sitemap.xml`,
+      `${primaryDomain}/news-sitemap.xml`,
+      'https://jornal-arcanjo.vercel.app/sitemap.xml',
+      'https://jornal-arcanjo.vercel.app/news-sitemap.xml',
       'https://jornalarcanjo.com.br/sitemap.xml',
       'https://jornalarcanjo.com.br/news-sitemap.xml',
     ],

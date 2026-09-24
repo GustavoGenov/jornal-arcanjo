@@ -24,7 +24,7 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 300; // Cache de 5 minutos
 
 export default async function sitemap() {
-  const baseUrl = 'https://jornalarcanjo.com.br';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://jornal-arcanjo.vercel.app';
   
   try {
     // 1. Busca os últimos 10.000 artigos publicados
