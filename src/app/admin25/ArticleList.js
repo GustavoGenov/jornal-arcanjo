@@ -265,7 +265,7 @@ export default function ArticleList({ articles }) {
                 </Link>
 
                 <Link 
-                  href={`/admin/editar/${article.id}`}
+                  href={`/admin25/editar/${article.id}`}
                   style={{ 
                     background: 'rgba(26, 115, 232, 0.1)', color: '#1a73e8', border: 'none', padding: '8px 12px', borderRadius: '6px', fontSize: '13px', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '4px', textDecoration: 'none' 
                   }}

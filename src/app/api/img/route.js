@@ -1,5 +1,28 @@
+/**
+ * ============================================================================
+ * JORNAL ARCANJO — EDGE IMAGE PROXY & CDN CACHE PROXY
+ * ============================================================================
+ * Rota executada no Vercel Edge Runtime para servir mídias com máxima performance.
+ * 
+ * Funcionalidades:
+ * 1. Transformação Dinâmica: Converte requisições para Supabase Image Transformation
+ *    quando os parâmetros de largura (`w`) e qualidade (`q`) são fornecidos.
+ * 2. Cache Global Imutável: Instruções HTTP rigorosas (`s-maxage=31536000, immutable`)
+ *    que cacheiam a imagem na CDN global do Vercel, reduzindo requisições ao banco.
+ * 3. Fallback Resiliente: Redireciona com Status 302 para `/simbolo.png` caso o upstream falhe,
+ *    evitando imagens quebradas ou erros 500 para o leitor.
+ * 4. Validação de Segurança: Permite somente origens autorizadas (Supabase e domínios do Jornal Arcanjo).
+ * 
+ * @module src/app/api/img/route
+ */
+
 export const runtime = 'edge';
 
+/**
+ * Handler HTTP GET para otimização e proxy de imagens
+ * @param {Request} request - Requisição recebida pelo Edge runtime
+ * @returns {Promise<Response>}
+ */
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const imageUrl = searchParams.get('url');
@@ -10,19 +33,19 @@ export async function GET(request) {
     return new Response('Missing url parameter', { status: 400 });
   }
 
-  // Security check: Only allow images from Supabase or trusted domains
+  // Lista de hosts permitidos para prevenir vulnerabilidades de SSRF / Open Proxy
   const allowedHosts = [
+    'jornalarcanjo.com.br',
+    'www.jornalarcanjo.com.br',
+    'jornal-arcanjo.vercel.app',
     'nisbarqzsjqylsvnyxrm.supabase.co',
-    'vozdaia.com',
-    'www.vozdaia.com',
-    'voz-da-ia.vercel.app',
     'localhost'
   ];
 
   try {
     let fetchUrl = imageUrl;
     if (imageUrl.startsWith('/')) {
-      const host = request.headers.get('host') || 'vozdaia.com';
+      const host = request.headers.get('host') || 'jornalarcanjo.com.br';
       const protocol = host.includes('localhost') ? 'http' : 'https';
       fetchUrl = `${protocol}://${host}${imageUrl}`;
     } else {
@@ -32,7 +55,7 @@ export async function GET(request) {
       }
     }
 
-    // If Supabase Storage image and width requested, use Supabase Image Transformation
+    // Se for imagem do Supabase Storage e largura for solicitada, usa o endpoint de transformação
     if (width && fetchUrl.includes('/storage/v1/object/public/')) {
       fetchUrl = fetchUrl.replace('/storage/v1/object/public/', '/storage/v1/render/image/public/') + 
         `?width=${encodeURIComponent(width)}&quality=${encodeURIComponent(quality)}`;
@@ -45,7 +68,7 @@ export async function GET(request) {
     });
 
     if (!imageRes.ok) {
-      // If upstream image is missing, redirect to default symbol rather than returning 500
+      // Em caso de falha no upstream, redireciona graciosamente para o símbolo oficial
       return Response.redirect(new URL('/simbolo.png', request.url), 302);
     }
 
@@ -56,7 +79,7 @@ export async function GET(request) {
       status: 200,
       headers: {
         'Content-Type': contentType,
-        // Cache at Vercel Edge CDN for 1 year, browser cache for 1 year, immutable
+        // Cache na CDN Edge da Vercel por 1 ano, cache do navegador por 1 ano, imutável
         'Cache-Control': 'public, max-age=31536000, s-maxage=31536000, stale-while-revalidate=86400, immutable',
         'CDN-Cache-Control': 'public, s-maxage=31536000, immutable',
         'Vercel-CDN-Cache-Control': 'public, s-maxage=31536000, immutable',

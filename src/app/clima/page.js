@@ -1,5 +1,22 @@
 'use client';
 
+/**
+ * ============================================================================
+ * JORNAL ARCANJO — HUB METEOROLÓGICO & PREVISÃO DO TEMPO
+ * ============================================================================
+ * Sistema meteorológico em tempo real alimentado por modelos numéricos
+ * de previsão atmosférica da Open-Meteo.
+ * 
+ * Funcionalidades:
+ * 1. Foco Hiperlocal: Destaque permanente para Formiga (MG) e Centro-Oeste Mineiro.
+ * 2. Monitoramento Nacional: Cobertura das principais capitais e regiões brasileiras.
+ * 3. Decodificação WMO: Converte códigos da Organização Meteorológica Mundial em descrições,
+ *    ícones e gradientes visuais dinâmicos conforme o estado do céu.
+ * 4. Painel de Notícias Climáticas: Integração com matérias da editoria 'clima-tempo' do Supabase.
+ * 
+ * @module src/app/clima/page
+ */
+
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
@@ -403,7 +420,7 @@ export default function ClimaPage() {
                       </div>
 
                       <div className="article-card-footer">
-                        <span>{article.author_name || 'Voz da I.A'}</span>
+                        <span>{article.author_name || 'Redação Jornal Arcanjo'}</span>
                         <span>•</span>
                         <span>{new Date(article.created_at).toLocaleDateString('pt-BR')}</span>
                       </div>

@@ -90,10 +90,10 @@ export default function PublishForm({ categories }) {
   }, [title, summary, content, sources]);
 
   let wordCountColor = '#d32f2f';
-  let wordCountText = `Alerta: Texto com ${wordCount} palavras (Mínimo de 750 palavras exigido pelo AdSense)`;
+  let wordCountText = `Alerta: Texto com ${wordCount} palavras (Mínimo de 750 palavras recomendado para padrão broadsheet)`;
   if (wordCount >= 750 && wordCount <= 1600) {
     wordCountColor = '#16a34a';
-    wordCountText = `Excelente densidade informativa (${wordCount} palavras - Aprovado para AdSense)`;
+    wordCountText = `Excelente densidade informativa (${wordCount} palavras - Padrão Editorial Completo)`;
   } else if (wordCount > 1600) {
     wordCountColor = '#1a73e8';
     wordCountText = `Matéria aprofundada e completa (${wordCount} palavras)`;
@@ -117,7 +117,7 @@ export default function PublishForm({ categories }) {
     }
 
     if (!isDraft && wordCount < 750) {
-      setMessage(`A matéria possui ${wordCount} palavras. É necessário atingir o mínimo de 750 palavras (contando Título, Linha Fina, Texto e Fontes) para publicação oficial com conformidade AdSense.`);
+      setMessage(`A matéria possui ${wordCount} palavras. É necessário atingir o mínimo de 750 palavras (contando Título, Linha Fina, Texto e Fontes) para publicação oficial com padrão editorial do jornal.`);
       return;
     }
 
@@ -240,7 +240,7 @@ export default function PublishForm({ categories }) {
       <div id="editor" style={{ flex: '1 1 100%', minWidth: 0, border: '1px solid var(--border)', borderRadius: '16px', padding: '32px', background: 'var(--card)', boxShadow: 'var(--shadow)' }}>
         <h2 style={{ fontSize: '22px', color: 'var(--text)', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '8px', borderBottom: '2px solid #1a73e8', paddingBottom: '12px' }}>
           <span className="material-icons-extended" style={{ color: '#1a73e8' }}>campaign</span>
-          Nova Notícia - Padrão AdSense (750+ Palavras)
+          Nova Notícia - Padrão Editorial (750+ Palavras)
         </h2>
         
         <form style={{ display: 'flex', flexDirection: 'column' }}>
@@ -347,7 +347,7 @@ export default function PublishForm({ categories }) {
               Salvar Rascunho
             </button>
             <button type="button" onClick={(e) => handlePublish(e, false)} disabled={loading} style={{ flex: 2, minWidth: '220px', background: '#1a73e8', color: '#fff', border: 'none', padding: '16px', borderRadius: '8px', fontSize: '15px', fontWeight: '700', cursor: loading ? 'wait' : 'pointer', transition: 'background 0.2s', boxShadow: '0 4px 12px rgba(26, 115, 232, 0.3)' }}>
-              {loading ? 'Processando...' : 'Publicar Matéria (AdSense Ready)'}
+              {loading ? 'Processando...' : 'Publicar Matéria'}
             </button>
           </div>
         </form>

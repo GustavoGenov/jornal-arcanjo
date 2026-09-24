@@ -1,3 +1,20 @@
+/**
+ * ============================================================================
+ * JORNAL ARCANJO — PAINEL DE CONTROLE EDITORIAL (ADMIN DASHBOARD)
+ * ============================================================================
+ * Painel administrativo central da redação digital do Jornal Arcanjo.
+ * 
+ * Capacidades:
+ * 1. Métricas em Tempo Real: Visitas diárias e totais, inscritos na newsletter,
+ *    volume de matérias e distribuição por bloco editorial.
+ * 2. Editoria e Publicação: Editor de matérias com contagem de palavras e
+ *    upload otimizado de imagens para o Supabase Storage.
+ * 3. Gestão de Blocos / Categorias: Criação, reorganização e restauração oficial.
+ * 4. Tabela de Matérias: Edição rápida, controle de rascunhos e destaques na Capa.
+ * 
+ * @module src/app/admin25/page
+ */
+
 import { supabase } from '@/lib/supabase';
 import PublishForm from './PublishForm';
 import CategoryForm from './CategoryForm';
@@ -100,7 +117,7 @@ export default async function AdminDashboard() {
             Painel de Controle Editorial
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '14px', margin: 0 }}>
-            Gerenciamento de matérias, monitoramento de visualizações em tempo real e conformidade Google AdSense.
+            Gerenciamento de matérias, monitoramento de visualizações em tempo real e integridade editorial.
           </p>
         </div>
         <div style={{ display: 'flex', gap: '10px' }}>
@@ -208,13 +225,13 @@ export default async function AdminDashboard() {
         </div>
       </div>
 
-      {/* PAINEL DE CONFORMIDADE GOOGLE ADSENSE E-E-A-T */}
-      <div id="adsense" style={{ padding: '24px', borderRadius: '14px', background: 'linear-gradient(135deg, rgba(30, 64, 175, 0.06), rgba(30, 64, 175, 0.02))', border: '1px solid rgba(37, 99, 235, 0.25)', marginBottom: '32px' }}>
+      {/* PAINEL DE CONFORMIDADE EDITORIAL E-E-A-T */}
+      <div id="qualidade" style={{ padding: '24px', borderRadius: '14px', background: 'linear-gradient(135deg, rgba(30, 64, 175, 0.06), rgba(30, 64, 175, 0.02))', border: '1px solid rgba(37, 99, 235, 0.25)', marginBottom: '32px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px', marginBottom: '16px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <span className="material-icons-extended" style={{ color: '#2563eb', fontSize: '24px' }}>verified_user</span>
             <h3 style={{ fontSize: '16px', fontWeight: '700', color: 'var(--text)', margin: 0 }}>
-              Checklist de Conformidade Google AdSense & Google Notícias
+              Checklist de Padrões Editoriais & Google Notícias
             </h3>
           </div>
           <span style={{ fontSize: '12px', fontWeight: '600', background: 'rgba(16, 185, 129, 0.15)', color: '#059669', padding: '4px 10px', borderRadius: '20px' }}>
@@ -225,11 +242,11 @@ export default async function AdminDashboard() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '12px', fontSize: '13px', color: 'var(--text)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span className="material-icons-extended" style={{ color: '#10b981', fontSize: '18px' }}>check_circle</span>
-            <span>Conta AdSense: <strong>ca-pub-5759690232636098</strong></span>
+            <span>Indexação e Sitemaps <strong>XML / News-Sitemap</strong></span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span className="material-icons-extended" style={{ color: '#10b981', fontSize: '18px' }}>check_circle</span>
-            <span>Arquivo <strong>ads.txt</strong> ativo na raiz com Status 200</span>
+            <span>Metadados e OpenGraph no padrão <strong>The New York Times</strong></span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span className="material-icons-extended" style={{ color: '#10b981', fontSize: '18px' }}>check_circle</span>

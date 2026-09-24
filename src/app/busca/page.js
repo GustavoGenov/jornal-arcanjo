@@ -1,18 +1,28 @@
+/**
+ * ============================================================================
+ * JORNAL ARCANJO — BUSCA DE MATÉRIAS & ARQUIVO JORNALÍSTICO
+ * ============================================================================
+ * Motor de pesquisa textual que permite aos leitores encontrar reportagens,
+ * artigos de opinião e ensaios históricos por palavras-chave.
+ * 
+ * @module src/app/busca/page
+ */
+
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
 import { getOptimizedImageUrl } from '@/lib/imageHelper';
 
-export const revalidate = 0; // Dynamic page
+export const revalidate = 0; // Página dinâmica baseada em searchParams
 
 export async function generateMetadata({ searchParams }) {
   const params = await searchParams;
   const query = params.q || '';
-  const title = query ? `Busca por "${query}" | Voz da I.A` : 'Busca de Notícias | Voz da I.A';
+  const title = query ? `Busca por "${query}" | Jornal Arcanjo` : 'Busca de Notícias | Jornal Arcanjo';
   return {
     title,
-    description: 'Pesquise notícias verificadas, inteligência artificial, ciência e fatos no Voz da I.A.',
+    description: 'Pesquise notícias verificadas, cultura, sociedade e fatos no Jornal Arcanjo.',
     alternates: {
-      canonical: 'https://vozdaia.com/busca',
+      canonical: 'https://jornal-arcanjo.vercel.app/busca',
     },
   };
 }

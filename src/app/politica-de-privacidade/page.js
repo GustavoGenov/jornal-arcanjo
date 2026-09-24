@@ -62,19 +62,11 @@ export default function PoliticaPrivacidade() {
         </ul>
 
         <h2 className="google-sans" style={{ fontSize: '20px', color: 'var(--gn-blue)', marginBottom: '16px', marginTop: '32px' }}>
-          2. Publicidade e Monetização (Google AdSense)
+          2. Ausência de Publicidade Invasiva e Respeito aos Dados
         </h2>
         <p style={{ marginBottom: '16px' }}>
-          O portal utiliza ou planeja utilizar serviços de publicidade digital fornecidos por terceiros, incluindo o Google AdSense.
+          O Jornal Arcanjo prioriza a experiência de leitura e a soberania dos dados de seus leitores. Não comercializamos dados pessoais com terceiros nem operamos redes invasivas de rastreamento comportamental. Toda a navegação é protegida por conexões criptografadas (HTTPS/TLS).
         </p>
-        <ul style={{ marginBottom: '24px', paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          <li>
-            <strong>Cookies de Terceiros (Cookie DART):</strong> O Google, na condição de fornecedor terceirizado, utiliza cookies (como o cookie DART) para exibir anúncios contextuais e personalizados com base nas suas visitas anteriores ao nosso site e a outros endereços da internet.
-          </li>
-          <li>
-            <strong>Desativação de Anúncios Personalizados:</strong> Os usuários podem desativar a personalização de anúncios com base em interesses a qualquer momento acessando as <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--gn-blue)', textDecoration: 'underline' }}>Configurações de Anúncios do Google</a> ou consultando a <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--gn-blue)', textDecoration: 'underline' }}>Política de Privacidade da rede de conteúdo e anúncios do Google</a>.
-          </li>
-        </ul>
 
         <h2 className="google-sans" style={{ fontSize: '20px', color: 'var(--gn-blue)', marginBottom: '16px', marginTop: '32px' }}>
           3. Links Externos e Conteúdos de Terceiros

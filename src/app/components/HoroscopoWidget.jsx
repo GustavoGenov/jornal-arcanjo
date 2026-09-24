@@ -1,14 +1,32 @@
 'use client';
 
+/**
+ * ============================================================================
+ * JORNAL ARCANJO — WIDGET DE HORÓSCOPO & TARÔ
+ * ============================================================================
+ * Componente interativo client-side que conecta os leitores às previsões
+ * astrológicas diárias e à tiragem dos Arcanos do Tarô de Marselha.
+ * 
+ * Recursos:
+ * 1. Mapeamento visual dos 12 signos do zodíaco com símbolos unicode clássicos.
+ * 2. Classificação elemental (Fogo, Terra, Ar, Água) com paleta visual adaptativa.
+ * 3. Integração com a API interna `/api/horoscopo` para previsões em tempo real.
+ * 4. Tiragem interativa de Tarô com efeito de revelação (flip card).
+ * 
+ * @component
+ */
+
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
+/** Glifos zodiacais oficiais */
 const SIMBOLOS_SIGNOS = {
   aries: '♈', touro: '♉', gemeos: '♊', cancer: '♋',
   leao: '♌', virgem: '♍', libra: '♎', escorpiao: '♏',
   sagitario: '♐', capricornio: '♑', aquario: '♒', peixes: '♓'
 };
 
+/** Cores temáticas dos quatro elementos fundamentais */
 const CORES_ELEMENTOS = {
   Fogo: { bg: 'rgba(239, 68, 68, 0.1)', text: '#ef4444', border: 'rgba(239, 68, 68, 0.3)' },
   Terra: { bg: 'rgba(16, 185, 129, 0.1)', text: '#10b981', border: 'rgba(16, 185, 129, 0.3)' },

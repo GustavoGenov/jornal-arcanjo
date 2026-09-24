@@ -1,3 +1,14 @@
+/**
+ * ============================================================================
+ * JORNAL ARCANJO — CORPO EDITORIAL & CONSELHO DE ÉTICA (E-E-A-T)
+ * ============================================================================
+ * Apresentação detalhada da redação, fundadores, colunistas e conselheiros.
+ * Atende aos mais altos padrões de transparência jornalística e E-E-A-T
+ * (Experience, Expertise, Authoritativeness, and Trustworthiness).
+ * 
+ * @module src/app/equipe/page
+ */
+
 import PageTracker from '../components/PageTracker';
 
 function IconVerified({ size = 22, color = '#1e3a8a' }) {

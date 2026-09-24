@@ -1,4 +1,19 @@
-﻿'use client';
+'use client';
+
+/**
+ * ============================================================================
+ * JORNAL ARCANJO — BLOCO DE PASSATEMPOS (GAMES & JOGOS DA MENTE)
+ * ============================================================================
+ * Implementação editorial inspirada no caderno 'NYT Games', oferecendo
+ * desafios de lógica, vocabulário e raciocínio para os leitores do portal.
+ * 
+ * Jogos Suportados:
+ * 1. Sudoku Clássico: Grade numérica diária com níveis progressivos.
+ * 2. Palavras Cruzadas: Cruzadinhas jornalísticas no padrão broadsheet.
+ * 3. Jogo das Palavras (Termo): Desafio lexical diário de 5 letras.
+ * 
+ * @component
+ */
 
 import { useState } from 'react';
 

@@ -1,4 +1,4 @@
-﻿import PageTracker from '../components/PageTracker';
+import PageTracker from '../components/PageTracker';
 
 export const metadata = {
   title: 'Termos e Condições de Uso | Jornal Arcanjo',
@@ -82,9 +82,6 @@ export default function TermosUso() {
           Para enriquecer o conteúdo jornalístico e apoiar a sustentabilidade da plataforma, o portal integra diferentes tipos de conexões externas:
         </p>
         <ul style={{ marginBottom: '24px', paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          <li>
-            <strong>Publicidade de Terceiros (Google AdSense):</strong> Nosso site exibe anúncios programáticos gerenciados pelo Google. Não temos controle direto sobre os produtos, serviços ou promessas anunciados nesses blocos publicitários. As transações e visitas a páginas de patrocinadores são de exclusiva responsabilidade entre o usuário e o anunciante.
-          </li>
           <li>
             <strong>Links para Fontes e Referências:</strong> Disponibilizamos links diretos para documentos oficiais, artigos acadêmicos e repositórios externos. Não nos responsabilizamos pela estabilidade, disponibilidade técnica ou políticas de privacidade de páginas de terceiros.
           </li>

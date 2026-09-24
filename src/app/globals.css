@@ -1518,6 +1518,7 @@ img.goog-te-gadget-icon,
 .card-img-wrap {
   width: 100%;
   aspect-ratio: 16 / 9;
+  max-height: 240px;
   overflow: hidden;
   background: radial-gradient(circle at center, #1e293b 0%, #090d16 100%);
   display: flex;
@@ -1529,7 +1530,7 @@ img.goog-te-gadget-icon,
 .card img {
   width: 100%;
   height: 100%;
-  object-fit: contain !important;
+  object-fit: cover !important;
   object-position: center !important;
   position: relative;
   z-index: 1;
@@ -2088,6 +2089,7 @@ body {
 .nyt-lead-media {
   width: 100%;
   aspect-ratio: 16 / 9;
+  max-height: 440px;
   position: relative;
   background: radial-gradient(circle at center, #1e293b 0%, #090d16 100%);
   border: 1px solid var(--nyt-border);
@@ -2102,7 +2104,7 @@ body {
 .nyt-lead-media img {
   width: 100%;
   height: 100%;
-  object-fit: contain !important;
+  object-fit: cover !important;
   object-position: center !important;
   display: block;
   position: relative;
@@ -2255,11 +2257,22 @@ body {
   padding-right: 0;
 }
 
+.nyt-grid-card img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 220px;
+  object-fit: cover !important;
+  object-position: center !important;
+  border-radius: 6px;
+  display: block;
+}
+
 .nyt-grid-img-wrap {
   width: 100%;
   aspect-ratio: 16 / 9;
+  max-height: 220px;
   overflow: hidden;
-  background: radial-gradient(circle at center, #1e293b 0%, #090d16 100%);
+  background: var(--nyt-surface);
   position: relative;
   display: flex;
   align-items: center;
@@ -2272,7 +2285,7 @@ body {
 .nyt-grid-img-wrap img {
   width: 100%;
   height: 100%;
-  object-fit: contain !important;
+  object-fit: cover !important;
   object-position: center !important;
   position: relative;
   z-index: 1;
@@ -2448,6 +2461,133 @@ body {
 .nyt-footer-col a:hover {
   color: var(--nyt-ink);
   text-decoration: underline;
+}
+
+/* --- ECOSSISTEMA PARCEIRO NO FOOTER (BROADSHEET NYT) --- */
+.nyt-footer-ecosystem {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--nyt-border);
+}
+
+.nyt-footer-ecosystem-header {
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.nyt-footer-ecosystem-tag {
+  display: inline-block;
+  font-family: var(--nyt-sans);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--nyt-ink);
+  margin-bottom: 4px;
+}
+
+.nyt-footer-ecosystem-lead {
+  font-family: var(--nyt-serif-body);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--nyt-ink-muted);
+  margin: 0;
+}
+
+.nyt-footer-ecosystem-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.nyt-footer-ecosystem-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: var(--nyt-paper-tint);
+  border: 1px solid var(--nyt-border);
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.nyt-footer-ecosystem-card:hover {
+  border-color: var(--nyt-ink-secondary);
+  background: var(--nyt-surface);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  transform: translateY(-1px);
+}
+
+.nyt-footer-ecosystem-icon-wrapper {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 8px;
+  padding: 2px;
+}
+
+.nyt-footer-ecosystem-icon {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  display: block;
+}
+
+.nyt-footer-ecosystem-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.nyt-footer-ecosystem-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 3px;
+}
+
+.nyt-footer-ecosystem-name {
+  font-family: var(--nyt-sans);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--nyt-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nyt-footer-ecosystem-arrow {
+  font-size: 13px;
+  color: var(--nyt-ink-muted);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.nyt-footer-ecosystem-card:hover .nyt-footer-ecosystem-arrow {
+  color: var(--nyt-ink);
+  transform: translate(2px, -2px);
+}
+
+.nyt-footer-ecosystem-desc {
+  font-family: var(--nyt-sans);
+  font-size: 11.5px;
+  color: var(--nyt-ink-muted);
+  line-height: 1.35;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .nyt-footer-ecosystem-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
 }
 
 .nyt-footer-bottom {
@@ -2746,7 +2886,7 @@ body {
 .g1-factcheck-thumb img {
   width: 100%;
   height: 100%;
-  object-fit: contain !important;
+  object-fit: cover !important;
   object-position: center !important;
   display: block;
   position: relative;
@@ -2846,6 +2986,7 @@ body {
   width: 100%;
   aspect-ratio: 16 / 10;
   min-height: 240px;
+  max-height: 380px;
   overflow: hidden;
   background: radial-gradient(circle at center, #1e293b 0%, #090d16 100%);
   display: flex;
@@ -2855,7 +2996,7 @@ body {
 .g1-special-media img {
   width: 100%;
   height: 100%;
-  object-fit: contain !important;
+  object-fit: cover !important;
   object-position: center !important;
   display: block;
   position: relative;
@@ -2976,7 +3117,7 @@ body {
 .g1-video-thumb img {
   width: 100%;
   height: 100%;
-  object-fit: contain !important;
+  object-fit: cover !important;
   object-position: center !important;
   display: block;
   position: relative;

@@ -79,7 +79,7 @@ export default function AdminLayout({ children }) {
               
               {/* Navigation Menu */}
               <nav style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <a href="/admin" style={{ 
+                <a href="/admin25" style={{ 
                   color: '#fff', 
                   display: 'flex', 
                   alignItems: 'center', 
@@ -141,7 +141,7 @@ export default function AdminLayout({ children }) {
                   Categorias / Blocos
                 </a>
 
-                <a href="#adsense" style={{ 
+                <a href="#qualidade" style={{ 
                   color: '#cbd5e1', 
                   display: 'flex', 
                   alignItems: 'center', 
@@ -153,7 +153,7 @@ export default function AdminLayout({ children }) {
                   transition: 'background 0.2s'
                 }}>
                   <span className="material-icons-extended" style={{ fontSize: '20px', color: '#38bdf8' }}>verified</span> 
-                  Conformidade AdSense
+                  Padrões Editoriais
                 </a>
               </nav>
             </div>

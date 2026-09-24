@@ -1,4 +1,19 @@
 'use client';
+
+/**
+ * ============================================================================
+ * JORNAL ARCANJO — TELA DE LOGIN DA REDAÇÃO (ADMIN LOGIN)
+ * ============================================================================
+ * Ponto de acesso restrito para repórteres, colunistas e editores do Jornal Arcanjo.
+ * 
+ * Funcionalidades:
+ * 1. Autenticação criptográfica via Supabase Auth (`signInWithPassword`).
+ * 2. Redirecionamento automático pós-login para o painel `/admin25`.
+ * 3. Identidade visual refinada com o símbolo oficial e tipografia limpa.
+ * 
+ * @module src/app/admin25/login/page
+ */
+
 import { useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
@@ -25,7 +40,7 @@ export default function AdminLogin() {
       setError('Credenciais inválidas. Verifique seu e-mail e senha.');
       setLoading(false);
     } else {
-      router.push('/admin');
+      router.push('/admin25');
     }
   };
 

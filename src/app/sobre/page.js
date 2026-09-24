@@ -1,3 +1,13 @@
+/**
+ * ============================================================================
+ * JORNAL ARCANJO — INSTITUCIONAL (QUEM SOMOS & MISSÃO EDITORIAL)
+ * ============================================================================
+ * Página oficial de transparência, história fundacional e princípios éticos.
+ * Implementa metadados estruturados Schema.org `AboutPage` e `NewsMediaOrganization`.
+ * 
+ * @module src/app/sobre/page
+ */
+
 import PageTracker from '../components/PageTracker';
 
 export const metadata = {

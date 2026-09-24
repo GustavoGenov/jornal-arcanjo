@@ -1,5 +1,20 @@
 'use client';
 
+/**
+ * ============================================================================
+ * JORNAL ARCANJO — COOKIE BANNER (CONSENTIMENTO LGPD)
+ * ============================================================================
+ * Notificação de transparência e consentimento de privacidade em conformidade
+ * com a Lei Geral de Proteção de Dados Pessoais (LGPD - Lei nº 13.709/2018).
+ * 
+ * Princípios de Implementação:
+ * 1. Sem Rastreamento de Terceiros: Foco exclusivo em cookies técnicos de sessão e preferências.
+ * 2. Persistência Local: Utiliza `localStorage` sob a chave `'arcanjo_cookie_consent'`.
+ * 3. Renderização Reativa: Integração com `useSyncExternalStore` para sincronizar entre abas sem flicker.
+ * 
+ * @component
+ */
+
 import { useState, useSyncExternalStore } from 'react';
 import Link from 'next/link';
 
@@ -15,7 +30,7 @@ export default function CookieBanner() {
     emptySubscribe,
     () => {
       try {
-        return localStorage.getItem('vozdaia_cookie_consent');
+        return localStorage.getItem('arcanjo_cookie_consent');
       } catch (e) {
         return 'accepted';
       }
@@ -25,32 +40,18 @@ export default function CookieBanner() {
 
   const showBanner = !closed && !consent;
 
+  /** Aceita todas as preferências técnicas */
   const handleAcceptAll = () => {
     try {
-      localStorage.setItem('vozdaia_cookie_consent', 'accepted');
-      if (typeof window !== 'undefined' && window.gtag) {
-        window.gtag('consent', 'update', {
-          ad_storage: 'granted',
-          analytics_storage: 'granted',
-          ad_user_data: 'granted',
-          ad_personalization: 'granted'
-        });
-      }
+      localStorage.setItem('arcanjo_cookie_consent', 'accepted');
     } catch (e) {}
     setClosed(true);
   };
 
+  /** Aceita apenas cookies estritamente essenciais */
   const handleAcceptEssential = () => {
     try {
-      localStorage.setItem('vozdaia_cookie_consent', 'essential');
-      if (typeof window !== 'undefined' && window.gtag) {
-        window.gtag('consent', 'update', {
-          ad_storage: 'denied',
-          analytics_storage: 'denied',
-          ad_user_data: 'denied',
-          ad_personalization: 'denied'
-        });
-      }
+      localStorage.setItem('arcanjo_cookie_consent', 'essential');
     } catch (e) {}
     setClosed(true);
   };
@@ -97,7 +98,7 @@ export default function CookieBanner() {
           <strong style={{ color: 'var(--gn-text, #202124)', fontSize: '14.5px', display: 'block', marginBottom: '4px' }}>
             Privacidade e Cookies (LGPD)
           </strong>
-          Utilizamos cookies e tecnologias semelhantes para personalizar conteúdo, veicular anúncios relevantes do Google AdSense e analisar o tráfego do portal, em total respeito à sua privacidade. Saiba mais em nossa{' '}
+          Utilizamos cookies e tecnologias essenciais para aprimorar sua experiência de leitura e navegação, em total conformidade com a LGPD e respeito à sua privacidade. Saiba mais em nossa{' '}
           <Link
             href="/politica-de-privacidade"
             style={{

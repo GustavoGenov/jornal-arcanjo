@@ -1,5 +1,20 @@
 'use client';
 
+/**
+ * ============================================================================
+ * JORNAL ARCANJO — CADERNO DE HORÓSCOPO & TARÔ DE MARSELHA
+ * ============================================================================
+ * Espaço editorial dedicado ao simbolismo dos astros e aos mistérios dos Arcanos,
+ * sob a curadoria e escrita do colunista e etnobotânico Jhonatan d' Osogiyan.
+ * 
+ * Funcionalidades:
+ * 1. Previsões Diárias dos 12 Signos: Amor, carreira, espiritualidade e número da sorte.
+ * 2. Tiragem Diária do Tarô: O Arcano Maior do dia com interpretação prática e conselho reflexivo.
+ * 3. Classificação Elemental: Filtros dinâmicos por Fogo, Terra, Ar e Água.
+ * 
+ * @module src/app/horoscopo/page
+ */
+
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 

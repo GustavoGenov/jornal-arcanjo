@@ -1,4 +1,24 @@
 'use client';
+
+/**
+ * ============================================================================
+ * JORNAL ARCANJO — SOCIAL SHARE (COMPARTILHAMENTO MULTIPLATAFORMA)
+ * ============================================================================
+ * Barra de compartilhamento social nativa e ultraleve, sem SDKs pesados
+ * ou rastreadores de terceiros (Zero Bloatware).
+ * 
+ * Redes Atendidas:
+ * - WhatsApp: Protocolo direto via api.whatsapp.com
+ * - Threads & Bluesky: Intents diretos da nova geração de redes abertas
+ * - LinkedIn & Facebook: Dialogs de compartilhamento oficiais
+ * - Clipboard API: Cópia imediata com feedback tátil para Instagram e mensageiros
+ * 
+ * @component
+ * @param {Object} props - Propriedades do componente
+ * @param {string} props.url - URL canônica da matéria
+ * @param {string} props.title - Título do artigo para pré-preenchimento
+ */
+
 import { useState } from 'react';
 
 export default function SocialShare({ url, title }) {
@@ -16,6 +36,7 @@ export default function SocialShare({ url, title }) {
     twitter: `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`
   };
 
+  /** Copia a URL atual para a área de transferência do usuário */
   const handleCopyLink = () => {
     if (navigator?.clipboard) {
       navigator.clipboard.writeText(url);

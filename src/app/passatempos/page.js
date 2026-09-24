@@ -1,4 +1,14 @@
-﻿import PageTracker from '../components/PageTracker';
+/**
+ * ============================================================================
+ * JORNAL ARCANJO — PÁGINA DE PASSATEMPOS & JOGOS MENTAIS
+ * ============================================================================
+ * Caderno editorial de entretenimento saudável e estímulo à neuroplasticidade.
+ * Inspirado na clássica tradição dos quebra-cabeças dos grandes periódicos mundiais.
+ * 
+ * @module src/app/passatempos/page
+ */
+
+import PageTracker from '../components/PageTracker';
 import GamesBlock from '../components/GamesBlock';
 
 export const metadata = {

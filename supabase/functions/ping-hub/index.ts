@@ -19,7 +19,7 @@ Deno.serve(async (req: Request) => {
     // Só dispara se o artigo estiver publicado
     if (record && record.published === true) {
       const hubUrl = "https://pubsubhubbub.appspot.com/";
-      const topicUrl = "https://vozdaia.com/feed.xml";
+      const topicUrl = "https://jornalarcanjo.com.br/feed.xml";
 
       // Monta os parâmetros no formato application/x-www-form-urlencoded exigido pelo Google Hub
       const formData = new URLSearchParams();

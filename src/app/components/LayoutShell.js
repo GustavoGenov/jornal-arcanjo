@@ -1,5 +1,24 @@
 'use client';
 
+/**
+ * ============================================================================
+ * JORNAL ARCANJO — LAYOUT SHELL (MASTHEAD & CASCA EDITORIAL)
+ * ============================================================================
+ * Casca visual unificada que implementa o padrão broadsheet (The New York Times).
+ * 
+ * Componentes Estruturais:
+ * 1. Top Utility Bar: Data por extenso, indicador de clima de Formiga (MG), alternador de tema e acesso à redação.
+ * 2. Masthead Central: Tipografia gótica/serifada clássica do Jornal Arcanjo com o lema editorial.
+ * 3. Double-rule Navigation: Grade horizontal de editorias com separadores clássicos do jornalismo impresso.
+ * 4. Drawer Lateral: Menu de seções completo acessível em qualquer resolução.
+ * 5. Footer Institucional: Quatro colunas estruturadas, links de transparência, equipe e copyright.
+ * 
+ * @component
+ * @param {Object} props - Propriedades do componente
+ * @param {Array<{id: string, name: string, slug: string, color_code?: string}>} props.categories - Categorias ativas
+ * @param {React.ReactNode} props.children - Conteúdo da página atual
+ */
+
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -13,7 +32,7 @@ export default function LayoutShell({ categories, children }) {
   const closeDrawer = () => setDrawerOpen(false);
 
   // Se a rota for administrativa, não duplica a casca pública do jornal
-  const isAdminRoute = pathname?.startsWith('/admin');
+  const isAdminRoute = pathname?.startsWith('/admin25') || pathname?.startsWith('/admin');
 
   if (isAdminRoute) {
     return <>{children}</>;
@@ -66,7 +85,7 @@ export default function LayoutShell({ categories, children }) {
               <span>•</span>
               <ThemeToggle />
               <span>•</span>
-              <Link href="/admin/login" style={{ fontWeight: '700' }}>
+              <Link href="/admin25/login" style={{ fontWeight: '700' }}>
                 REDAÇÃO / ENTRAR
               </Link>
             </div>
@@ -257,6 +276,106 @@ export default function LayoutShell({ categories, children }) {
                 <li><Link href="/termos">Termos de Uso</Link></li>
                 <li><a href="mailto:gustavocastroinfo@gmail.com">gustavocastroinfo@gmail.com</a></li>
               </ul>
+            </div>
+          </div>
+
+          {/*
+            SEÇÃO DE ATALHOS DO ECOSSISTEMA DIGITAL & PROJETOS PARCEIROS
+            Apresenta links diretos de alta relevância com ícones vetoriais otimizados em SVG:
+            1. Cursos Livres Tech & IA: https://cursos-livres-tech-ia.vercel.app/
+            2. Kaelara Online: https://kaelara-online.vercel.app/
+            3. Jornal Voz da IA: https://vozdaia.com/
+          */}
+          <div className="nyt-footer-ecosystem">
+            <div className="nyt-footer-ecosystem-header">
+              <span className="nyt-footer-ecosystem-tag">Rede Digital & Projetos Parceiros</span>
+              <p className="nyt-footer-ecosystem-lead">Conheça as iniciativas integradas do nosso ecossistema de jornalismo, inteligência artificial e educação:</p>
+            </div>
+
+            <div className="nyt-footer-ecosystem-grid">
+              {/* ATALHO 1: JORNAL VOZ DA IA */}
+              <a 
+                href="https://vozdaia.com/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="nyt-footer-ecosystem-card"
+                title="Acessar o portal Voz da IA"
+              >
+                <div className="nyt-footer-ecosystem-icon-wrapper">
+                  <img 
+                    src="/ecosystem/vozdaia.svg" 
+                    alt="Símbolo Voz da IA" 
+                    width="32" 
+                    height="32" 
+                    className="nyt-footer-ecosystem-icon" 
+                  />
+                </div>
+                <div className="nyt-footer-ecosystem-info">
+                  <div className="nyt-footer-ecosystem-title-row">
+                    <strong className="nyt-footer-ecosystem-name">Voz da IA</strong>
+                    <span className="nyt-footer-ecosystem-arrow" aria-hidden="true">↗</span>
+                  </div>
+                  <p className="nyt-footer-ecosystem-desc">
+                    Jornalismo de Inteligência Artificial, Ciência &amp; Futuro Digital.
+                  </p>
+                </div>
+              </a>
+
+              {/* ATALHO 2: KAELARA ONLINE */}
+              <a 
+                href="https://kaelara-online.vercel.app/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="nyt-footer-ecosystem-card"
+                title="Acessar o portal Kaelara Online"
+              >
+                <div className="nyt-footer-ecosystem-icon-wrapper">
+                  <img 
+                    src="/ecosystem/kaelara.svg" 
+                    alt="Símbolo Kaelara Online" 
+                    width="32" 
+                    height="32" 
+                    className="nyt-footer-ecosystem-icon" 
+                  />
+                </div>
+                <div className="nyt-footer-ecosystem-info">
+                  <div className="nyt-footer-ecosystem-title-row">
+                    <strong className="nyt-footer-ecosystem-name">Kaelara Online</strong>
+                    <span className="nyt-footer-ecosystem-arrow" aria-hidden="true">↗</span>
+                  </div>
+                  <p className="nyt-footer-ecosystem-desc">
+                    Assistência Cognitiva Avançada &amp; Inteligência Artificial Conversacional.
+                  </p>
+                </div>
+              </a>
+
+              {/* ATALHO 3: CURSOS LIVRES TECH & IA */}
+              <a 
+                href="https://cursos-livres-tech-ia.vercel.app/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="nyt-footer-ecosystem-card"
+                title="Acessar a plataforma Cursos Livres Tech & IA"
+              >
+                <div className="nyt-footer-ecosystem-icon-wrapper">
+                  <img 
+                    src="/ecosystem/cursos.svg" 
+                    alt="Símbolo Cursos Livres Tech & IA" 
+                    width="32" 
+                    height="32" 
+                    className="nyt-footer-ecosystem-icon" 
+                  />
+                </div>
+                <div className="nyt-footer-ecosystem-info">
+                  <div className="nyt-footer-ecosystem-title-row">
+                    <strong className="nyt-footer-ecosystem-name">Cursos Livres Tech &amp; IA</strong>
+                    <span className="nyt-footer-ecosystem-arrow" aria-hidden="true">↗</span>
+                  </div>
+                  <p className="nyt-footer-ecosystem-desc">
+                    Formação Tecnológica Prática, Gratuita e Acessível em IA e Programação.
+                  </p>
+                </div>
+              </a>
             </div>
           </div>
 

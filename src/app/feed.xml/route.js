@@ -1,9 +1,28 @@
-﻿import { supabase } from '@/lib/supabase';
+/**
+ * ============================================================================
+ * JORNAL ARCANJO — FEED RSS 2.0 (GOOGLE PUBLISHER CENTER & AGREGADORES)
+ * ============================================================================
+ * Endpoint dinâmico que gera o feed de notícias no formato RSS 2.0 com extensões
+ * multimídia (`media:content`) e corpo completo (`content:encoded`).
+ * 
+ * Especificações:
+ * 1. Protocolo Google Publisher Center: Atende rigorosamente aos critérios de indexação de notícias.
+ * 2. Suporte a PubSubHubbub: Hub de distribuição instantânea em tempo real.
+ * 3. MIME Types de Imagem: Detecção precisa de WebP, PNG, JPEG e GIF para miniaturas nos feeds.
+ * 
+ * @module src/app/feed.xml/route
+ */
+
+import { supabase } from '@/lib/supabase';
 
 // Força rota dinâmica para que novos artigos apareçam instantaneamente no RSS / Feed
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
+/**
+ * Handler HTTP GET para o feed RSS
+ * @returns {Promise<Response>} Resposta XML com cabeçalho application/rss+xml
+ */
 export async function GET() {
   const baseUrl = 'https://jornalarcanjo.com.br';
 
@@ -25,7 +44,7 @@ export async function GET() {
         const url = `${baseUrl}/artigo/${article.slug}`;
         const pubDate = new Date(article.created_at).toUTCString();
         
-        // Escape XML attributes
+        // Escape rigoroso de caracteres XML especiais
         const escapeXml = (str) =>
           str
             ? str
@@ -37,7 +56,7 @@ export async function GET() {
                 .replace(/'/g, '&apos;')
             : '';
 
-        // Media content tag for Google News images with accurate MIME type
+        // Media content tag para imagens no Google News com MIME type correspondente
         let mediaUrl = article.image_url;
         let mimeType = 'image/jpeg';
         if (mediaUrl) {

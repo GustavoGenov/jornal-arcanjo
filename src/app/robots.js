@@ -1,3 +1,19 @@
+/**
+ * ============================================================================
+ * JORNAL ARCANJO — ROBOTS.TXT DINÂMICO
+ * ============================================================================
+ * Diretivas de rastreamento para web crawlers e robôs de indexação.
+ * 
+ * Regras Configuradas:
+ * 1. Allow: Capa, reportagens (/artigo/), editorias (/categoria/), imagens e rotas públicas.
+ * 2. Disallow: Painel administrativo (/admin/) e rotas de mutação interna de API (/api/).
+ * 3. Crawlers Específicos: Googlebot, Googlebot-News (Google Notícias) e Googlebot-Image.
+ * 4. Sitemap Declaration: Aponta para sitemap.xml e news-sitemap.xml (protocolo de notícias 48h).
+ * 
+ * @module src/app/robots
+ * @returns {import('next').MetadataRoute.Robots}
+ */
+
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
@@ -28,18 +44,6 @@ export default function robots() {
         allow: ['/', '/articles/', '/api/img'],
         disallow: ['/admin/', '/api/'],
       },
-      // 5. Mediapartners-Google (Rastreador contextual do Google AdSense)
-      {
-        userAgent: 'Mediapartners-Google',
-        allow: ['/'],
-        disallow: ['/admin/'],
-      },
-      // 6. Bots de Anúncios do Google (Mobile e Display)
-      {
-        userAgent: ['AdsBot-Google', 'AdsBot-Google-Mobile'],
-        allow: ['/'],
-        disallow: ['/admin/'],
-      },
     ],
     // Lista unificada dos sitemaps oficiais
     sitemap: [
@@ -48,4 +52,3 @@ export default function robots() {
     ],
   };
 }
-

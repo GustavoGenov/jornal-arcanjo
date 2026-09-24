@@ -60,8 +60,8 @@ export default function CategoryForm() {
     }
   };
 
-  const handleSetupAdSense = async () => {
-    if (!window.confirm('Atenção: Isso irá reestruturar os blocos para o padrão oficial otimizado. Deseja continuar?')) {
+  const handleSetupCategories = async () => {
+    if (!window.confirm('Atenção: Isso irá reestruturar os blocos para o padrão oficial do Jornal Arcanjo. Deseja continuar?')) {
       return;
     }
 
@@ -103,12 +103,12 @@ export default function CategoryForm() {
           Gerenciar Blocos e Editorias
         </h2>
         <button 
-          onClick={handleSetupAdSense}
+          onClick={handleSetupCategories}
           disabled={resetLoading}
-          style={{ background: '#f59e0b', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: resetLoading ? 'wait' : 'pointer', display: 'flex', alignItems: 'center', gap: '6px', boxShadow: '0 2px 6px rgba(245, 158, 11, 0.3)' }}
+          style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: resetLoading ? 'wait' : 'pointer', display: 'flex', alignItems: 'center', gap: '6px', boxShadow: '0 2px 6px rgba(2, 132, 199, 0.3)' }}
         >
-          <span className="material-icons-extended" style={{ fontSize: '18px' }}>monetization_on</span>
-          {resetLoading ? 'Sincronizando...' : 'Sincronizar Blocos AdSense'}
+          <span className="material-icons-extended" style={{ fontSize: '18px' }}>sync</span>
+          {resetLoading ? 'Sincronizando...' : 'Restaurar Blocos Oficiais'}
         </button>
       </div>
 

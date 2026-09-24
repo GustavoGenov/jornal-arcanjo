@@ -145,7 +145,7 @@ export default function EditForm({ article, categories }) {
       router.refresh();
 
       setTimeout(() => {
-        router.push('/admin');
+        router.push('/admin25');
       }, 1200);
 
     } catch (err) {
@@ -166,7 +166,7 @@ export default function EditForm({ article, categories }) {
           <span className="material-icons-extended" style={{ color: '#1a73e8' }}>edit_note</span>
           Editar Notícia: {article.title}
         </h1>
-        <Link href="/admin" style={{ color: 'var(--text-muted)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '14px', fontWeight: 600 }}>
+        <Link href="/admin25" style={{ color: 'var(--text-muted)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '14px', fontWeight: 600 }}>
           <span className="material-icons-extended" style={{ fontSize: '18px' }}>arrow_back</span> Voltar
         </Link>
       </div>
@@ -343,7 +343,7 @@ export default function EditForm({ article, categories }) {
           </button>
           
           <Link 
-            href="/admin"
+            href="/admin25"
             style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--card)', color: 'var(--text-muted)', border: '1px solid var(--border)', padding: '14px 24px', borderRadius: '8px', fontWeight: '600', fontSize: '15px', textDecoration: 'none', flex: 1, minWidth: '140px' }}
           >
             Cancelar

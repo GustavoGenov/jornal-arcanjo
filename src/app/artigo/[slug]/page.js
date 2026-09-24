@@ -1,13 +1,32 @@
+/**
+ * ============================================================================
+ * JORNAL ARCANJO — PÁGINA DE ARTIGO INDIVIDUAL (LONG-FORM ARTICLE)
+ * ============================================================================
+ * Renderização dinâmica e estática (SSG/ISR) de reportagens e ensaios.
+ * 
+ * Funcionalidades Críticas:
+ * 1. Conformidade E-E-A-T: Mapeamento de perfis completos de autores verificados.
+ * 2. Metadados SEO Avançados: OpenGraph 1200x630, Twitter Cards e Canonical URLs.
+ * 3. Schema.org JSON-LD: Marcação NewsArticle para Google Notícias e motores de busca.
+ * 4. Tipografia de Leitura Contínua: Serif Merriweather com espaçamento calculado.
+ * 5. Seção de Fontes Verificadas e Disclaimers de Transparência Jornalística.
+ * 
+ * @module src/app/artigo/[slug]/page
+ */
+
 import { supabase } from '@/lib/supabase';
 import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
-import AdBanner from '@/components/AdBanner';
 import SocialShare from '@/components/SocialShare';
 import PageTracker from '../../components/PageTracker';
 import { getOptimizedImageUrl, getImageSrcSet } from '@/lib/imageHelper';
 
 export const revalidate = 60;
 
+/**
+ * Catálogo de Autores e Articulistas Oficiais (E-E-A-T)
+ * Mapeia nomes às credenciais, foto oficial e perfis de autoridade.
+ */
 const AUTHORS_META = {
   "Gustavo de Castro Bernardes Rosa": {
     initials: "GC",
@@ -488,9 +507,6 @@ export default async function ArticlePage({ params }) {
             </div>
           </div>
         </div>
-
-        {/* Anúncio AdSense Fim do Artigo */}
-        <AdBanner dataAdSlot="SEU_SLOT_ARTIGO" />
 
       </main>
     </>

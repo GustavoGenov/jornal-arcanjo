@@ -23,7 +23,7 @@ export default async function EditArticlePage({ params }) {
   return (
     <div style={{ padding: '24px', maxWidth: '1080px', margin: '0 auto' }}>
       <div style={{ marginBottom: '24px' }}>
-        <Link href="/admin" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: '#1a73e8', textDecoration: 'none', fontWeight: '500' }}>
+        <Link href="/admin25" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: '#1a73e8', textDecoration: 'none', fontWeight: '500' }}>
           <span className="material-icons-extended">arrow_back</span>
           Voltar para o Painel
         </Link>

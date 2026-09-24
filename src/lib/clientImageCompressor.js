@@ -1,14 +1,19 @@
 /**
- * Compresses and resizes an image file in the browser before upload.
- * Reduces 5MB-10MB camera/phone photos to ~80KB-120KB WebP/JPEG,
- * protecting Supabase storage and drastically speeding up uploads.
+ * ============================================================================
+ * JORNAL ARCANJO — COMPRESSOR DE IMAGENS CLIENT-SIDE (BROWSER CANVAS)
+ * ============================================================================
+ * Reduz e otimiza imagens no navegador antes do upload para o Supabase Storage.
+ * Transforma fotos pesadas de celulares (5MB-15MB) em arquivos WebP/JPEG leves
+ * (~80KB-140KB), economizando banda, storage e garantindo uploads ultrarrápidos
+ * para a equipe da redação.
  *
- * @param {File} file - Original file from <input type="file">
- * @param {Object} options - Configuration options
- * @param {number} options.maxWidth - Maximum width in pixels (default 1280)
- * @param {number} options.maxHeight - Maximum height in pixels (default 1280)
- * @param {number} options.quality - Compression quality 0.0 to 1.0 (default 0.82)
- * @returns {Promise<{ file: Blob, fileName: string, mimeType: string }>}
+ * @module src/lib/clientImageCompressor
+ * @param {File} file - Arquivo de imagem original selecionado no input
+ * @param {Object} [options] - Parâmetros opcionais de compressão
+ * @param {number} [options.maxWidth=1280] - Largura máxima em pixels
+ * @param {number} [options.maxHeight=1280] - Altura máxima em pixels
+ * @param {number} [options.quality=0.82] - Fator de qualidade visual (0.0 a 1.0)
+ * @returns {Promise<{ blob: Blob, fileName: string, mimeType: string }>}
  */
 export async function compressImageForUpload(file, options = {}) {
   const {

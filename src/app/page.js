@@ -1,14 +1,36 @@
+/**
+ * ============================================================================
+ * JORNAL ARCANJO — CAPA EDITORIAL (BROADSHEET HOME PAGE)
+ * ============================================================================
+ * Página inicial no padrão The New York Times (NYT), estruturada em blocos
+ * de alta densidade informativa e hierarquia visual rigorosa.
+ * 
+ * Arquitetura de Seções:
+ * 1. Hero Grid: Manchete Principal de grande impacto + Coluna Lateral de Destaques.
+ * 2. Formiga em Foco & Sociedade: Noticiário regional e memória local.
+ * 3. Coluna de Opinião & Vozes: Fotos e reflexões dos articulistas fixos.
+ * 4. Cultura, Filosofia & Saberes: Ensaios e reflexões aprofundadas.
+ * 5. Barra de Serviços & Utilitários: Widgets ao vivo de clima e passatempos.
+ * 6. Saúde, Bem-Estar & Tradição: Matérias formativas com rigor científico.
+ * 7. Newsletter Broadsheet: Caixa de subscrição de leitores.
+ * 
+ * @module src/app/page
+ */
+
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
-import AdBanner from '@/components/AdBanner';
 import PageTracker from './components/PageTracker';
 import SubscribeForm from './components/SubscribeForm';
 import HoroscopoWidget from './components/HoroscopoWidget';
 import GamesBlock from './components/GamesBlock';
 import { getOptimizedImageUrl, getImageSrcSet } from '@/lib/imageHelper';
 
+/** Revalidação estática periódica a cada 60 segundos (ISR) */
 export const revalidate = 60;
 
+/**
+ * Metadados SEO da Capa do Jornal
+ */
 export const metadata = {
   title: 'Jornal Arcanjo - The New York Times do Centro-Oeste e do Brasil',
   description: 'Jornal independente de Formiga (MG) com cobertura analítica e rigor editorial em Sociedade, Cultura, Filosofia, Saúde e Fatos Checados.',
@@ -25,6 +47,11 @@ export const metadata = {
   },
 };
 
+/**
+ * Formata timestamps ISO em datas amigáveis no padrão editorial brasileiro
+ * @param {string} dateStr - String de data no padrão ISO ou timestamp
+ * @returns {string} Data formatada (ex: '24 de set. de 2026')
+ */
 function formatDate(dateStr) {
   if (!dateStr) return '';
   return new Date(dateStr).toLocaleDateString('pt-BR', {
@@ -34,6 +61,12 @@ function formatDate(dateStr) {
   });
 }
 
+/**
+ * Calcula o tempo estimado de leitura com base na média de 180 palavras/minuto
+ * @param {string} content - HTML ou texto completo do artigo
+ * @param {string} summary - Resumo ou linha fina de fallback
+ * @returns {string} String descritiva (ex: '4 min de leitura')
+ */
 function estimateReadingTime(content, summary) {
   const text = (content || summary || '').replace(/<[^>]*>/g, '');
   const wordCount = text.split(/\s+/).length;
@@ -105,7 +138,7 @@ export default async function Home() {
           <p style={{ fontFamily: 'var(--nyt-serif-body)', fontSize: '16px', color: 'var(--nyt-ink-secondary)', marginBottom: '24px' }}>
             O portal está conectado ao banco de dados. As matérias e edições broadsheet carregarão automaticamente.
           </p>
-          <Link href="/admin" className="nyt-btn-play">
+          <Link href="/admin25" className="nyt-btn-play">
             Acessar Painel de Redação
           </Link>
         </div>
@@ -387,11 +420,6 @@ export default async function Home() {
         </aside>
 
       </section>
-
-      {/* ADSENSE / MONETIZAÇÃO SLOT 1 */}
-      <div style={{ margin: '30px 0' }}>
-        <AdBanner dataAdSlot="SEU_SLOT_HOME_1" />
-      </div>
 
       {/* ====================================================================
           NOVO BLOCO G1 2: GUIA RÁPIDO & SERVIÇOS DO DIA (SERVIÇOS G1)
@@ -853,11 +881,17 @@ export default async function Home() {
             {latestArticles.map((article) => (
               <Link key={article.id} href={`/artigo/${article.slug}`} className="nyt-grid-card">
                 {article.image_url && (
-                  <img 
-                    src={getOptimizedImageUrl(article.image_url, 400)} 
-                    alt={article.title} 
-                    loading="lazy"
-                  />
+                  <div className="nyt-grid-img-wrap">
+                    <div 
+                      className="img-ambient-backdrop" 
+                      style={{ backgroundImage: `url(${getOptimizedImageUrl(article.image_url, 300)})` }} 
+                    />
+                    <img 
+                      src={getOptimizedImageUrl(article.image_url, 400)} 
+                      alt={article.title} 
+                      loading="lazy"
+                    />
+                  </div>
                 )}
                 <span className="nyt-kicker">REPORTAGEM</span>
                 <h4>{article.title}</h4>
@@ -876,11 +910,6 @@ export default async function Home() {
           ==================================================================== */}
       <div style={{ margin: '48px 0' }}>
         <SubscribeForm />
-      </div>
-
-      {/* ADSENSE SLOT 2 */}
-      <div style={{ margin: '20px 0' }}>
-        <AdBanner dataAdSlot="SEU_SLOT_HOME_2" />
       </div>
 
     </main>

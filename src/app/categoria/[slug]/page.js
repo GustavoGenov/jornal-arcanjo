@@ -1,8 +1,22 @@
+/**
+ * ============================================================================
+ * JORNAL ARCANJO — PÁGINA DE CATEGORIA / EDITORIA
+ * ============================================================================
+ * Exibe a coletânea de reportagens e ensaios agrupados por tema.
+ * 
+ * Funcionalidades:
+ * 1. Resolução dinâmica de rotas por slug de categoria.
+ * 2. Suporte a editorias especiais com redirecionamento canônico (Clima, Horóscopo, Passatempos).
+ * 3. Geração de metadados SEO contextuais com canonical URLs personalizadas.
+ * 4. Grid responsivo de artigos ordenados por data decrescente.
+ * 
+ * @module src/app/categoria/[slug]/page
+ */
+
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
 import '../../page.module.css';
 import { notFound, redirect } from 'next/navigation';
-import AdBanner from '@/components/AdBanner';
 import PageTracker from '../../components/PageTracker';
 import HoroscopoWidget from '../../components/HoroscopoWidget';
 import GamesBlock from '../../components/GamesBlock';
@@ -11,7 +25,12 @@ import { getOptimizedImageUrl } from '@/lib/imageHelper';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-// Metadados dinâmicos para a página da categoria
+/**
+ * Gera os metadados dinâmicos da página de acordo com a editoria consultada
+ * @param {Object} props
+ * @param {Promise<{slug: string}>} props.params
+ * @returns {Promise<import('next').Metadata>}
+ */
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   
@@ -155,7 +174,7 @@ export default async function CategoryPage({ params }) {
                   {article.summary?.length > 120 ? article.summary.substring(0, 120) + '...' : article.summary}
                 </p>
                 <div className="meta">
-                  <span>{article.author_name || 'Voz da I.A'}</span>
+                  <span>{article.author_name || 'Redação Jornal Arcanjo'}</span>
                   <span>•</span>
                   <span>{new Date(article.created_at).toLocaleDateString('pt-BR')}</span>
                 </div>
@@ -169,9 +188,6 @@ export default async function CategoryPage({ params }) {
           </div>
         )}
       </div>
-
-      {/* AdSense Slot */}
-      <AdBanner dataAdSlot="SEU_SLOT_CATEGORY" />
     </main>
   );
 }

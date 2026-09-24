@@ -1,6 +1,24 @@
+/**
+ * ============================================================================
+ * JORNAL ARCANJO — API DE HORÓSCOPO & TARÔ DE MARSELHA
+ * ============================================================================
+ * Endpoint de previsões astrológicas e oraculares diárias.
+ * 
+ * Engenharia Algorítmica:
+ * - Utiliza um gerador pseudo-aleatório baseado na data corrente (`seedRandom`),
+ *   assegurando que todo leitor receba a mesma previsão coerente do dia para cada signo
+ *   e a mesma carta do Tarô, com cache de 1 hora no servidor e revalidação determinística.
+ * 
+ * @module src/app/api/horoscopo/route
+ */
+
 export const revalidate = 3600; // Cache de 1 hora
 
-// Gerador pseudo-aleatório determinístico baseado em seed
+/**
+ * Gerador pseudo-aleatório determinístico baseado em seed
+ * @param {number} seed - Número semente derivado da data (YYYYMMDD)
+ * @returns {number} Valor float entre 0 e 1
+ */
 function seedRandom(seed) {
   const x = Math.sin(seed++) * 10000;
   return x - Math.floor(x);

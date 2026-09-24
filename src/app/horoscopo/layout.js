@@ -1,8 +1,8 @@
 export const metadata = {
-  title: 'Horóscopo & Tarô do Dia | Voz da I.A',
-  description: 'Previsões diárias, leituras de tarô e reflexões astrológicas no Voz da I.A.',
+  title: 'Horóscopo & Tarô do Dia | Jornal Arcanjo',
+  description: 'Previsões diárias, leituras de tarô e reflexões astrológicas no Jornal Arcanjo.',
   alternates: {
-    canonical: 'https://vozdaia.com/horoscopo',
+    canonical: 'https://jornal-arcanjo.vercel.app/horoscopo',
   },
 };
 

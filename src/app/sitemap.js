@@ -1,12 +1,33 @@
+/**
+ * ============================================================================
+ * JORNAL ARCANJO — SITEMAP XML DINÂMICO
+ * ============================================================================
+ * Gerador oficial de sitemap.xml do App Router do Next.js para indexação
+ * nos motores de busca (Google, Bing, DuckDuckGo).
+ * 
+ * Regras de SEO & Rastreabilidade:
+ * 1. Prioridades Hierárquicas:
+ *    - Capa: 1.0 (always)
+ *    - Artigos / Reportagens: 0.9 (daily)
+ *    - Editorias e Páginas Especiais: 0.8 (hourly / monthly)
+ *    - Termos e Privacidade: 0.5 (yearly)
+ * 2. Prevenção de Soft 404: Apenas categorias com matérias publicadas são indexadas.
+ * 3. `lastModified` Dinâmico: Utiliza timestamps reais de atualização (`updated_at`).
+ * 
+ * @module src/app/sitemap
+ * @returns {Promise<import('next').MetadataRoute.Sitemap>}
+ */
+
 import { supabase } from '@/lib/supabase';
 
 export const dynamic = 'force-dynamic';
-export const revalidate = 300;
+export const revalidate = 300; // Cache de 5 minutos
 
 export default async function sitemap() {
   const baseUrl = 'https://jornalarcanjo.com.br';
   
   try {
+    // 1. Busca os últimos 10.000 artigos publicados
     const { data: articles, error: artError } = await supabase
       .from('articles')
       .select('id, slug, category_id, created_at, updated_at')
@@ -18,7 +39,7 @@ export default async function sitemap() {
       ? new Date(articles[0].updated_at || articles[0].created_at).toISOString()
       : new Date().toISOString();
 
-    // Rotas estáticas principais com lastModified realístico (data de atualização de cada página)
+    // 2. Rotas institucionais e editoriais fixas
     const routes = [
       {
         url: baseUrl,
@@ -64,6 +85,7 @@ export default async function sitemap() {
       },
     ];
 
+    // 3. Adiciona URLs individuais de artigos
     if (!artError && articles) {
       const articleRoutes = articles.map((article) => ({
         url: `${baseUrl}/artigo/${article.slug}`,
@@ -73,7 +95,7 @@ export default async function sitemap() {
       }));
       routes.push(...articleRoutes);
 
-      // Obter categorias que contêm artigos publicados para evitar Soft 404
+      // 4. Mapeia categorias ativas que contêm artigos (Prevenção de Soft 404)
       const usedCategoryIds = new Set(articles.map(a => a.category_id).filter(Boolean));
       
       const { data: categories } = await supabase
@@ -83,7 +105,6 @@ export default async function sitemap() {
       if (categories) {
         const activeCategories = categories.filter(c => usedCategoryIds.has(c.id) && c.slug !== 'clima-tempo' && c.slug !== 'horoscopo-e-taro');
         const categoryRoutes = activeCategories.map((cat) => {
-          // A data da categoria reflete a última publicação real de sua própria editoria
           const latestCatArticle = articles.find(a => a.category_id === cat.id);
           const catLastMod = latestCatArticle 
             ? new Date(latestCatArticle.updated_at || latestCatArticle.created_at).toISOString() 
