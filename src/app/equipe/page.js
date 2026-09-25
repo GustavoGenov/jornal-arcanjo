@@ -233,7 +233,7 @@ const columnists = [
     roleTag: 'Cidadania & Dinâmicas Sociais',
     subtitle: 'Articulista de Cidadania, Dinâmicas Comunitárias e Integridade Social',
     initials: 'AO',
-    image: '',
+    image: '/equipe/Amancio.jpeg',
     email: 'agenteamancio@gmail.com',
     phone: null,
     linkedin: null,

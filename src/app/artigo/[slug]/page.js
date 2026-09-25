@@ -164,14 +164,28 @@ const AUTHORS_META = {
   "Amâncio de Oliveira Neto": {
     initials: "AO",
     role: "Articulista de Cidadania, Dinâmicas Comunitárias e Integridade Social",
-    img: null,
+    img: "/equipe/Amancio.jpeg",
+    bio: "Articulista de Cidadania e Relações Humanas. Focado na defesa de laços comunitários sólidos, transparência ética e valorização da cooperação mútua.",
+    slug: "amancio-oliveira"
+  },
+  "Amancio de Oliveira Neto": {
+    initials: "AO",
+    role: "Articulista de Cidadania, Dinâmicas Comunitárias e Integridade Social",
+    img: "/equipe/Amancio.jpeg",
     bio: "Articulista de Cidadania e Relações Humanas. Focado na defesa de laços comunitários sólidos, transparência ética e valorização da cooperação mútua.",
     slug: "amancio-oliveira"
   },
   "Amâncio de Oliveira": {
     initials: "AO",
     role: "Articulista de Cidadania, Dinâmicas Comunitárias e Integridade Social",
-    img: null,
+    img: "/equipe/Amancio.jpeg",
+    bio: "Articulista de Cidadania e Relações Humanas. Focado na defesa de laços comunitários sólidos, transparência ética e valorização da cooperação mútua.",
+    slug: "amancio-oliveira"
+  },
+  "Amancio de Oliveira": {
+    initials: "AO",
+    role: "Articulista de Cidadania, Dinâmicas Comunitárias e Integridade Social",
+    img: "/equipe/Amancio.jpeg",
     bio: "Articulista de Cidadania e Relações Humanas. Focado na defesa de laços comunitários sólidos, transparência ética e valorização da cooperação mútua.",
     slug: "amancio-oliveira"
   },
